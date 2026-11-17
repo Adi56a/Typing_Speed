@@ -184,3 +184,4 @@ export const TypingGamesPage: React.FC<TypingGamesPageProps> = ({ onNavigate }) 
     </div>
   );
 };
+

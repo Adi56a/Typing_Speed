@@ -221,3 +221,4 @@ export const VirtualKeyboard: React.FC<VirtualKeyboardProps> = ({ activeChar = '
     </div>
   );
 };
+

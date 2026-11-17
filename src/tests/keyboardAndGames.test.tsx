@@ -28,13 +28,14 @@ describe('VirtualKeyboard Component', () => {
 });
 
 describe('WordCascadeGame & TypingGamesPage', () => {
-  it('renders the WordCascadeGame arena in idle state with start controls', () => {
+  it('renders the WordCascadeGame arena in idle state with start and fullscreen controls', () => {
     render(<WordCascadeGame />);
 
     expect(screen.getByText(/Word Cascade: Kinetic Defense/i)).toBeInTheDocument();
     expect(screen.getByText(/Launch Game/i)).toBeInTheDocument();
     expect(screen.getByText(/Score/i)).toBeInTheDocument();
     expect(screen.getByText(/Streak/i)).toBeInTheDocument();
+    expect(screen.getByLabelText(/Enter full screen/i)).toBeInTheDocument();
   });
 
   it('renders the TypingGamesPage with cognitive science educational section', () => {
