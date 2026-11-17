@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" fill="none">
+  <rect width="1200" height="630" fill="#121316"/>
+  
+  <!-- Subtle Gradient Background Element -->
+  <circle cx="950" cy="180" r="300" fill="#10B981" fill-opacity="0.12" filter="blur(80px)"/>
+  <circle cx="200" cy="500" r="250" fill="#3B82F6" fill-opacity="0.08" filter="blur(80px)"/>
+
+  <!-- Border Card Frame -->
+  <rect x="60" y="60" width="1080" height="510" rx="24" stroke="#2E323B" stroke-width="2" fill="#1A1C22" fill-opacity="0.7"/>
+
+  <!-- Logo & Brand Header -->
+  <g transform="translate(120, 130)">
+    <rect width="64" height="64" rx="16" fill="#10B981"/>
+    <rect x="14" y="16" width="36" height="32" rx="6" stroke="#FFFFFF" stroke-width="3"/>
+    <path d="M22 26H26M30 26H34M38 26H42" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round"/>
+    <path d="M22 34H42" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round"/>
+    
+    <text x="84" y="44" fill="#FFFFFF" font-family="system-ui, -apple-system, sans-serif" font-size="38" font-weight="800" letter-spacing="-1">
+      Type<tspan fill="#10B981">Fast</tspan>
+    </text>
+  </g>
+
+  <!-- Tagline & Heading -->
+  <text x="120" y="270" fill="#FFFFFF" font-family="system-ui, -apple-system, sans-serif" font-size="52" font-weight="800" letter-spacing="-1">
+    Free Online Typing Speed Test
+  </text>
+  <text x="120" y="330" fill="#94A3B8" font-family="system-ui, -apple-system, sans-serif" font-size="24" font-weight="500">
+    Measure WPM • Timed Tests (1, 2, 5, 10 min) • 100% Private &amp; Ad-Free
+  </text>
+
+  <!-- Feature Pills -->
+  <g transform="translate(120, 400)">
+    <!-- Pill 1 -->
+    <rect x="0" y="0" width="260" height="54" rx="12" fill="#252830" stroke="#2E323B"/>
+    <text x="24" y="34" fill="#10B981" font-family="system-ui, -apple-system, sans-serif" font-size="18" font-weight="700">⚡ Sub-Second Speed</text>
+
+    <!-- Pill 2 -->
+    <rect x="280" y="0" width="290" height="54" rx="12" fill="#252830" stroke="#2E323B"/>
+    <text x="304" y="34" fill="#60A5FA" font-family="system-ui, -apple-system, sans-serif" font-size="18" font-weight="700">🔒 Zero Keystroke Logging</text>
+
+    <!-- Pill 3 -->
+    <rect x="590" y="0" width="290" height="54" rx="12" fill="#252830" stroke="#2E323B"/>
+    <text x="614" y="34" fill="#FBBF24" font-family="system-ui, -apple-system, sans-serif" font-size="18" font-weight="700">🎯 SSC &amp; Exam Standards</text>
+  </g>
+
+  <!-- Canonical URL footer -->
+  <text x="120" y="515" fill="#64748B" font-family="monospace" font-size="16">
+    https://typingtest.example.com
+  </text>
+</svg>

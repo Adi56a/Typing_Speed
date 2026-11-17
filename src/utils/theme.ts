@@ -3,7 +3,7 @@ import { Theme } from '../types';
 const THEME_STORAGE_KEY = 'typing_platform_theme_preference';
 
 export function getSystemTheme(): 'dark' | 'light' {
-  if (typeof window === 'undefined') return 'dark';
+  if (typeof window === 'undefined' || typeof window.matchMedia !== 'function') return 'dark';
   return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
 }
 

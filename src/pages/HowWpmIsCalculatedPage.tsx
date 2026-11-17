@@ -158,3 +158,4 @@ export const HowWpmIsCalculatedPage: React.FC<HowWpmIsCalculatedPageProps> = ({ 
     </div>
   );
 };
+

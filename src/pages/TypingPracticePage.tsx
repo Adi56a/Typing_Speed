@@ -159,3 +159,4 @@ export const TypingPracticePage: React.FC<TypingPracticePageProps> = () => {
     </div>
   );
 };
+

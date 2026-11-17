@@ -107,3 +107,4 @@ export function getSpeedRating(netWPM: number): {
     feedback: 'World-class typing speed! You are among the fastest typists worldwide.',
   };
 }
+

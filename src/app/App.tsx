@@ -7,6 +7,7 @@ import { TypingPracticePage } from '../pages/TypingPracticePage';
 import { HowWpmIsCalculatedPage } from '../pages/HowWpmIsCalculatedPage';
 import { AboutPage } from '../pages/AboutPage';
 import { LegalPage } from '../pages/LegalPage';
+import { NotFoundPage } from '../pages/NotFoundPage';
 import { GenericContentPage } from '../pages/GenericContentPage';
 import { ROUTES } from '../seo/routes';
 
@@ -65,6 +66,9 @@ export const App: React.FC<AppProps> = ({ initialPath }) => {
     }
     if (currentPath.startsWith('/typing-test/') || currentPath.includes('typing-speed-test')) {
       return <TimedTestPage route={currentRoute} onNavigate={handleNavigate} />;
+    }
+    if (currentPath === '/404/' || !ROUTES[currentPath]) {
+      return <NotFoundPage onNavigate={handleNavigate} />;
     }
     return <GenericContentPage route={currentRoute} onNavigate={handleNavigate} />;
   };

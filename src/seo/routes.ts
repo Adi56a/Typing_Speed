@@ -115,6 +115,13 @@ export const ROUTES: Record<string, RouteMeta> = {
     subheading: 'Clear, transparent terms for using our open educational typing platform.',
     canonical: `${SITE_URL}/terms/`,
   },
+  '/404/': {
+    path: '/404/',
+    title: 'Page Not Found (404) | TypeFast Typing Test',
+    description: 'The requested page could not be found. Return to our free online typing speed test.',
+    heading: 'Page Not Found',
+    canonical: `${SITE_URL}/404/`,
+  },
 };
 
 export const ROUTE_LIST = Object.values(ROUTES);

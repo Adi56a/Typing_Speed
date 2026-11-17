@@ -222,3 +222,4 @@ export const WpmCalculatorPage: React.FC<WpmCalculatorPageProps> = ({ onNavigate
     </div>
   );
 };
+

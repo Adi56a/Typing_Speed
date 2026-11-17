@@ -31,11 +31,16 @@ export function render(url: string) {
     <meta property="og:url" content="${canonicalUrl}" />
     <meta property="og:title" content="${route.title}" />
     <meta property="og:description" content="${route.description}" />
+    <meta property="og:image" content="${SITE_URL}/images/og-image.svg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
     
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content="${canonicalUrl}" />
     <meta name="twitter:title" content="${route.title}" />
     <meta name="twitter:description" content="${route.description}" />
+    <meta name="twitter:image" content="${SITE_URL}/images/og-image.svg" />
 
     <!-- Structured Data (Schema.org) -->
     <script type="application/ld+json">

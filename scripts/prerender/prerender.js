@@ -45,7 +45,12 @@ async function prerender() {
       );
     }
 
-    const relativePath = route.path === '/' ? 'index.html' : path.join(route.path.replace(/^\//, ''), 'index.html');
+    const relativePath =
+      route.path === '/'
+        ? 'index.html'
+        : route.path === '/404/'
+          ? '404.html'
+          : path.join(route.path.replace(/^\//, ''), 'index.html');
     const outFilePath = path.resolve(distDir, relativePath);
     const outDir = path.dirname(outFilePath);
 
@@ -68,7 +73,10 @@ function generateSitemap(routes) {
   const siteUrl = 'https://typingtest.example.com';
   const today = new Date().toISOString().split('T')[0];
 
-  const urlsXml = routes
+  // Exclude error/utility routes from sitemap
+  const indexableRoutes = routes.filter((r) => r.path !== '/404/');
+
+  const urlsXml = indexableRoutes
     .map(
       (r) => `  <url>
     <loc>${siteUrl}${r.path}</loc>
