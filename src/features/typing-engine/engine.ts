@@ -7,6 +7,7 @@ export interface CharState {
   char: string;
   status: CharStatus;
   inputChar?: string;
+  hadError?: boolean;
 }
 
 export type EngineStatus = 'ready' | 'running' | 'completed';
@@ -27,10 +28,17 @@ export class TypingEngine {
   private startTime: number | null = null;
   private endTime: number | null = null;
   private correctCount: number = 0;
-  private incorrectCount: number = 0;
+  private uncorrectedErrorsCount: number = 0;
+  private totalMistakesCount: number = 0; // Cumulative errors committed, never decremented on backspace
   private totalTypedCount: number = 0;
   private wpmHistory: WpmSample[] = [];
   private lastSampleSecond: number = -1;
+
+  // Word-level tracking
+  private currentWordIndex: number = 0;
+  private currentWordHadError: boolean = false;
+  private wordsWithErrors: number = 0;
+  private cleanWords: number = 0;
 
   constructor(targetText: string, durationSeconds: number = 60) {
     this.targetText = targetText;
@@ -42,6 +50,7 @@ export class TypingEngine {
     this.chars = Array.from(this.targetText).map((char, idx) => ({
       char,
       status: idx === 0 ? 'current' : 'pending',
+      hadError: false,
     }));
   }
 
@@ -92,19 +101,31 @@ export class TypingEngine {
     const isCorrect = inputChar === expectedChar;
 
     this.totalTypedCount++;
+
     if (isCorrect) {
       this.correctCount++;
       this.chars[this.currentIndex] = {
         char: expectedChar,
         status: 'correct',
         inputChar,
+        hadError: this.chars[this.currentIndex].hadError || false,
       };
+
+      // If user typed a space, they completed a word
+      if (expectedChar === ' ') {
+        this.finishWord();
+      }
     } else {
-      this.incorrectCount++;
+      // Record mistake: cumulative mistakes increment permanently
+      this.totalMistakesCount++;
+      this.uncorrectedErrorsCount++;
+      this.currentWordHadError = true;
+
       this.chars[this.currentIndex] = {
         char: expectedChar,
         status: 'incorrect',
         inputChar,
+        hadError: true,
       };
     }
 
@@ -115,6 +136,7 @@ export class TypingEngine {
       this.chars[this.currentIndex].status = 'current';
     } else {
       // Completed all characters in the passage!
+      this.finishWord();
       this.complete(currentTime);
     }
 
@@ -122,7 +144,23 @@ export class TypingEngine {
   }
 
   /**
+   * Completes evaluation of the current word
+   */
+  private finishWord(): void {
+    if (this.currentWordHadError) {
+      this.wordsWithErrors++;
+    } else {
+      this.cleanWords++;
+    }
+    this.currentWordIndex++;
+    this.currentWordHadError = false;
+  }
+
+  /**
    * Handles backspace action
+   * Notice: Backspacing allows correcting the text on-screen,
+   * but the historical mistake count remains logged so accuracy and Net WPM
+   * accurately reflect that an error was committed!
    */
   public handleBackspace(): void {
     if (this.status !== 'running' || this.currentIndex <= 0) return;
@@ -135,16 +173,18 @@ export class TypingEngine {
     this.currentIndex--;
     const prevChar = this.chars[this.currentIndex];
 
-    // Revert counts
+    // Revert buffer statuses
     if (prevChar.status === 'correct') {
       this.correctCount = Math.max(0, this.correctCount - 1);
     } else if (prevChar.status === 'incorrect') {
-      this.incorrectCount = Math.max(0, this.incorrectCount - 1);
+      this.uncorrectedErrorsCount = Math.max(0, this.uncorrectedErrorsCount - 1);
     }
 
+    // Set cursor back to this character, preserving hadError flag
     this.chars[this.currentIndex] = {
       char: this.targetText[this.currentIndex],
       status: 'current',
+      hadError: prevChar.hadError || false,
     };
   }
 
@@ -219,10 +259,12 @@ export class TypingEngine {
     return calculateTypingMetrics({
       totalCharsTyped: this.totalTypedCount,
       correctChars: this.correctCount,
-      incorrectChars: this.incorrectCount,
+      incorrectChars: this.totalMistakesCount, // Cumulative errors committed
       elapsedMs,
       durationSeconds: this.durationSeconds,
+      uncorrectedErrors: this.uncorrectedErrorsCount,
+      wordsWithErrors: this.wordsWithErrors + (this.currentWordHadError ? 1 : 0),
+      cleanWords: this.cleanWords,
     });
   }
 }
-

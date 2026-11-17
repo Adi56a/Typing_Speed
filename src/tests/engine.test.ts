@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import { TypingEngine } from '../features/typing-engine/engine';
 import { calculateTypingMetrics, getSpeedRating } from '../features/typing-engine/scoring';
-import { generateTestText } from '../features/typing-engine/textBank';
+import { generateTestText, CURATED_QUOTES } from '../features/typing-engine/textBank';
 
 describe('Scoring Module', () => {
   it('handles zero elapsed time and empty input safely without NaN or Infinity', () => {
@@ -127,6 +127,36 @@ describe('TypingEngine', () => {
     expect(engine.getChars()[0].status).toBe('current');
   });
 
+  it('preserves error count and penalizes accuracy when a user mistypes and corrects with backspace', () => {
+    // Target text: "cat"
+    // User types: 'x' (mistake!), Backspace, 'c' (correct), 'a' (correct), 't' (correct)
+    const engine = new TypingEngine('cat', 60);
+    const t0 = 1000;
+
+    engine.handleInput('x', t0); // typo
+    expect(engine.getChars()[0].status).toBe('incorrect');
+
+    engine.handleBackspace(); // user fixes with backspace
+    expect(engine.getCurrentIndex()).toBe(0);
+
+    engine.handleInput('c', t0 + 100);
+    engine.handleInput('a', t0 + 200);
+    engine.handleInput('t', t0 + 300);
+
+    const metrics = engine.getMetrics(t0 + 1000);
+
+    // In standard scoring, the mistake made is NOT erased into a false 100% accuracy:
+    // Total keystrokes typed = 4 ('x', 'c', 'a', 't')
+    // Mistakes made = 1 ('x')
+    // Correct characters = 3
+    expect(metrics.totalChars).toBe(4);
+    expect(metrics.incorrectChars).toBe(1);
+    expect(metrics.correctChars).toBe(3);
+    expect(metrics.accuracy).toBe(75); // (4 - 1) / 4 = 75%, NOT 100%!
+    expect(metrics.wordsWithErrors).toBe(1);
+    expect(metrics.cleanWords).toBe(0);
+  });
+
   it('completes automatically when duration elapses via tick', () => {
     const engine = new TypingEngine('the quick brown fox', 15);
     const t0 = 1000;
@@ -168,6 +198,17 @@ describe('TextBank', () => {
   it('selects curated quote in quote mode', () => {
     const text = generateTestText({ mode: 'quote' });
     expect(text.length).toBeGreaterThan(10);
+  });
+
+  it('contains a rich bank of at least 80 to 100 meaningful statements across easy, medium, and hard', () => {
+    expect(CURATED_QUOTES.length).toBeGreaterThanOrEqual(80);
+    const easyQuotes = CURATED_QUOTES.filter((q) => q.difficulty === 'easy');
+    const mediumQuotes = CURATED_QUOTES.filter((q) => q.difficulty === 'medium');
+    const hardQuotes = CURATED_QUOTES.filter((q) => q.difficulty === 'hard');
+
+    expect(easyQuotes.length).toBeGreaterThanOrEqual(20);
+    expect(mediumQuotes.length).toBeGreaterThanOrEqual(25);
+    expect(hardQuotes.length).toBeGreaterThanOrEqual(25);
   });
 
   it('includes punctuation when requested', () => {

@@ -16,6 +16,9 @@ export interface TypingMetrics {
   correctChars: number;
   incorrectChars: number;
   totalChars: number;
+  uncorrectedErrors?: number;
+  wordsWithErrors?: number;
+  cleanWords?: number;
 }
 
 export interface RouteMeta {

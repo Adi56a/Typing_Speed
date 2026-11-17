@@ -3,23 +3,35 @@ import { TypingMetrics } from '../../types';
 export interface ScoringInput {
   totalCharsTyped: number;
   correctChars: number;
-  incorrectChars: number;
+  incorrectChars: number; // Cumulative errors committed
   elapsedMs: number;
   durationSeconds: number;
+  uncorrectedErrors?: number;
+  wordsWithErrors?: number;
+  cleanWords?: number;
 }
 
 /**
  * Standard touch-typing calculation specifications:
  * - 1 standard word = 5 characters (including spaces & punctuation)
  * - Gross WPM = (Total characters typed / 5) / (elapsed minutes)
- * - Net WPM = max(0, Gross WPM - (unfixed errors / 5) / (elapsed minutes))
- * - Accuracy % = (Correct characters / Total characters typed) * 100
+ * - Net WPM = max(0, Gross WPM - (total errors / 5) / (elapsed minutes))
+ * - Accuracy % = (Net Correct Keystrokes / Total Keystrokes Typed) * 100
  * - CPM = Total characters typed / (elapsed minutes)
  */
 export function calculateTypingMetrics(input: ScoringInput): TypingMetrics {
-  const { totalCharsTyped, correctChars, incorrectChars, elapsedMs, durationSeconds } = input;
+  const {
+    totalCharsTyped,
+    correctChars,
+    incorrectChars,
+    elapsedMs,
+    durationSeconds,
+    uncorrectedErrors = 0,
+    wordsWithErrors = 0,
+    cleanWords = 0,
+  } = input;
 
-  // Safe guard: zero or negative elapsed time
+  // Safety guard: zero or negative elapsed time or empty input
   if (elapsedMs <= 0 || totalCharsTyped <= 0) {
     return {
       durationSeconds,
@@ -31,6 +43,9 @@ export function calculateTypingMetrics(input: ScoringInput): TypingMetrics {
       correctChars: 0,
       incorrectChars: 0,
       totalChars: 0,
+      uncorrectedErrors: 0,
+      wordsWithErrors: 0,
+      cleanWords: 0,
     };
   }
 
@@ -42,7 +57,9 @@ export function calculateTypingMetrics(input: ScoringInput): TypingMetrics {
   const errorPenalty = incorrectChars / 5 / elapsedMinutes;
   const netWPM = Math.max(0, Math.round((grossWPM - errorPenalty) * 10) / 10);
 
-  const accuracy = Math.round((correctChars / totalCharsTyped) * 1000) / 10;
+  // Net correct keystrokes out of all attempts (penalizes mistakes even if backspaced)
+  const netCorrect = Math.max(0, totalCharsTyped - incorrectChars);
+  const accuracy = Math.round((netCorrect / totalCharsTyped) * 1000) / 10;
   const cpm = Math.round(totalCharsTyped / elapsedMinutes);
 
   return {
@@ -55,6 +72,9 @@ export function calculateTypingMetrics(input: ScoringInput): TypingMetrics {
     correctChars,
     incorrectChars,
     totalChars: totalCharsTyped,
+    uncorrectedErrors,
+    wordsWithErrors,
+    cleanWords,
   };
 }
 
@@ -70,7 +90,7 @@ export function getSpeedRating(netWPM: number): {
     return {
       level: 'Beginner',
       percentile: 'Top 90%',
-      feedback: 'Focus on accuracy and keeping your fingers on the home row.',
+      feedback: 'Focus on accuracy and keeping your fingers anchored on the home row.',
     };
   }
   if (netWPM < 45) {
@@ -107,4 +127,3 @@ export function getSpeedRating(netWPM: number): {
     feedback: 'World-class typing speed! You are among the fastest typists worldwide.',
   };
 }
-

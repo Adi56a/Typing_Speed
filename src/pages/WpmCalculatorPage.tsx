@@ -98,7 +98,7 @@ export const WpmCalculatorPage: React.FC<WpmCalculatorPageProps> = ({ onNavigate
 
           <div>
             <label className="block text-xs font-semibold uppercase tracking-wider text-slate-600 dark:text-slate-400 mb-1.5">
-              Uncorrected Errors / Mistakes
+              Total Errors &amp; Mistakes Made (Including Backspaced Typos)
             </label>
             <input
               type="number"
@@ -107,6 +107,9 @@ export const WpmCalculatorPage: React.FC<WpmCalculatorPageProps> = ({ onNavigate
               onChange={(e) => setErrors(Math.max(0, parseInt(e.target.value) || 0))}
               className="w-full px-3.5 py-2.5 rounded-lg border border-slate-200 dark:border-surface-dark-border bg-white dark:bg-surface-dark text-slate-900 dark:text-white font-mono text-base focus-ring"
             />
+            <span className="text-[11px] text-slate-400 mt-1 block">
+              In touch-typing exams and standard scoring, each missed character is counted as an error even if fixed with Backspace.
+            </span>
           </div>
         </Card>
 

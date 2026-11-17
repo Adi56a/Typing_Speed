@@ -33,6 +33,28 @@
   }
 }
 
+/* Modern sleek vertical typing cursor */
+@keyframes smoothCaretBlink {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}
+
+.caret-blinker {
+  position: absolute;
+  left: -1px;
+  top: 10%;
+  height: 80%;
+  width: 2.5px;
+  border-radius: 9999px;
+  background-color: #10b981;
+  animation: smoothCaretBlink 1s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  pointer-events: none;
+}
+
 /* Reduced motion preference */
 @media (prefers-reduced-motion: reduce) {
   *,
