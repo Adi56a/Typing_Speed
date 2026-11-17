@@ -135,6 +135,24 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
               </li>
               <li>
                 <a
+                  href="/methodology/"
+                  onClick={(e) => handleLinkClick(e, '/methodology/')}
+                  className="text-slate-600 dark:text-slate-400 hover:text-brand-600 dark:hover:text-brand-400 transition-colors"
+                >
+                  Scoring Methodology
+                </a>
+              </li>
+              <li>
+                <a
+                  href="/contact/"
+                  onClick={(e) => handleLinkClick(e, '/contact/')}
+                  className="text-slate-600 dark:text-slate-400 hover:text-brand-600 dark:hover:text-brand-400 transition-colors"
+                >
+                  Contact & Feedback
+                </a>
+              </li>
+              <li>
+                <a
                   href="/privacy/"
                   onClick={(e) => handleLinkClick(e, '/privacy/')}
                   className="text-slate-600 dark:text-slate-400 hover:text-brand-600 dark:hover:text-brand-400 transition-colors"

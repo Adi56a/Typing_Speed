@@ -98,6 +98,24 @@ export const ROUTES: Record<string, RouteMeta> = {
     subheading: 'Built on privacy-by-design, local-first performance, and distraction-free learning.',
     canonical: `${SITE_URL}/about/`,
   },
+  '/methodology/': {
+    path: '/methodology/',
+    title: 'Typing Test Scoring Methodology - Formulas, Clock Sync & Standards',
+    description:
+      'Detailed engineering and mathematical specification of our typing engine: monotonic performance.now timers, 5-character word convention, and Net WPM penalty rules.',
+    heading: 'Engine & Scoring Methodology',
+    subheading: 'Mathematical precision, clock drift immunity, and standardized metrics.',
+    canonical: `${SITE_URL}/methodology/`,
+  },
+  '/contact/': {
+    path: '/contact/',
+    title: 'Contact Us & Feedback - Global Typing Speed Platform',
+    description:
+      'Get in touch with the TypeFast team. Send feedback, report bugs, suggest exam formats, or discuss school/educator partnerships.',
+    heading: 'Contact & Feedback',
+    subheading: 'We welcome ideas, bug reports, and exam format suggestions.',
+    canonical: `${SITE_URL}/contact/`,
+  },
   '/privacy/': {
     path: '/privacy/',
     title: 'Privacy Policy - Zero Keystroke Logging Guarantee',

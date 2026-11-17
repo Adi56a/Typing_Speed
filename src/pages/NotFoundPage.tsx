@@ -79,3 +79,4 @@ export const NotFoundPage: React.FC<NotFoundPageProps> = ({ onNavigate }) => {
     </div>
   );
 };
+

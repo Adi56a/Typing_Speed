@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { TypingMetrics } from '../../types';
 import { getSpeedRating } from '../typing-engine/scoring';
-import { RotateCcw, Share2, Check, Award, ArrowRight, Target } from 'lucide-react';
+import { saveResult, getPersonalBests } from './localHistory';
+import { RotateCcw, Share2, Check, Award, ArrowRight, Target, Trophy } from 'lucide-react';
 import { Button } from '../../components/ui/Button';
 
 export interface ResultsModalProps {
@@ -12,7 +13,19 @@ export interface ResultsModalProps {
 
 export const ResultsModal: React.FC<ResultsModalProps> = ({ metrics, onRestart, onNewTest }) => {
   const [copied, setCopied] = useState(false);
+  const [isPersonalBest, setIsPersonalBest] = useState(false);
+  const [previousBest, setPreviousBest] = useState<number>(0);
   const rating = getSpeedRating(metrics.netWPM);
+
+  useEffect(() => {
+    const bBefore = getPersonalBests();
+    setPreviousBest(bBefore.bestNetWPM);
+    if (metrics.netWPM > bBefore.bestNetWPM && metrics.netWPM > 0) {
+      setIsPersonalBest(true);
+    }
+    // Save locally
+    saveResult(metrics, 'words');
+  }, [metrics]);
 
   const handleShare = async () => {
     const summaryText = `🚀 TypeFast Speed Test Results:
@@ -20,6 +33,7 @@ export const ResultsModal: React.FC<ResultsModalProps> = ({ metrics, onRestart, 
 • Accuracy: ${metrics.accuracy}%
 • Duration: ${metrics.durationSeconds}s
 • Consistency: ${metrics.cpm} CPM | ${metrics.incorrectChars} errors
+${isPersonalBest ? '🏆 New Personal Best!' : ''}
 Test your typing speed free at: https://typingtest.example.com`;
 
     if (navigator.clipboard) {
@@ -44,9 +58,17 @@ Test your typing speed free at: https://typingtest.example.com`;
         {/* Header & Speed Tier Badge */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-100 dark:border-surface-dark-border pb-4">
           <div>
-            <span className="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">
-              Test Completed
-            </span>
+            <div className="flex items-center gap-2">
+              <span className="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+                Test Completed
+              </span>
+              {isPersonalBest && (
+                <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-amber-100 text-amber-800 dark:bg-amber-950 dark:text-amber-300 text-[10px] font-bold">
+                  <Trophy className="w-3 h-3 text-amber-600 dark:text-amber-400" />
+                  <span>New Personal Best!</span>
+                </span>
+              )}
+            </div>
             <h2 id="results-title" className="text-2xl font-extrabold text-slate-900 dark:text-white">
               Your Typing Results
             </h2>
@@ -85,7 +107,9 @@ Test your typing speed free at: https://typingtest.example.com`;
             <div className="text-4xl font-black font-mono text-slate-900 dark:text-white my-1">
               {metrics.grossWPM}
             </div>
-            <span className="text-[11px] text-slate-400 font-mono">Gross WPM</span>
+            <span className="text-[11px] text-slate-400 font-mono">
+              Prev Best: {previousBest} WPM
+            </span>
           </div>
         </div>
 
