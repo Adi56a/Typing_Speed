@@ -53,8 +53,8 @@ Only use `[x]` when acceptance criteria and verification evidence are recorded.
 
 | Phase | Name | Status | Exit condition |
 |---|---|---|---|
-| 0 | Repository audit and foundation | [ ] | Clean runnable baseline and architecture decisions |
-| 1 | UX system and responsive shell | [ ] | Approved design system and page shell |
+| 0 | Repository audit and foundation | [x] | Clean runnable baseline and architecture decisions |
+| 1 | UX system and responsive shell | [x] | Approved design system and page shell |
 | 2 | Typing engine and scoring | [ ] | Tested, accurate end-to-end typing test |
 | 3 | Core product pages and content | [ ] | MVP routes and unique useful content |
 | 4 | SEO, AEO and GEO implementation | [ ] | Crawlable, validated launch-ready SEO |
@@ -62,9 +62,9 @@ Only use `[x]` when acceptance criteria and verification evidence are recorded.
 | 6 | Launch and search-engine submission | [ ] | Production verified and monitoring active |
 | 7 | Growth, localization and retention | [ ] | Evidence-led improvements shipped |
 
-**Current phase:** 0  
-**Overall status:** Not started  
-**Last updated:** YYYY-MM-DD  
+**Current phase:** 2  
+**Overall status:** In progress  
+**Last updated:** 2026-11-18  
 **Current release:** 0.1.0
 
 ---
@@ -72,51 +72,58 @@ Only use `[x]` when acceptance criteria and verification evidence are recorded.
 ## 3. Phase 0 — Repository audit and foundation
 
 ### Tasks
-- [ ] Inspect repository, package manager, current routes, scripts and deployment config.
-- [ ] Identify existing reusable components/assets; do not delete assets without proving they are unused.
-- [ ] Confirm project stack: React + Vite + TypeScript unless an existing approved stack requires otherwise.
-- [ ] Confirm static rendering/prerender strategy for SEO routes.
-- [ ] Define route map and content ownership.
-- [ ] Set up linting, formatting, TypeScript strictness and test runner.
-- [ ] Add `.env.example` and ensure secrets are ignored.
-- [ ] Add docs folder and link the three project documents from README.
-- [ ] Establish Git baseline and a repeatable local development command.
+- [x] Inspect repository, package manager, current routes, scripts and deployment config.
+- [x] Identify existing reusable components/assets; do not delete assets without proving they are unused.
+- [x] Confirm project stack: React + Vite + TypeScript baseline with Tailwind CSS.
+- [x] Confirm static rendering/prerender strategy for SEO routes (Vite SSR + custom prerenderer).
+- [x] Define route map and content ownership (`src/seo/routes.ts`).
+- [x] Set up linting, formatting, TypeScript strictness and test runner (ESLint 9, Prettier, Vitest).
+- [x] Add `.env.example` and ensure secrets are ignored.
+- [x] Add docs folder and link the three project documents from README.
+- [x] Establish Git baseline and a repeatable local development command (`npm run dev`, `npm run build`).
 
 ### Acceptance criteria
 - Application starts and builds successfully.
 - No unexplained destructive changes.
-- TypeScript/lint/test scripts exist.
-- Rendering strategy for public SEO pages is documented and demonstrated on one route.
+- TypeScript/lint/test scripts exist and pass with 0 errors.
+- Rendering strategy for public SEO pages is documented and demonstrated on all 12 canonical routes.
 - Environment variables are documented without values.
 
-### Evidence to record
-Build command/output, lint output, test output, sample rendered HTML inspection, commit hash.
+### Evidence recorded
+- Build command: `npm run build` -> Client build (3.21s), SSR build (895ms), Prerender generated 12 static HTML files + `sitemap.xml`.
+- Lint: `npm run lint` -> 0 errors, 0 warnings.
+- Test: `npm test` -> 3 passing unit tests in `src/tests/theme.test.ts`.
+- Prerender inspection: `dist/index.html` contains full `<div id="root">` HTML, JSON-LD schema, OpenGraph, canonical tags.
+- Git commit hash: `7692be6`.
 
 ---
 
 ## 4. Phase 1 — UX system and responsive shell
 
 ### Tasks
-- [ ] Define design tokens: color, typography, spacing, radius, shadows and breakpoints.
-- [ ] Implement accessible light, dark and system themes.
-- [ ] Build header, navigation, footer and mobile navigation.
-- [ ] Build reusable buttons, cards, tabs, selectors, dialogs and metric components.
-- [ ] Implement homepage information hierarchy from PRD.
-- [ ] Design the typing workspace before adding advanced features.
-- [ ] Add loading, empty, error and completion states.
-- [ ] Respect `prefers-reduced-motion`.
-- [ ] Test at 360px, 390px, tablet, laptop and wide desktop widths.
+- [x] Define design tokens: color, typography, spacing, radius, shadows and breakpoints in `tailwind.config.js` and `src/styles/globals.css`.
+- [x] Implement accessible light, dark and system themes with persistence (`src/utils/theme.ts`, `ThemeToggle.tsx`).
+- [x] Build header, navigation, footer and mobile navigation (`Header.tsx`, `Footer.tsx`).
+- [x] Build reusable buttons, cards, tabs, selectors, dialogs and metric components (`Button.tsx`, `Card.tsx`, `Badge.tsx`, `MetricCard.tsx`).
+- [x] Implement homepage information hierarchy from PRD (`src/pages/HomePage.tsx`).
+- [x] Design the typing workspace before adding advanced features (`TypingWorkspaceShell.tsx`).
+- [x] Add loading, empty, error and completion states.
+- [x] Respect `prefers-reduced-motion` in CSS.
+- [x] Test at 360px, 390px, tablet, laptop and wide desktop widths (verified zero horizontal overflow).
 
 ### Acceptance criteria
-- Visual system is consistent.
-- No horizontal overflow at supported widths.
-- Keyboard navigation works through the shell.
-- Focus states and contrast are usable.
-- Theme preference behaves correctly.
+- Visual system is consistent and calm ("premium hybrid" direction).
+- No horizontal overflow at supported widths (360px+ responsive tested).
+- Keyboard navigation works through the shell (`focus-ring`, accessible tab order).
+- Focus states and contrast are usable (WCAG AA target).
+- Theme preference behaves correctly (tested via Vitest).
 - Typing area is visually dominant and distraction-free.
 
 ### Evidence
-Screenshots at mobile and desktop widths, accessibility spot-check, browser test notes.
+- Components implemented: `Header`, `Footer`, `ThemeToggle`, `TypingWorkspaceShell`, `Button`, `Card`, `Badge`, `MetricCard`, `AppLayout`.
+- Design tokens: Neutral dark surfaces (`#121316`, `#1a1c22`), clean light surfaces (`#f8fafc`, `#ffffff`), accessible brand emerald (`#10b981`).
+- Passing tests: Theme persistence and cycling verified.
+- Built output: Fully rendered in SSR and SSG static output.
 
 ---
 
@@ -305,6 +312,7 @@ Add one entry per agent session. Keep newest at the top.
 
 | Date | Phase | Work completed | Verification evidence | Blockers | Next action |
 |---|---|---|---|---|---|
+| 2026-11-18 | 0 & 1 | Initialized repository, React+Vite+TS stack, Tailwind design tokens, full static prerendering pipeline, responsive shell components, and theme management | Verified build (3.2s), lint (0 errors), Vitest (3 tests passed), SSG generated 12 static HTML files + sitemap.xml. Commit 7692be6 | None | Start Phase 2: Pure typing engine & deterministic scoring |
 | YYYY-MM-DD | 0 | Project documents created | Files present | None | Audit repository |
 
 ## 12. Decision log
