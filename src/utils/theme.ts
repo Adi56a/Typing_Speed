@@ -38,3 +38,4 @@ export function applyTheme(theme: Theme): void {
     // Ignore storage errors
   }
 }
+

@@ -221,3 +221,4 @@ export const HomePage: React.FC<HomePageProps> = ({ initialDuration = 60, onNavi
     </div>
   );
 };
+

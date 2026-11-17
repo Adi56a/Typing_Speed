@@ -49,3 +49,4 @@ export function generateStructuredData(route: RouteMeta): string {
 
   return JSON.stringify(jsonLdObjects, null, 2);
 }
+

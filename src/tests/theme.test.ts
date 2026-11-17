@@ -23,3 +23,4 @@ describe('Theme Utility', () => {
     expect(document.documentElement.classList.contains('dark')).toBe(false);
   });
 });
+

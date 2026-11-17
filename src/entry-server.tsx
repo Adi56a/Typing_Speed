@@ -45,3 +45,4 @@ ${structuredData}
 
   return { html, head };
 }
+

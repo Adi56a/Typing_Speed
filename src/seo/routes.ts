@@ -118,3 +118,4 @@ export const ROUTES: Record<string, RouteMeta> = {
 };
 
 export const ROUTE_LIST = Object.values(ROUTES);
+

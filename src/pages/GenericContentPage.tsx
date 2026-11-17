@@ -91,3 +91,4 @@ export const GenericContentPage: React.FC<GenericContentPageProps> = ({ route, o
     </div>
   );
 };
+

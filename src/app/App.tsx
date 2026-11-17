@@ -1,6 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { AppLayout } from '../components/AppLayout';
 import { HomePage } from '../pages/HomePage';
+import { TimedTestPage } from '../pages/TimedTestPage';
+import { WpmCalculatorPage } from '../pages/WpmCalculatorPage';
+import { TypingPracticePage } from '../pages/TypingPracticePage';
+import { HowWpmIsCalculatedPage } from '../pages/HowWpmIsCalculatedPage';
+import { AboutPage } from '../pages/AboutPage';
+import { LegalPage } from '../pages/LegalPage';
 import { GenericContentPage } from '../pages/GenericContentPage';
 import { ROUTES } from '../seo/routes';
 
@@ -33,16 +39,39 @@ export const App: React.FC<AppProps> = ({ initialPath }) => {
     setCurrentPath(path);
   };
 
-  // Match route
   const currentRoute = ROUTES[currentPath] || ROUTES['/'];
+
+  const renderCurrentPage = () => {
+    if (currentPath === '/') {
+      return <HomePage initialDuration={60} onNavigate={handleNavigate} />;
+    }
+    if (currentPath === '/wpm-calculator/') {
+      return <WpmCalculatorPage onNavigate={handleNavigate} />;
+    }
+    if (currentPath === '/typing-practice/') {
+      return <TypingPracticePage onNavigate={handleNavigate} />;
+    }
+    if (currentPath === '/how-wpm-is-calculated/') {
+      return <HowWpmIsCalculatedPage onNavigate={handleNavigate} />;
+    }
+    if (currentPath === '/about/') {
+      return <AboutPage />;
+    }
+    if (currentPath === '/privacy/') {
+      return <LegalPage type="privacy" />;
+    }
+    if (currentPath === '/terms/') {
+      return <LegalPage type="terms" />;
+    }
+    if (currentPath.startsWith('/typing-test/') || currentPath.includes('typing-speed-test')) {
+      return <TimedTestPage route={currentRoute} onNavigate={handleNavigate} />;
+    }
+    return <GenericContentPage route={currentRoute} onNavigate={handleNavigate} />;
+  };
 
   return (
     <AppLayout currentPath={currentPath} onNavigate={handleNavigate}>
-      {currentPath === '/' ? (
-        <HomePage initialDuration={60} onNavigate={handleNavigate} />
-      ) : (
-        <GenericContentPage route={currentRoute} onNavigate={handleNavigate} />
-      )}
+      {renderCurrentPage()}
     </AppLayout>
   );
 };
