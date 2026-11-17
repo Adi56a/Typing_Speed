@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { ThemeToggle } from './ThemeToggle';
-import { Keyboard, Menu, X, Zap } from 'lucide-react';
+import { Keyboard, Menu, X } from 'lucide-react';
 
 interface HeaderProps {
   currentPath?: string;
@@ -12,10 +12,11 @@ export const Header: React.FC<HeaderProps> = ({ currentPath = '/', onNavigate })
 
   const navLinks = [
     { label: 'Speed Test', path: '/typing-speed-test/' },
-    { label: '1 Min Test', path: '/typing-test/1-minute/' },
-    { label: '5 Min Test', path: '/typing-test/5-minute/' },
+    { label: '1 Min', path: '/typing-test/1-minute/' },
+    { label: '5 Min', path: '/typing-test/5-minute/' },
     { label: 'Practice', path: '/typing-practice/' },
-    { label: 'WPM Calculator', path: '/wpm-calculator/' },
+    { label: 'Games', path: '/typing-games/' },
+    { label: 'WPM Calc', path: '/wpm-calculator/' },
     { label: 'About', path: '/about/' },
   ];
 
@@ -76,9 +77,8 @@ export const Header: React.FC<HeaderProps> = ({ currentPath = '/', onNavigate })
           <a
             href="/"
             onClick={(e) => handleLinkClick(e, '/')}
-            className="hidden sm:inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-brand-600 hover:bg-brand-500 text-white transition-colors focus-ring shadow-sm"
+            className="hidden sm:inline-flex items-center px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-brand-600 hover:bg-brand-500 text-white transition-colors focus-ring shadow-sm"
           >
-            <Zap className="w-3.5 h-3.5" />
             <span>Start Test</span>
           </a>
 
@@ -120,9 +120,8 @@ export const Header: React.FC<HeaderProps> = ({ currentPath = '/', onNavigate })
               <a
                 href="/"
                 onClick={(e) => handleLinkClick(e, '/')}
-                className="w-full flex items-center justify-center gap-2 py-2.5 rounded-lg text-sm font-semibold bg-brand-600 hover:bg-brand-500 text-white transition-colors"
+                className="w-full flex items-center justify-center py-2.5 rounded-lg text-sm font-semibold bg-brand-600 hover:bg-brand-500 text-white transition-colors"
               >
-                <Zap className="w-4 h-4" />
                 <span>Start Free Typing Test</span>
               </a>
             </div>

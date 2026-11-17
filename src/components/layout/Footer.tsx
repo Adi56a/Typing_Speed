@@ -99,6 +99,15 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
               </li>
               <li>
                 <a
+                  href="/typing-games/"
+                  onClick={(e) => handleLinkClick(e, '/typing-games/')}
+                  className="text-slate-600 dark:text-slate-400 hover:text-brand-600 dark:hover:text-brand-400 transition-colors"
+                >
+                  Typing Games (Word Cascade)
+                </a>
+              </li>
+              <li>
+                <a
                   href="/wpm-calculator/"
                   onClick={(e) => handleLinkClick(e, '/wpm-calculator/')}
                   className="text-slate-600 dark:text-slate-400 hover:text-brand-600 dark:hover:text-brand-400 transition-colors"

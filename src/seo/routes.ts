@@ -71,6 +71,15 @@ export const ROUTES: Record<string, RouteMeta> = {
     subheading: 'Targeted drills to build muscle memory, reduce typos, and steadily raise your WPM.',
     canonical: `${SITE_URL}/typing-practice/`,
   },
+  '/typing-games/': {
+    path: '/typing-games/',
+    title: 'Free Online Typing Games - Kinetic Speed & Reflex Practice',
+    description:
+      'Play free online typing games to increase your typing speed and muscle memory. Play Word Cascade: Kinetic Defense, sharpen keystroke reflexes, and crush WPM plateaus.',
+    heading: 'Free Online Typing Games',
+    subheading: 'Kinetic, arcade-style typing challenges designed to sharpen reflexes and eliminate finger hesitation.',
+    canonical: `${SITE_URL}/typing-games/`,
+  },
   '/wpm-calculator/': {
     path: '/wpm-calculator/',
     title: 'WPM Calculator - Calculate Words Per Minute, Accuracy & CPM',

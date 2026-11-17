@@ -4,6 +4,7 @@ import { HomePage } from '../pages/HomePage';
 import { TimedTestPage } from '../pages/TimedTestPage';
 import { WpmCalculatorPage } from '../pages/WpmCalculatorPage';
 import { TypingPracticePage } from '../pages/TypingPracticePage';
+import { TypingGamesPage } from '../pages/TypingGamesPage';
 import { HowWpmIsCalculatedPage } from '../pages/HowWpmIsCalculatedPage';
 import { AboutPage } from '../pages/AboutPage';
 import { MethodologyPage } from '../pages/MethodologyPage';
@@ -53,6 +54,9 @@ export const App: React.FC<AppProps> = ({ initialPath }) => {
     }
     if (currentPath === '/typing-practice/') {
       return <TypingPracticePage onNavigate={handleNavigate} />;
+    }
+    if (currentPath === '/typing-games/') {
+      return <TypingGamesPage onNavigate={handleNavigate} />;
     }
     if (currentPath === '/how-wpm-is-calculated/') {
       return <HowWpmIsCalculatedPage onNavigate={handleNavigate} />;
