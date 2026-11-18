@@ -11,6 +11,7 @@ export function generateStructuredData(route: RouteMeta): string {
       name: SITE_NAME,
       url: SITE_URL,
       description: 'Free, fast, ad-free online typing speed test and practice platform.',
+      image: `${SITE_URL}/logo.webp`,
       potentialAction: {
         '@type': 'SearchAction',
         target: `${SITE_URL}/typing-test/{search_term_string}/`,
@@ -24,6 +25,7 @@ export function generateStructuredData(route: RouteMeta): string {
       applicationCategory: 'EducationalApplication',
       operatingSystem: 'All modern web browsers (Chrome, Edge, Firefox, Safari)',
       url: canonicalUrl,
+      image: `${SITE_URL}/logo.webp`,
       browserRequirements: 'Requires JavaScript. Operates offline after initial page load.',
       offers: {
         '@type': 'Offer',

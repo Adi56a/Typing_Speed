@@ -7,23 +7,32 @@ export const AboutPage: React.FC = () => {
   return (
     <div className="w-full max-w-4xl mx-auto px-4 sm:px-6 py-8">
       {/* Header */}
-      <div className="text-center mb-10">
+      <div className="text-center mb-8">
         <div className="inline-flex items-center gap-1.5 mb-2">
           <Badge variant="brand">Our Mission</Badge>
         </div>
         <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white mb-3">
-          About TypeFast
+          About TypeSpeed
         </h1>
         <p className="max-w-2xl mx-auto text-sm sm:text-base text-slate-600 dark:text-slate-400">
-          The fastest, most accessible, and trustworthy free typing test platform for global learners and students in India.
+          The fastest, most accessible, and trustworthy free typing speed platform for global learners and students in India.
         </p>
+      </div>
+
+      {/* Brand Hero Artwork */}
+      <div className="w-full max-w-3xl mx-auto mb-10 rounded-2xl overflow-hidden border border-slate-200 dark:border-surface-dark-border shadow-md">
+        <img
+          src="/logo.webp"
+          alt="TypeSpeed TS Crest - Focus, Elevation and Precision"
+          className="w-full h-auto object-cover"
+        />
       </div>
 
       <div className="space-y-8 text-sm text-slate-700 dark:text-slate-300 leading-relaxed">
         {/* Why We Built This */}
         <Card className="p-6 sm:p-8 space-y-4">
           <h2 className="text-xl font-bold text-slate-900 dark:text-white">
-            Why We Built TypeFast
+            Why We Built TypeSpeed
           </h2>
           <p>
             The web is flooded with typing speed tests that have lost sight of their core utility: they are bloated
@@ -31,7 +40,7 @@ export const AboutPage: React.FC = () => {
             unnecessary mandatory account registrations.
           </p>
           <p>
-            <strong>TypeFast was engineered on an uncompromising principle: Utility First.</strong> When you arrive
+            <strong>TypeSpeed was engineered on an uncompromising principle: Utility First.</strong> When you arrive
             at our website, you can start typing immediately without a single click, without an account, and with zero
             tracking scripts recording your keystrokes.
           </p>

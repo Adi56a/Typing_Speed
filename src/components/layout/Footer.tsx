@@ -1,5 +1,5 @@
 import React from 'react';
-import { Keyboard, ShieldCheck, Heart } from 'lucide-react';
+import { ShieldCheck, Heart } from 'lucide-react';
 
 interface FooterProps {
   onNavigate?: (path: string) => void;
@@ -19,12 +19,14 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 mb-12">
           {/* Brand & Privacy Pledge */}
           <div className="space-y-3">
-            <div className="flex items-center gap-2 font-bold text-lg text-slate-900 dark:text-white">
-              <div className="w-7 h-7 rounded-lg bg-brand-500 flex items-center justify-center text-white">
-                <Keyboard className="w-4 h-4" />
-              </div>
+            <div className="flex items-center gap-2.5 font-bold text-lg text-slate-900 dark:text-white">
+              <img
+                src="/logo.webp"
+                alt="TypeSpeed TS Crest"
+                className="w-8 h-8 rounded-lg object-cover shadow-sm border border-slate-200/80 dark:border-surface-dark-border"
+              />
               <span>
-                Type<span className="text-brand-500">Fast</span>
+                Type<span className="text-brand-500">Speed</span>
               </span>
             </div>
             <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">

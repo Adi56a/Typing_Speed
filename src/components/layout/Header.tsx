@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { ThemeToggle } from './ThemeToggle';
-import { Keyboard, Menu, X } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 
 interface HeaderProps {
   currentPath?: string;
@@ -37,11 +37,13 @@ export const Header: React.FC<HeaderProps> = ({ currentPath = '/', onNavigate })
           onClick={(e) => handleLinkClick(e, '/')}
           className="flex items-center gap-2.5 font-bold text-lg sm:text-xl tracking-tight text-slate-900 dark:text-white focus-ring rounded-md py-1"
         >
-          <div className="w-8 h-8 rounded-lg bg-brand-500 flex items-center justify-center text-white shadow-sm shadow-brand-500/30">
-            <Keyboard className="w-5 h-5" />
-          </div>
+          <img
+            src="/logo.webp"
+            alt="TypeSpeed TS Crest"
+            className="w-9 h-9 rounded-lg object-cover shadow-sm border border-slate-200/80 dark:border-surface-dark-border"
+          />
           <span>
-            Type<span className="text-brand-500">Fast</span>
+            Type<span className="text-brand-500">Speed</span>
           </span>
           <span className="hidden sm:inline-block px-1.5 py-0.5 text-[10px] font-semibold tracking-wider uppercase rounded bg-brand-100 text-brand-800 dark:bg-brand-950 dark:text-brand-400">
             Free
