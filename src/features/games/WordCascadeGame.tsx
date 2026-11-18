@@ -8,6 +8,7 @@ import {
   Trophy,
   Flame,
   Zap,
+  Gauge,
   Maximize2,
   Minimize2,
 } from 'lucide-react';
@@ -100,6 +101,29 @@ class SoundSynth {
     }
   }
 
+  playLevelUp() {
+    if (!this.enabled) return;
+    this.init();
+    if (!this.ctx) return;
+    try {
+      const now = this.ctx.currentTime;
+      const osc = this.ctx.createOscillator();
+      const gain = this.ctx.createGain();
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(440, now);
+      osc.frequency.setValueAtTime(659.25, now + 0.08); // E5
+      osc.frequency.setValueAtTime(880, now + 0.16); // A5
+      gain.gain.setValueAtTime(0.14, now);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.28);
+      osc.connect(gain);
+      gain.connect(this.ctx.destination);
+      osc.start(now);
+      osc.stop(now + 0.28);
+    } catch {
+      // Audio not permitted
+    }
+  }
+
   playBreach() {
     if (!this.enabled) return;
     this.init();
@@ -138,6 +162,9 @@ export const WordCascadeGame: React.FC = () => {
   const [shields, setShields] = useState(3);
   const [streak, setStreak] = useState(0);
   const [wordsDestroyed, setWordsDestroyed] = useState(0);
+  const [wave, setWave] = useState(1);
+  const [velocity, setVelocity] = useState(1.0);
+  const [waveBanner, setWaveBanner] = useState<string | null>(null);
   const [soundEnabled, setSoundEnabled] = useState(true);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [fallingWords, setFallingWords] = useState<FallingWord[]>([]);
@@ -150,18 +177,20 @@ export const WordCascadeGame: React.FC = () => {
   const lastSpawnTimeRef = useRef(0);
   const animFrameRef = useRef<number | null>(null);
   const lastTickTimeRef = useRef(0);
+  const gameStartTimeRef = useRef(0);
   const scoreRef = useRef(0);
   const streakRef = useRef(0);
   const shieldsRef = useRef(3);
   const wordsDestroyedRef = useRef(0);
+  const currentWaveRef = useRef(1);
 
   const gameContainerRef = useRef<HTMLDivElement>(null);
 
-  // Speed and spawn configurations
+  // Difficulty base presets
   const diffConfig = {
-    cadet: { speedMult: 0.75, spawnInterval: 2200 },
-    pilot: { speedMult: 1.0, spawnInterval: 1700 },
-    ace: { speedMult: 1.35, spawnInterval: 1250 },
+    cadet: { speedMult: 0.8, spawnInterval: 2200 },
+    pilot: { speedMult: 1.0, spawnInterval: 1750 },
+    ace: { speedMult: 1.35, spawnInterval: 1300 },
   }[difficulty];
 
   const toggleSound = () => {
@@ -223,7 +252,7 @@ export const WordCascadeGame: React.FC = () => {
 
     const wordText = WORD_POOL[Math.floor(Math.random() * WORD_POOL.length)];
     const xPos = Math.floor(Math.random() * 75) + 8; // 8% to 83% width
-    const baseSpeed = (10 + Math.random() * 5) * diffConfig.speedMult; // % per second
+    const baseSpeed = (11 + Math.random() * 4) * diffConfig.speedMult; // % per second
 
     const newWord: FallingWord = {
       id: nextWordIdRef.current++,
@@ -242,20 +271,27 @@ export const WordCascadeGame: React.FC = () => {
   const startGame = useCallback(() => {
     enterFullscreen();
 
+    const now = performance.now();
+    gameStartTimeRef.current = now;
+    lastSpawnTimeRef.current = now;
+    lastTickTimeRef.current = now;
+
     scoreRef.current = 0;
     streakRef.current = 0;
     shieldsRef.current = 3;
     wordsDestroyedRef.current = 0;
+    currentWaveRef.current = 1;
     wordsRef.current = [];
     targetWordIdRef.current = null;
     nextWordIdRef.current = 1;
-    lastSpawnTimeRef.current = performance.now();
-    lastTickTimeRef.current = performance.now();
 
     setScore(0);
     setShields(3);
     setStreak(0);
     setWordsDestroyed(0);
+    setWave(1);
+    setVelocity(1.0);
+    setWaveBanner(null);
     setFallingWords([]);
     setScoreBursts([]);
     setGameState('playing');
@@ -307,10 +343,23 @@ export const WordCascadeGame: React.FC = () => {
           scoreRef.current += earnedPoints;
           wordsDestroyedRef.current += 1;
 
+          const destroyedCount = wordsDestroyedRef.current;
           const newScore = scoreRef.current;
           setScore(newScore);
           setStreak(currentStreak);
-          setWordsDestroyed(wordsDestroyedRef.current);
+          setWordsDestroyed(destroyedCount);
+
+          // Check Wave Level Up (every 7 words destroyed increases wave!)
+          const newWave = 1 + Math.floor(destroyedCount / 7);
+          if (newWave > currentWaveRef.current) {
+            currentWaveRef.current = newWave;
+            setWave(newWave);
+            synth.playLevelUp();
+            setWaveBanner(`WAVE ${newWave}: SPEED ESCALATING!`);
+            setTimeout(() => {
+              setWaveBanner(null);
+            }, 1600);
+          }
 
           if (newScore > highScore) {
             setHighScore(newScore);
@@ -386,7 +435,7 @@ export const WordCascadeGame: React.FC = () => {
     return () => window.removeEventListener('keydown', handleGlobalKeyDown, { capture: true });
   }, [gameState, startGame, processKey]);
 
-  // Main game loop via requestAnimationFrame
+  // Main game loop via requestAnimationFrame with progressive speed scaling
   useEffect(() => {
     if (gameState !== 'playing') {
       if (animFrameRef.current) cancelAnimationFrame(animFrameRef.current);
@@ -397,18 +446,34 @@ export const WordCascadeGame: React.FC = () => {
       const delta = (currentTime - lastTickTimeRef.current) / 1000;
       lastTickTimeRef.current = currentTime;
 
+      const elapsedSec = (currentTime - gameStartTimeRef.current) / 1000;
+
+      // DYNAMIC PROGRESSIVE SPEED SCALING:
+      // Speed gradually scales with every word destroyed (+2.5% each) and time survived (+1% per 5s)
+      const wordsScale = wordsDestroyedRef.current * 0.025;
+      const timeScale = Math.min(0.5, elapsedSec * 0.002);
+      const dynamicMultiplier = Math.min(2.5, 1.0 + wordsScale + timeScale);
+
+      // Dynamically tighten spawn intervals as player speeds up
+      const currentSpawnInterval = Math.max(
+        750,
+        diffConfig.spawnInterval / (1 + wordsDestroyedRef.current * 0.018)
+      );
+
       // Check spawn
-      if (currentTime - lastSpawnTimeRef.current > diffConfig.spawnInterval) {
+      if (currentTime - lastSpawnTimeRef.current > currentSpawnInterval) {
         spawnWord();
         lastSpawnTimeRef.current = currentTime;
       }
 
-      // Update positions synchronously in wordsRef
+      // Update positions with progressive acceleration
       let breached = false;
       const updatedWords: FallingWord[] = [];
 
       for (const w of wordsRef.current) {
-        const nextY = w.y + w.speed * delta;
+        const currentSpeed = w.speed * dynamicMultiplier;
+        const nextY = w.y + currentSpeed * delta;
+
         if (nextY >= 92) {
           // Word breached defense perimeter!
           breached = true;
@@ -423,6 +488,7 @@ export const WordCascadeGame: React.FC = () => {
 
       wordsRef.current = updatedWords;
       setFallingWords([...updatedWords]);
+      setVelocity(dynamicMultiplier);
 
       if (breached) {
         shieldsRef.current = Math.max(0, shieldsRef.current - 1);
@@ -458,8 +524,8 @@ export const WordCascadeGame: React.FC = () => {
     >
       {/* Game Control HUD */}
       <div className="flex flex-wrap items-center justify-between gap-3 p-3 rounded-2xl bg-white dark:bg-surface-dark-card border border-slate-200 dark:border-surface-dark-border shadow-sm">
-        {/* Score & Combo */}
-        <div className="flex items-center gap-4">
+        {/* Score, Streak & Dynamic Velocity HUD */}
+        <div className="flex items-center gap-3 sm:gap-4">
           <div>
             <div className="text-[10px] font-mono uppercase text-slate-400">Score</div>
             <div className="text-xl sm:text-2xl font-mono font-extrabold text-slate-900 dark:text-white">
@@ -467,13 +533,23 @@ export const WordCascadeGame: React.FC = () => {
             </div>
           </div>
 
-          <div className="border-l border-slate-200 dark:border-surface-dark-border pl-4">
+          <div className="border-l border-slate-200 dark:border-surface-dark-border pl-3 sm:pl-4">
             <div className="text-[10px] font-mono uppercase text-slate-400 flex items-center gap-1">
               <Flame className="w-3 h-3 text-amber-500" />
               <span>Streak</span>
             </div>
             <div className="text-xl sm:text-2xl font-mono font-bold text-amber-500">
               {streak}x
+            </div>
+          </div>
+
+          <div className="border-l border-slate-200 dark:border-surface-dark-border pl-3 sm:pl-4">
+            <div className="text-[10px] font-mono uppercase text-slate-400 flex items-center gap-1">
+              <Gauge className="w-3 h-3 text-brand-500" />
+              <span>Wave {wave}</span>
+            </div>
+            <div className="text-xl sm:text-2xl font-mono font-bold text-emerald-500 flex items-baseline gap-1">
+              <span>{velocity.toFixed(1)}x</span>
             </div>
           </div>
 
@@ -568,6 +644,15 @@ export const WordCascadeGame: React.FC = () => {
           }}
         />
 
+        {/* Wave Level Escalation Banner */}
+        {waveBanner && (
+          <div className="absolute top-1/4 left-0 right-0 text-center pointer-events-none z-30 animate-pulse">
+            <span className="inline-block px-5 py-2 rounded-xl bg-brand-500/20 border border-brand-500/50 text-brand-300 font-extrabold text-base sm:text-lg tracking-wider shadow-lg shadow-brand-500/30">
+              ⚡ {waveBanner}
+            </span>
+          </div>
+        )}
+
         {/* Floating Score Bursts */}
         {scoreBursts.map((b) => (
           <div
@@ -585,7 +670,7 @@ export const WordCascadeGame: React.FC = () => {
           Defensive Perimeter • Do Not Let Words Breach
         </div>
 
-        {/* Falling Words */}
+        {/* Falling Words with Dynamic Speed */}
         {gameState === 'playing' &&
           fallingWords.map((word) => {
             const isTarget = targetWordIdRef.current === word.id;
@@ -620,8 +705,8 @@ export const WordCascadeGame: React.FC = () => {
             </div>
             <h2 className="text-2xl sm:text-3xl font-extrabold text-white mb-2">Word Cascade: Kinetic Defense</h2>
             <p className="max-w-md text-xs sm:text-sm text-slate-400 mb-6 leading-relaxed">
-              Words descend from above. Type their letters to vaporize them before they cross your defensive perimeter.
-              Consecutive words build combo multipliers.
+              Words descend with progressive velocity. Type words before they breach your shield barrier.
+              Speed escalates with each wave completed.
             </p>
             <button
               onClick={startGame}
@@ -631,7 +716,7 @@ export const WordCascadeGame: React.FC = () => {
               <span>Launch Game (Auto Fullscreen)</span>
             </button>
             <div className="text-[11px] text-slate-500 mt-4">
-              Difficulty: <span className="text-slate-300 capitalize">{difficulty}</span> • Spacebar scroll locked
+              Difficulty: <span className="text-slate-300 capitalize">{difficulty}</span> • Progressive speed escalation
             </div>
           </div>
         )}
@@ -645,14 +730,18 @@ export const WordCascadeGame: React.FC = () => {
             <h2 className="text-2xl font-bold text-white mb-1">Defense Perimeter Breached</h2>
             <p className="text-xs text-slate-400 mb-6">All shield energy depleted.</p>
 
-            <div className="grid grid-cols-2 gap-3 max-w-xs w-full mb-6">
+            <div className="grid grid-cols-3 gap-2.5 max-w-sm w-full mb-6">
               <div className="p-3 rounded-xl bg-slate-900 border border-slate-800 text-left">
                 <div className="text-[10px] text-slate-400 uppercase">Final Score</div>
-                <div className="text-xl font-bold font-mono text-emerald-400">{score.toLocaleString()}</div>
+                <div className="text-lg font-bold font-mono text-emerald-400">{score.toLocaleString()}</div>
               </div>
               <div className="p-3 rounded-xl bg-slate-900 border border-slate-800 text-left">
-                <div className="text-[10px] text-slate-400 uppercase">Words Destroyed</div>
-                <div className="text-xl font-bold font-mono text-white">{wordsDestroyed}</div>
+                <div className="text-[10px] text-slate-400 uppercase">Words Hit</div>
+                <div className="text-lg font-bold font-mono text-white">{wordsDestroyed}</div>
+              </div>
+              <div className="p-3 rounded-xl bg-slate-900 border border-slate-800 text-left">
+                <div className="text-[10px] text-slate-400 uppercase">Top Wave</div>
+                <div className="text-lg font-bold font-mono text-amber-400">Wave {wave}</div>
               </div>
             </div>
 
@@ -669,7 +758,7 @@ export const WordCascadeGame: React.FC = () => {
 
       {/* Footer Controls & Instructions */}
       <div className="flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500 dark:text-slate-400 px-1 gap-2">
-        <span>Type letters to destroy targets • Space key does not scroll page</span>
+        <span>Type letters to destroy targets • Velocity escalates with each wave</span>
         {isFullscreen ? (
           <button
             onClick={exitFullscreen}
