@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { render, screen } from '@testing-library/react';
+import { render, screen, fireEvent, act } from '@testing-library/react';
 import { VirtualKeyboard } from '../components/typing/VirtualKeyboard';
 import { TypingGamesPage } from '../pages/TypingGamesPage';
 import { WordCascadeGame } from '../features/games/WordCascadeGame';
@@ -36,6 +36,27 @@ describe('WordCascadeGame & TypingGamesPage', () => {
     expect(screen.getByText(/Score/i)).toBeInTheDocument();
     expect(screen.getByText(/Streak/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/Enter full screen/i)).toBeInTheDocument();
+  });
+
+  it('starts game and allows typing input without crashing or dropping score', () => {
+    render(<WordCascadeGame />);
+
+    // Click Launch Game
+    const startBtn = screen.getByText(/Launch Game/i);
+    act(() => {
+      fireEvent.click(startBtn);
+    });
+
+    // Score and Best are initially 0
+    expect(screen.getAllByText('0').length).toBeGreaterThanOrEqual(1);
+
+    // Type a character via window keydown
+    act(() => {
+      window.dispatchEvent(new KeyboardEvent('keydown', { key: 'f' }));
+    });
+
+    // The game handles input cleanly without error
+    expect(screen.getByText(/Perimeter/i)).toBeInTheDocument();
   });
 
   it('renders the TypingGamesPage with cognitive science educational section', () => {

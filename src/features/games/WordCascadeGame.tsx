@@ -16,9 +16,16 @@ interface FallingWord {
   id: number;
   text: string;
   typedChars: string;
-  x: number; // Percentage 8% to 85%
+  x: number; // Percentage 8% to 83%
   y: number; // Percentage -5% to 100%
   speed: number;
+}
+
+interface ScoreBurst {
+  id: number;
+  text: string;
+  x: number;
+  y: number;
 }
 
 type GameDifficulty = 'cadet' | 'pilot' | 'ace';
@@ -39,7 +46,9 @@ class SoundSynth {
 
   private init() {
     if (!this.ctx && typeof window !== 'undefined') {
-      const AudioCtx = window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
+      const AudioCtx =
+        window.AudioContext ||
+        (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
       if (AudioCtx) {
         this.ctx = new AudioCtx();
       }
@@ -57,13 +66,13 @@ class SoundSynth {
       const osc = this.ctx.createOscillator();
       const gain = this.ctx.createGain();
       osc.type = 'sine';
-      osc.frequency.setValueAtTime(480, this.ctx.currentTime);
-      gain.gain.setValueAtTime(0.08, this.ctx.currentTime);
-      gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + 0.05);
+      osc.frequency.setValueAtTime(540, this.ctx.currentTime);
+      gain.gain.setValueAtTime(0.06, this.ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + 0.04);
       osc.connect(gain);
       gain.connect(this.ctx.destination);
       osc.start();
-      osc.stop(this.ctx.currentTime + 0.05);
+      osc.stop(this.ctx.currentTime + 0.04);
     } catch {
       // Audio not permitted or suspended
     }
@@ -78,8 +87,8 @@ class SoundSynth {
       const osc = this.ctx.createOscillator();
       const gain = this.ctx.createGain();
       osc.type = 'triangle';
-      osc.frequency.setValueAtTime(523.25, now); // C5
-      osc.frequency.exponentialRampToValueAtTime(783.99, now + 0.12); // G5
+      osc.frequency.setValueAtTime(587.33, now); // D5
+      osc.frequency.exponentialRampToValueAtTime(880, now + 0.12); // A5
       gain.gain.setValueAtTime(0.12, now);
       gain.gain.exponentialRampToValueAtTime(0.001, now + 0.15);
       osc.connect(gain);
@@ -100,9 +109,9 @@ class SoundSynth {
       const osc = this.ctx.createOscillator();
       const gain = this.ctx.createGain();
       osc.type = 'sawtooth';
-      osc.frequency.setValueAtTime(160, now);
-      osc.frequency.linearRampToValueAtTime(80, now + 0.2);
-      gain.gain.setValueAtTime(0.15, now);
+      osc.frequency.setValueAtTime(180, now);
+      osc.frequency.linearRampToValueAtTime(90, now + 0.2);
+      gain.gain.setValueAtTime(0.12, now);
       gain.gain.exponentialRampToValueAtTime(0.001, now + 0.2);
       osc.connect(gain);
       gain.connect(this.ctx.destination);
@@ -131,21 +140,28 @@ export const WordCascadeGame: React.FC = () => {
   const [wordsDestroyed, setWordsDestroyed] = useState(0);
   const [soundEnabled, setSoundEnabled] = useState(true);
   const [isFullscreen, setIsFullscreen] = useState(false);
-
   const [fallingWords, setFallingWords] = useState<FallingWord[]>([]);
+  const [scoreBursts, setScoreBursts] = useState<ScoreBurst[]>([]);
+
+  // Simulation state refs to eliminate React state race conditions during 60 FPS loop
+  const wordsRef = useRef<FallingWord[]>([]);
   const targetWordIdRef = useRef<number | null>(null);
   const nextWordIdRef = useRef(1);
   const lastSpawnTimeRef = useRef(0);
   const animFrameRef = useRef<number | null>(null);
   const lastTickTimeRef = useRef(0);
+  const scoreRef = useRef(0);
+  const streakRef = useRef(0);
+  const shieldsRef = useRef(3);
+  const wordsDestroyedRef = useRef(0);
+
   const gameContainerRef = useRef<HTMLDivElement>(null);
-  const gameAreaRef = useRef<HTMLDivElement>(null);
 
   // Speed and spawn configurations
   const diffConfig = {
-    cadet: { speedMult: 0.7, spawnInterval: 2400 },
-    pilot: { speedMult: 1.0, spawnInterval: 1800 },
-    ace: { speedMult: 1.45, spawnInterval: 1300 },
+    cadet: { speedMult: 0.75, spawnInterval: 2200 },
+    pilot: { speedMult: 1.0, spawnInterval: 1700 },
+    ace: { speedMult: 1.35, spawnInterval: 1250 },
   }[difficulty];
 
   const toggleSound = () => {
@@ -201,46 +217,13 @@ export const WordCascadeGame: React.FC = () => {
     };
   }, [isFullscreen, exitFullscreen]);
 
-  // Prevent Spacebar from scrolling the page
-  useEffect(() => {
-    const handleWindowKeyDown = (e: KeyboardEvent) => {
-      if (
-        (e.key === ' ' || e.code === 'Space') &&
-        (gameState === 'playing' || isFullscreen || gameContainerRef.current?.contains(document.activeElement))
-      ) {
-        e.preventDefault();
-      }
-    };
-    window.addEventListener('keydown', handleWindowKeyDown, { capture: true });
-    return () => window.removeEventListener('keydown', handleWindowKeyDown, { capture: true });
-  }, [gameState, isFullscreen]);
-
-  // Start game with automatic fullscreen
-  const startGame = useCallback(() => {
-    // Automatically trigger fullscreen mode upon entering the game
-    enterFullscreen();
-
-    setGameState('playing');
-    setScore(0);
-    setShields(3);
-    setStreak(0);
-    setWordsDestroyed(0);
-    setFallingWords([]);
-    targetWordIdRef.current = null;
-    nextWordIdRef.current = 1;
-    lastSpawnTimeRef.current = performance.now();
-    lastTickTimeRef.current = performance.now();
-
-    setTimeout(() => {
-      gameAreaRef.current?.focus();
-    }, 50);
-  }, [enterFullscreen]);
-
-  // Spawn a new falling word
+  // Spawn a new falling word into wordsRef
   const spawnWord = useCallback(() => {
+    if (wordsRef.current.length >= 6) return; // Prevent overcrowding
+
     const wordText = WORD_POOL[Math.floor(Math.random() * WORD_POOL.length)];
     const xPos = Math.floor(Math.random() * 75) + 8; // 8% to 83% width
-    const baseSpeed = (10 + Math.random() * 6) * diffConfig.speedMult; // % per second
+    const baseSpeed = (10 + Math.random() * 5) * diffConfig.speedMult; // % per second
 
     const newWord: FallingWord = {
       id: nextWordIdRef.current++,
@@ -251,8 +234,157 @@ export const WordCascadeGame: React.FC = () => {
       speed: baseSpeed,
     };
 
-    setFallingWords((prev) => [...prev, newWord]);
+    wordsRef.current = [...wordsRef.current, newWord];
+    setFallingWords([...wordsRef.current]);
   }, [diffConfig.speedMult]);
+
+  // Start game with automatic fullscreen
+  const startGame = useCallback(() => {
+    enterFullscreen();
+
+    scoreRef.current = 0;
+    streakRef.current = 0;
+    shieldsRef.current = 3;
+    wordsDestroyedRef.current = 0;
+    wordsRef.current = [];
+    targetWordIdRef.current = null;
+    nextWordIdRef.current = 1;
+    lastSpawnTimeRef.current = performance.now();
+    lastTickTimeRef.current = performance.now();
+
+    setScore(0);
+    setShields(3);
+    setStreak(0);
+    setWordsDestroyed(0);
+    setFallingWords([]);
+    setScoreBursts([]);
+    setGameState('playing');
+  }, [enterFullscreen]);
+
+  // Process a typed character with guaranteed synchronous word destruction
+  const processKey = useCallback(
+    (pressedKey: string) => {
+      const currentWords = wordsRef.current;
+      if (currentWords.length === 0) return;
+
+      let target = currentWords.find((w) => w.id === targetWordIdRef.current);
+
+      // If no active target, acquire lowest matching word starting with pressedKey
+      if (!target) {
+        const candidates = currentWords.filter((w) => w.text.startsWith(pressedKey));
+        if (candidates.length > 0) {
+          // Sort by highest y (closest to bottom)
+          candidates.sort((a, b) => b.y - a.y);
+          target = candidates[0];
+          targetWordIdRef.current = target.id;
+        }
+      }
+
+      if (!target) {
+        // Missed keypress
+        streakRef.current = 0;
+        setStreak(0);
+        return;
+      }
+
+      // Check expected character
+      const expectedChar = target.text[target.typedChars.length]?.toLowerCase();
+
+      if (pressedKey === expectedChar) {
+        const nextTyped = target.typedChars + target.text[target.typedChars.length];
+
+        // CHECK IF COMPLETED (Including the LAST letter!)
+        if (nextTyped.length === target.text.length) {
+          // Play success chime
+          synth.playWordSuccess();
+
+          // Calculate score & multiplier
+          streakRef.current += 1;
+          const currentStreak = streakRef.current;
+          const multiplier = Math.min(5, 1 + Math.floor(currentStreak / 5));
+          const earnedPoints = target.text.length * 20 * multiplier;
+
+          scoreRef.current += earnedPoints;
+          wordsDestroyedRef.current += 1;
+
+          const newScore = scoreRef.current;
+          setScore(newScore);
+          setStreak(currentStreak);
+          setWordsDestroyed(wordsDestroyedRef.current);
+
+          if (newScore > highScore) {
+            setHighScore(newScore);
+            if (typeof window !== 'undefined') {
+              localStorage.setItem('typefast_cascade_highscore', String(newScore));
+            }
+          }
+
+          // Trigger visual score burst
+          const burstId = Date.now() + Math.random();
+          const burstX = target.x;
+          const burstY = Math.max(10, target.y);
+          setScoreBursts((b) => [
+            ...b,
+            { id: burstId, text: `+${earnedPoints} (${multiplier}x)`, x: burstX, y: burstY },
+          ]);
+          setTimeout(() => {
+            setScoreBursts((b) => b.filter((item) => item.id !== burstId));
+          }, 800);
+
+          // SYNCHRONOUSLY DESTROY WORD
+          targetWordIdRef.current = null;
+          wordsRef.current = wordsRef.current.filter((w) => w.id !== target.id);
+          setFallingWords([...wordsRef.current]);
+        } else {
+          // Advance character
+          synth.playKey();
+          target.typedChars = nextTyped;
+          wordsRef.current = wordsRef.current.map((w) =>
+            w.id === target.id ? { ...w, typedChars: nextTyped } : w
+          );
+          setFallingWords([...wordsRef.current]);
+        }
+      } else {
+        // Typo on active target
+        streakRef.current = 0;
+        setStreak(0);
+      }
+    },
+    [highScore]
+  );
+
+  // Global Keydown Listener: catches all keys without needing focus on a specific div!
+  useEffect(() => {
+    const handleGlobalKeyDown = (e: KeyboardEvent) => {
+      // Space or Enter shortcuts for Start/Restart
+      if (e.key === ' ' || e.code === 'Space' || e.key === 'Enter') {
+        if (gameState === 'idle' || gameState === 'gameover') {
+          e.preventDefault();
+          startGame();
+          return;
+        }
+      }
+
+      if (gameState !== 'playing') return;
+
+      // Lock Space key from scrolling the page
+      if (e.key === ' ' || e.code === 'Space') {
+        e.preventDefault();
+      }
+
+      // Ignore modifiers and function keys
+      if (e.key.length !== 1 || e.ctrlKey || e.metaKey || e.altKey) {
+        return;
+      }
+
+      e.preventDefault();
+      const pressedKey = e.key.toLowerCase();
+      processKey(pressedKey);
+    };
+
+    window.addEventListener('keydown', handleGlobalKeyDown, { capture: true });
+    return () => window.removeEventListener('keydown', handleGlobalKeyDown, { capture: true });
+  }, [gameState, startGame, processKey]);
 
   // Main game loop via requestAnimationFrame
   useEffect(() => {
@@ -271,38 +403,38 @@ export const WordCascadeGame: React.FC = () => {
         lastSpawnTimeRef.current = currentTime;
       }
 
-      // Update positions
-      setFallingWords((prev) => {
-        let breached = false;
-        const updated: FallingWord[] = [];
+      // Update positions synchronously in wordsRef
+      let breached = false;
+      const updatedWords: FallingWord[] = [];
 
-        for (const w of prev) {
-          const nextY = w.y + w.speed * delta;
-          if (nextY >= 92) {
-            // Word reached defense line!
-            breached = true;
-            synth.playBreach();
-            if (targetWordIdRef.current === w.id) {
-              targetWordIdRef.current = null;
-            }
-          } else {
-            updated.push({ ...w, y: nextY });
+      for (const w of wordsRef.current) {
+        const nextY = w.y + w.speed * delta;
+        if (nextY >= 92) {
+          // Word breached defense perimeter!
+          breached = true;
+          synth.playBreach();
+          if (targetWordIdRef.current === w.id) {
+            targetWordIdRef.current = null;
           }
+        } else {
+          updatedWords.push({ ...w, y: nextY });
         }
+      }
 
-        if (breached) {
-          setShields((prevShields) => {
-            const nextShields = prevShields - 1;
-            if (nextShields <= 0) {
-              setGameState('gameover');
-            }
-            return Math.max(0, nextShields);
-          });
-          setStreak(0);
+      wordsRef.current = updatedWords;
+      setFallingWords([...updatedWords]);
+
+      if (breached) {
+        shieldsRef.current = Math.max(0, shieldsRef.current - 1);
+        streakRef.current = 0;
+        setShields(shieldsRef.current);
+        setStreak(0);
+
+        if (shieldsRef.current <= 0) {
+          setGameState('gameover');
+          return;
         }
-
-        return updated;
-      });
+      }
 
       animFrameRef.current = requestAnimationFrame(loop);
     };
@@ -314,101 +446,6 @@ export const WordCascadeGame: React.FC = () => {
       if (animFrameRef.current) cancelAnimationFrame(animFrameRef.current);
     };
   }, [gameState, diffConfig.spawnInterval, spawnWord]);
-
-  // Handle typing input
-  const handleKeyDown = (e: React.KeyboardEvent) => {
-    // Prevent Space or Enter from scrolling window
-    if (e.key === ' ' || e.code === 'Space' || e.key === 'Enter') {
-      e.preventDefault();
-    }
-
-    if (gameState === 'idle') {
-      if (e.key === ' ' || e.key === 'Enter') {
-        startGame();
-      }
-      return;
-    }
-
-    if (gameState === 'gameover') {
-      if (e.key === ' ' || e.key === 'Enter') {
-        startGame();
-      }
-      return;
-    }
-
-    if (e.key.length !== 1 || e.ctrlKey || e.metaKey || e.altKey) {
-      return;
-    }
-
-    e.preventDefault();
-    const pressedKey = e.key.toLowerCase();
-
-    setFallingWords((prev) => {
-      let activeTarget = prev.find((w) => w.id === targetWordIdRef.current);
-
-      // If no active target, find the lowest word whose next character matches
-      if (!activeTarget) {
-        const candidates = prev.filter((w) => w.text.startsWith(pressedKey));
-        if (candidates.length > 0) {
-          // Target candidate with highest y (closest to bottom)
-          candidates.sort((a, b) => b.y - a.y);
-          activeTarget = candidates[0];
-          targetWordIdRef.current = activeTarget.id;
-        }
-      }
-
-      if (!activeTarget) {
-        // Missed keypress
-        setStreak(0);
-        return prev;
-      }
-
-      // Check next expected character of target
-      const expectedChar = activeTarget.text[activeTarget.typedChars.length]?.toLowerCase();
-
-      if (pressedKey === expectedChar) {
-        synth.playKey();
-        const nextTyped = activeTarget.typedChars + activeTarget.text[activeTarget.typedChars.length];
-
-        if (nextTyped.length === activeTarget.text.length) {
-          // Word completed and destroyed!
-          synth.playWordSuccess();
-          targetWordIdRef.current = null;
-
-          setStreak((prevStreak) => {
-            const newStreak = prevStreak + 1;
-            const multiplier = Math.min(5, 1 + Math.floor(newStreak / 5));
-            const earnedPoints = activeTarget.text.length * 15 * multiplier;
-
-            setScore((s) => {
-              const newScore = s + earnedPoints;
-              if (newScore > highScore) {
-                setHighScore(newScore);
-                if (typeof window !== 'undefined') {
-                  localStorage.setItem('typefast_cascade_highscore', String(newScore));
-                }
-              }
-              return newScore;
-            });
-
-            return newStreak;
-          });
-
-          setWordsDestroyed((c) => c + 1);
-
-          // Remove the destroyed word
-          return prev.filter((w) => w.id !== activeTarget.id);
-        } else {
-          // Advance character
-          return prev.map((w) => (w.id === activeTarget.id ? { ...w, typedChars: nextTyped } : w));
-        }
-      } else {
-        // Typo on active target
-        setStreak(0);
-        return prev;
-      }
-    });
-  };
 
   return (
     <div
@@ -517,9 +554,6 @@ export const WordCascadeGame: React.FC = () => {
 
       {/* Main Arcade Canvas / Arena */}
       <div
-        ref={gameAreaRef}
-        tabIndex={0}
-        onKeyDown={handleKeyDown}
         className={`relative w-full rounded-2xl bg-slate-950 border-2 border-slate-800 shadow-xl overflow-hidden focus:outline-none focus:ring-2 focus:ring-brand-500 cursor-crosshair font-mono ${
           isFullscreen ? 'flex-1 my-2.5 min-h-[350px]' : 'h-[480px]'
         }`}
@@ -533,6 +567,17 @@ export const WordCascadeGame: React.FC = () => {
             backgroundSize: '28px 28px',
           }}
         />
+
+        {/* Floating Score Bursts */}
+        {scoreBursts.map((b) => (
+          <div
+            key={b.id}
+            className="absolute pointer-events-none text-emerald-400 font-mono font-extrabold text-sm sm:text-base animate-bounce z-30 transition-all"
+            style={{ left: `${b.x}%`, top: `${b.y}%`, transform: 'translate(-50%, -100%)' }}
+          >
+            {b.text}
+          </div>
+        ))}
 
         {/* Defense Barrier Laser Line */}
         <div className="absolute bottom-[8%] left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-rose-500 to-transparent shadow-[0_0_8px_#f43f5e]" />
@@ -624,7 +669,7 @@ export const WordCascadeGame: React.FC = () => {
 
       {/* Footer Controls & Instructions */}
       <div className="flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500 dark:text-slate-400 px-1 gap-2">
-        <span>Click arena to focus • Type letters to target • Space key does not scroll page</span>
+        <span>Type letters to destroy targets • Space key does not scroll page</span>
         {isFullscreen ? (
           <button
             onClick={exitFullscreen}
