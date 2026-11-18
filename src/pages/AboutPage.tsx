@@ -49,7 +49,7 @@ export const AboutPage: React.FC = () => {
         {/* Core Principles */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <Card className="p-5 space-y-2">
-            <div className="p-2.5 rounded-lg bg-emerald-50 dark:bg-emerald-950/40 text-brand-600 dark:text-brand-400 w-fit mb-3">
+            <div className="p-2.5 rounded-lg bg-brand-50 dark:bg-brand-950/40 text-brand-600 dark:text-brand-400 w-fit mb-3">
               <Zap className="w-5 h-5" />
             </div>
             <h3 className="font-bold text-base text-slate-900 dark:text-white">Local-First Speed</h3>
@@ -59,7 +59,7 @@ export const AboutPage: React.FC = () => {
           </Card>
 
           <Card className="p-5 space-y-2">
-            <div className="p-2.5 rounded-lg bg-blue-50 dark:bg-blue-950/40 text-blue-600 dark:text-blue-400 w-fit mb-3">
+            <div className="p-2.5 rounded-lg bg-sage-50 dark:bg-sage-950/40 text-sage-600 dark:text-sage-400 w-fit mb-3">
               <ShieldCheck className="w-5 h-5" />
             </div>
             <h3 className="font-bold text-base text-slate-900 dark:text-white">Zero Keystroke Tracking</h3>
@@ -69,7 +69,7 @@ export const AboutPage: React.FC = () => {
           </Card>
 
           <Card className="p-5 space-y-2">
-            <div className="p-2.5 rounded-lg bg-amber-50 dark:bg-amber-950/40 text-amber-600 dark:text-amber-400 w-fit mb-3">
+            <div className="p-2.5 rounded-lg bg-ochre-50 dark:bg-ochre-950/40 text-ochre-600 dark:text-ochre-400 w-fit mb-3">
               <Award className="w-5 h-5" />
             </div>
             <h3 className="font-bold text-base text-slate-900 dark:text-white">Honest Metrics</h3>

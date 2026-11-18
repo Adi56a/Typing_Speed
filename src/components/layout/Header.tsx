@@ -29,7 +29,7 @@ export const Header: React.FC<HeaderProps> = ({ currentPath = '/', onNavigate })
   };
 
   return (
-    <header className="sticky top-0 z-40 w-full backdrop-blur-md bg-white/80 dark:bg-surface-dark/80 border-b border-slate-200/80 dark:border-surface-dark-border/80 transition-colors">
+    <header className="sticky top-0 z-40 w-full backdrop-blur-md bg-white/80 dark:bg-surface-dark/80 border-b border-surface-light-border dark:border-surface-dark-border transition-colors">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
         {/* Logo */}
         <a
@@ -40,7 +40,7 @@ export const Header: React.FC<HeaderProps> = ({ currentPath = '/', onNavigate })
           <img
             src="/logo.webp"
             alt="TypeSpeed TS Crest"
-            className="w-9 h-9 rounded-lg object-cover shadow-sm border border-slate-200/80 dark:border-surface-dark-border"
+            className="w-9 h-9 rounded-lg object-cover shadow-sm border border-surface-light-border dark:border-surface-dark-border"
           />
           <span>
             Type<span className="text-brand-500">Speed</span>
@@ -88,7 +88,7 @@ export const Header: React.FC<HeaderProps> = ({ currentPath = '/', onNavigate })
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             type="button"
-            className="md:hidden p-2 rounded-lg border border-slate-200 dark:border-surface-dark-border text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-surface-dark-muted focus-ring"
+            className="md:hidden p-2 rounded-lg border border-surface-light-border dark:border-surface-dark-border text-slate-700 dark:text-slate-300 hover:bg-surface-light-muted dark:hover:bg-surface-dark-muted focus-ring"
             aria-label="Toggle navigation menu"
             aria-expanded={mobileMenuOpen}
           >
@@ -99,7 +99,7 @@ export const Header: React.FC<HeaderProps> = ({ currentPath = '/', onNavigate })
 
       {/* Mobile Drawer */}
       {mobileMenuOpen && (
-        <div className="md:hidden border-b border-slate-200 dark:border-surface-dark-border bg-white dark:bg-surface-dark px-4 pt-2 pb-6 shadow-xl transition-all">
+        <div className="md:hidden border-b border-surface-light-border dark:border-surface-dark-border bg-white dark:bg-surface-dark px-4 pt-2 pb-6 shadow-xl transition-all">
           <nav className="flex flex-col gap-1.5">
             {navLinks.map((link) => {
               const isActive = currentPath === link.path;

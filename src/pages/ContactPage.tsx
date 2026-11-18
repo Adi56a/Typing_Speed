@@ -35,7 +35,7 @@ export const ContactPage: React.FC = () => {
         {/* Contact Info */}
         <div className="space-y-4">
           <Card className="p-5 space-y-3">
-            <div className="p-2.5 rounded-lg bg-emerald-50 dark:bg-emerald-950/40 text-brand-600 dark:text-brand-400 w-fit">
+            <div className="p-2.5 rounded-lg bg-brand-50 dark:bg-brand-950/40 text-brand-600 dark:text-brand-400 w-fit">
               <Mail className="w-5 h-5" />
             </div>
             <h2 className="text-base font-bold text-slate-900 dark:text-white">Direct Email</h2>
@@ -48,7 +48,7 @@ export const ContactPage: React.FC = () => {
           </Card>
 
           <Card className="p-5 space-y-3">
-            <div className="p-2.5 rounded-lg bg-blue-50 dark:bg-blue-950/40 text-blue-600 dark:text-blue-400 w-fit">
+            <div className="p-2.5 rounded-lg bg-sage-50 dark:bg-sage-950/40 text-sage-600 dark:text-sage-400 w-fit">
               <MessageSquare className="w-5 h-5" />
             </div>
             <h2 className="text-base font-bold text-slate-900 dark:text-white">Exam Format Suggestions</h2>
@@ -63,7 +63,7 @@ export const ContactPage: React.FC = () => {
           <Card className="p-6 sm:p-8">
             {submitted ? (
               <div className="text-center py-8 space-y-3">
-                <div className="w-12 h-12 rounded-full bg-emerald-100 dark:bg-emerald-950/50 text-emerald-600 dark:text-emerald-400 flex items-center justify-center mx-auto">
+                <div className="w-12 h-12 rounded-full bg-brand-100 dark:bg-brand-950/50 text-brand-600 dark:text-brand-400 flex items-center justify-center mx-auto">
                   <CheckCircle2 className="w-6 h-6" />
                 </div>
                 <h2 className="text-lg font-bold text-slate-900 dark:text-white">

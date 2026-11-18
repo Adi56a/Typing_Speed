@@ -33,7 +33,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
               Fast, distraction-free typing platform designed for global learners and students in India.
               Measure speed, master touch typing, and pass typing exams.
             </p>
-            <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800 text-[11px] text-emerald-800 dark:text-emerald-300 font-medium">
+            <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-brand-50 dark:bg-brand-950/40 border border-brand-200 dark:border-brand-800 text-[11px] text-brand-800 dark:text-brand-300 font-medium">
               <ShieldCheck className="w-3.5 h-3.5 flex-shrink-0" />
               <span>100% Client-Side Privacy: No Keystroke Logging</span>
             </div>
@@ -189,7 +189,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
           <p>© {new Date().getFullYear()} TypeFast. All rights reserved. Free and accessible for everyone.</p>
           <div className="flex items-center gap-1 text-[11px]">
             <span>Engineered with</span>
-            <Heart className="w-3.5 h-3.5 text-rose-500 fill-rose-500" />
+            <Heart className="w-3.5 h-3.5 text-terracotta-500 fill-terracotta-500" />
             <span>for speed and accuracy</span>
           </div>
         </div>

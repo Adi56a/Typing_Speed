@@ -20,8 +20,8 @@ export const HomePage: React.FC<HomePageProps> = ({ initialDuration = 60, onNavi
     <div className="flex flex-col items-center w-full">
       {/* Hero Section */}
       <section className="w-full max-w-5xl mx-auto px-4 sm:px-6 pt-8 pb-6 text-center">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-mono font-medium border border-slate-200 dark:border-surface-dark-border text-slate-600 dark:text-slate-300 bg-slate-50 dark:bg-surface-dark-card mb-4">
-          <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-mono font-medium border border-surface-light-border dark:border-surface-dark-border text-slate-600 dark:text-slate-300 bg-surface-light-muted dark:bg-surface-dark-card mb-4">
+          <span className="w-2 h-2 rounded-full bg-brand-500 animate-pulse" />
           <span>ANSI Standard 5-Char Norm • Monotonic Timer • 100% Client-Side Privacy</span>
         </div>
         <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-slate-900 dark:text-white mb-3">
@@ -228,7 +228,7 @@ export const HomePage: React.FC<HomePageProps> = ({ initialDuration = 60, onNavi
               <a
                 href="/typing-games/"
                 onClick={(e) => handleLinkClick(e, '/typing-games/')}
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-emerald-600 hover:bg-emerald-500 text-white transition-colors"
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-brand-600 hover:bg-brand-500 text-white transition-colors"
               >
                 <Gamepad2 className="w-3.5 h-3.5" />
                 <span>Play Typing Games</span>

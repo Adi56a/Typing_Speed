@@ -49,7 +49,7 @@ export const MethodologyPage: React.FC = () => {
         {/* Standard 5-Character Word Rule */}
         <Card className="p-6 sm:p-8 space-y-4">
           <h2 className="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
-            <Award className="w-5 h-5 text-amber-500" />
+            <Award className="w-5 h-5 text-ochre-500" />
             <span>2. The 5-Character Standard Word Rule</span>
           </h2>
           <p>
@@ -81,7 +81,7 @@ export const MethodologyPage: React.FC = () => {
         {/* Input Method and Unicode Handling */}
         <Card className="p-6 sm:p-8 space-y-4">
           <h2 className="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
-            <ShieldAlert className="w-5 h-5 text-blue-500" />
+            <ShieldAlert className="w-5 h-5 text-sage-600 dark:text-sage-400" />
             <span>3. Unicode &amp; Input Method Composition (IME)</span>
           </h2>
           <p>

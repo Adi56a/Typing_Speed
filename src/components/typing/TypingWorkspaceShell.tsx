@@ -166,11 +166,11 @@ export const TypingWorkspaceShell: React.FC<TypingWorkspaceShellProps> = ({
     >
       <div className={`w-full ${isFullscreen ? 'max-w-4xl flex flex-col gap-4' : 'flex flex-col gap-4'}`}>
         {/* Control Bar: Mode, Difficulty, Duration & View Options */}
-        <div className="flex flex-wrap items-center justify-between gap-2.5 p-2.5 sm:p-3 rounded-2xl bg-white dark:bg-surface-dark-card border border-slate-200 dark:border-surface-dark-border shadow-sm">
+        <div className="flex flex-wrap items-center justify-between gap-2.5 p-2.5 sm:p-3 rounded-2xl bg-white dark:bg-surface-dark-card border border-surface-light-border dark:border-surface-dark-border shadow-sm">
           {/* Left: Mode & Difficulty Selectors */}
           <div className="flex flex-wrap items-center gap-2">
             {/* Mode Selector */}
-            <div className="flex items-center rounded-xl bg-slate-100 dark:bg-surface-dark-muted p-1 text-xs font-medium">
+            <div className="flex items-center rounded-xl bg-surface-light-muted dark:bg-surface-dark-muted p-1 text-xs font-medium">
               <button
                 onClick={() => handleModeChange('words')}
                 className={`px-3 py-1.5 rounded-lg transition-all ${
@@ -194,7 +194,7 @@ export const TypingWorkspaceShell: React.FC<TypingWorkspaceShellProps> = ({
             </div>
 
             {/* Difficulty Selector: Easy / Medium / Hard */}
-            <div className="flex items-center rounded-xl bg-slate-100 dark:bg-surface-dark-muted p-1 text-xs font-medium">
+            <div className="flex items-center rounded-xl bg-surface-light-muted dark:bg-surface-dark-muted p-1 text-xs font-medium">
               {difficulties.map((diff) => (
                 <button
                   key={diff.value}
@@ -219,7 +219,7 @@ export const TypingWorkspaceShell: React.FC<TypingWorkspaceShellProps> = ({
                   className={`px-2.5 py-1.5 rounded-lg border transition-all ${
                     withPunctuation
                       ? 'border-brand-500 bg-brand-50 dark:bg-brand-950/40 text-brand-600 dark:text-brand-400 font-semibold'
-                      : 'border-slate-200 dark:border-surface-dark-border text-slate-500 hover:bg-slate-100 dark:hover:bg-surface-dark-muted'
+                      : 'border-surface-light-border dark:border-surface-dark-border text-slate-500 hover:bg-surface-light-muted dark:hover:bg-surface-dark-muted'
                   }`}
                 >
                   Punctuation
@@ -229,7 +229,7 @@ export const TypingWorkspaceShell: React.FC<TypingWorkspaceShellProps> = ({
                   className={`px-2.5 py-1.5 rounded-lg border transition-all ${
                     withNumbers
                       ? 'border-brand-500 bg-brand-50 dark:bg-brand-950/40 text-brand-600 dark:text-brand-400 font-semibold'
-                      : 'border-slate-200 dark:border-surface-dark-border text-slate-500 hover:bg-slate-100 dark:hover:bg-surface-dark-muted'
+                      : 'border-surface-light-border dark:border-surface-dark-border text-slate-500 hover:bg-surface-light-muted dark:hover:bg-surface-dark-muted'
                   }`}
                 >
                   Numbers
@@ -241,7 +241,7 @@ export const TypingWorkspaceShell: React.FC<TypingWorkspaceShellProps> = ({
           {/* Right: Duration Presets & View Controls (Fullscreen + Keyboard) */}
           <div className="flex items-center gap-2">
             {/* Duration Selector */}
-            <div className="flex items-center gap-1 rounded-xl bg-slate-100 dark:bg-surface-dark-muted p-1 text-xs font-mono font-medium">
+            <div className="flex items-center gap-1 rounded-xl bg-surface-light-muted dark:bg-surface-dark-muted p-1 text-xs font-mono font-medium">
               {durations.map((d) => (
                 <button
                   key={d}
@@ -258,14 +258,14 @@ export const TypingWorkspaceShell: React.FC<TypingWorkspaceShellProps> = ({
             </div>
 
             {/* View Controls: Keyboard Guide & Fullscreen */}
-            <div className="flex items-center gap-1 border-l border-slate-200 dark:border-surface-dark-border pl-2">
+            <div className="flex items-center gap-1 border-l border-surface-light-border dark:border-surface-dark-border pl-2">
               <button
                 onClick={toggleKeyboard}
                 type="button"
                 className={`p-2 rounded-lg border transition-all ${
                   showKeyboard
                     ? 'border-brand-500 bg-brand-50 dark:bg-brand-950/40 text-brand-600 dark:text-brand-400'
-                    : 'border-slate-200 dark:border-surface-dark-border text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-surface-dark-muted'
+                    : 'border-surface-light-border dark:border-surface-dark-border text-slate-600 dark:text-slate-400 hover:bg-surface-light-muted dark:hover:bg-surface-dark-muted'
                 }`}
                 title={showKeyboard ? 'Hide virtual keyboard guide' : 'Show virtual keyboard guide'}
                 aria-label="Toggle virtual keyboard guide"
@@ -279,7 +279,7 @@ export const TypingWorkspaceShell: React.FC<TypingWorkspaceShellProps> = ({
                 className={`p-2 rounded-lg border transition-all ${
                   isFullscreen
                     ? 'border-brand-500 bg-brand-50 dark:bg-brand-950/40 text-brand-600 dark:text-brand-400'
-                    : 'border-slate-200 dark:border-surface-dark-border text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-surface-dark-muted'
+                    : 'border-surface-light-border dark:border-surface-dark-border text-slate-600 dark:text-slate-400 hover:bg-surface-light-muted dark:hover:bg-surface-dark-muted'
                 }`}
                 title={isFullscreen ? 'Exit full screen (Esc)' : 'Enter full screen'}
                 aria-label={isFullscreen ? 'Exit full screen' : 'Enter full screen'}
@@ -293,8 +293,8 @@ export const TypingWorkspaceShell: React.FC<TypingWorkspaceShellProps> = ({
         {/* Live Metrics Header */}
         <div className="grid grid-cols-4 gap-2.5 sm:gap-4">
           {/* Time Remaining */}
-          <div className="flex items-center gap-2.5 sm:gap-3 p-3 rounded-xl bg-white dark:bg-surface-dark-card border border-slate-200 dark:border-surface-dark-border">
-            <div className="p-2 rounded-lg bg-emerald-50 dark:bg-emerald-950/40 text-brand-600 dark:text-brand-400">
+          <div className="flex items-center gap-2.5 sm:gap-3 p-3 rounded-xl bg-white dark:bg-surface-dark-card border border-surface-light-border dark:border-surface-dark-border">
+            <div className="p-2 rounded-lg bg-brand-50 dark:bg-brand-950/40 text-brand-600 dark:text-brand-400">
               <Clock className="w-4 h-4 sm:w-5 sm:h-5" />
             </div>
             <div>
@@ -308,8 +308,8 @@ export const TypingWorkspaceShell: React.FC<TypingWorkspaceShellProps> = ({
           </div>
 
           {/* Net Speed (WPM) */}
-          <div className="flex items-center gap-2.5 sm:gap-3 p-3 rounded-xl bg-white dark:bg-surface-dark-card border border-slate-200 dark:border-surface-dark-border">
-            <div className="p-2 rounded-lg bg-blue-50 dark:bg-blue-950/40 text-blue-600 dark:text-blue-400">
+          <div className="flex items-center gap-2.5 sm:gap-3 p-3 rounded-xl bg-white dark:bg-surface-dark-card border border-surface-light-border dark:border-surface-dark-border">
+            <div className="p-2 rounded-lg bg-ochre-50 dark:bg-ochre-950/40 text-ochre-600 dark:text-ochre-400">
               <Gauge className="w-4 h-4 sm:w-5 sm:h-5" />
             </div>
             <div>
@@ -323,8 +323,8 @@ export const TypingWorkspaceShell: React.FC<TypingWorkspaceShellProps> = ({
           </div>
 
           {/* Accuracy % */}
-          <div className="flex items-center gap-2.5 sm:gap-3 p-3 rounded-xl bg-white dark:bg-surface-dark-card border border-slate-200 dark:border-surface-dark-border">
-            <div className="p-2 rounded-lg bg-amber-50 dark:bg-amber-950/40 text-amber-600 dark:text-amber-400">
+          <div className="flex items-center gap-2.5 sm:gap-3 p-3 rounded-xl bg-white dark:bg-surface-dark-card border border-surface-light-border dark:border-surface-dark-border">
+            <div className="p-2 rounded-lg bg-sage-50 dark:bg-sage-950/40 text-sage-600 dark:text-sage-400">
               <Target className="w-4 h-4 sm:w-5 sm:h-5" />
             </div>
             <div>
@@ -338,8 +338,8 @@ export const TypingWorkspaceShell: React.FC<TypingWorkspaceShellProps> = ({
           </div>
 
           {/* Errors Committed */}
-          <div className="flex items-center gap-2.5 sm:gap-3 p-3 rounded-xl bg-white dark:bg-surface-dark-card border border-slate-200 dark:border-surface-dark-border">
-            <div className="p-2 rounded-lg bg-rose-50 dark:bg-rose-950/40 text-rose-600 dark:text-rose-400">
+          <div className="flex items-center gap-2.5 sm:gap-3 p-3 rounded-xl bg-white dark:bg-surface-dark-card border border-surface-light-border dark:border-surface-dark-border">
+            <div className="p-2 rounded-lg bg-terracotta-50 dark:bg-terracotta-950/40 text-terracotta-600 dark:text-terracotta-400">
               <AlertCircle className="w-4 h-4 sm:w-5 sm:h-5" />
             </div>
             <div>
@@ -356,7 +356,7 @@ export const TypingWorkspaceShell: React.FC<TypingWorkspaceShellProps> = ({
         {/* Typing Surface: Distraction-free with Sleek Vertical Caret Blinker */}
         <div
           onClick={() => inputRef.current?.focus()}
-          className="relative rounded-2xl bg-white dark:bg-surface-dark-card border-2 border-slate-200 dark:border-surface-dark-border p-6 sm:p-8 shadow-sm transition-all focus-within:border-brand-500 dark:focus-within:border-brand-500 cursor-text"
+          className="relative rounded-2xl bg-white dark:bg-surface-dark-card border-2 border-surface-light-border dark:border-surface-dark-border p-6 sm:p-8 shadow-sm transition-all focus-within:border-brand-500 dark:focus-within:border-brand-500 cursor-text"
         >
           {/* Hidden accessible input for mobile keyboards and key capture */}
           <input
@@ -382,8 +382,8 @@ export const TypingWorkspaceShell: React.FC<TypingWorkspaceShellProps> = ({
                     key={idx}
                     className={
                       item.hadError
-                        ? 'text-amber-600 dark:text-amber-400 font-medium'
-                        : 'text-emerald-600 dark:text-emerald-400 font-medium'
+                        ? 'text-ochre-700 dark:text-ochre-400 font-medium'
+                        : 'text-sage-700 dark:text-sage-400 font-medium'
                     }
                     title={item.hadError ? 'Corrected typo' : undefined}
                   >
@@ -395,7 +395,7 @@ export const TypingWorkspaceShell: React.FC<TypingWorkspaceShellProps> = ({
                 return (
                   <span
                     key={idx}
-                    className="text-rose-600 dark:text-rose-400 bg-rose-100/60 dark:bg-rose-950/60 underline decoration-rose-500 font-medium"
+                    className="text-terracotta-700 dark:text-terracotta-400 bg-terracotta-100/70 dark:bg-terracotta-950/70 underline decoration-terracotta-500 font-medium"
                   >
                     {item.char === ' ' ? '␣' : item.char}
                   </span>
@@ -413,7 +413,7 @@ export const TypingWorkspaceShell: React.FC<TypingWorkspaceShellProps> = ({
                 );
               }
               return (
-                <span key={idx} className="text-slate-400 dark:text-slate-600">
+                <span key={idx} className="text-slate-400 dark:text-slate-500">
                   {item.char}
                 </span>
               );
@@ -421,9 +421,9 @@ export const TypingWorkspaceShell: React.FC<TypingWorkspaceShellProps> = ({
           </div>
 
           {/* Helper Footer: Status, Shortcuts & Reset */}
-          <div className="mt-6 pt-4 border-t border-slate-100 dark:border-surface-dark-border flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-500 dark:text-slate-400">
+          <div className="mt-6 pt-4 border-t border-surface-light-border dark:border-surface-dark-border flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-500 dark:text-slate-400">
             <div className="flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-emerald-500" />
+              <span className="w-2 h-2 rounded-full bg-brand-500" />
               <span>
                 {status === 'ready'
                   ? 'Type the first letter to begin timer. All calculations run client-side in browser memory.'
@@ -434,7 +434,7 @@ export const TypingWorkspaceShell: React.FC<TypingWorkspaceShellProps> = ({
               <button
                 onClick={() => restart()}
                 type="button"
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-slate-200 dark:border-surface-dark-border hover:bg-slate-100 dark:hover:bg-surface-dark-muted font-medium text-slate-700 dark:text-slate-300 transition-colors"
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-surface-light-border dark:border-surface-dark-border hover:bg-surface-light-muted dark:hover:bg-surface-dark-muted font-medium text-slate-700 dark:text-slate-300 transition-colors"
               >
                 <RotateCcw className="w-3.5 h-3.5" />
                 <span>Retry</span>
@@ -442,7 +442,7 @@ export const TypingWorkspaceShell: React.FC<TypingWorkspaceShellProps> = ({
               <button
                 onClick={() => restart({})}
                 type="button"
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-slate-200 dark:border-surface-dark-border hover:bg-slate-100 dark:hover:bg-surface-dark-muted font-medium text-slate-700 dark:text-slate-300 transition-colors"
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-surface-light-border dark:border-surface-dark-border hover:bg-surface-light-muted dark:hover:bg-surface-dark-muted font-medium text-slate-700 dark:text-slate-300 transition-colors"
               >
                 <RefreshCw className="w-3.5 h-3.5" />
                 <span>New Text</span>

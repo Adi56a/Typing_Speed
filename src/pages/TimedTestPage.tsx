@@ -118,7 +118,7 @@ export const TimedTestPage: React.FC<TimedTestPageProps> = ({ route, onNavigate 
 
           <Card className="p-6 space-y-3">
             <h2 className="text-base font-bold text-slate-900 dark:text-white flex items-center gap-2">
-              <Award className="w-4 h-4 text-amber-500" />
+              <Award className="w-4 h-4 text-ochre-500" />
               <span>Target Benchmarks for {duration >= 60 ? `${duration / 60} Minute` : `${duration}s`} Test</span>
             </h2>
             <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed">

@@ -535,10 +535,10 @@ export const WordCascadeGame: React.FC = () => {
 
           <div className="border-l border-slate-200 dark:border-surface-dark-border pl-3 sm:pl-4">
             <div className="text-[10px] font-mono uppercase text-slate-400 flex items-center gap-1">
-              <Flame className="w-3 h-3 text-amber-500" />
+              <Flame className="w-3 h-3 text-ochre-500" />
               <span>Streak</span>
             </div>
-            <div className="text-xl sm:text-2xl font-mono font-bold text-amber-500">
+            <div className="text-xl sm:text-2xl font-mono font-bold text-ochre-600 dark:text-ochre-400">
               {streak}x
             </div>
           </div>
@@ -548,7 +548,7 @@ export const WordCascadeGame: React.FC = () => {
               <Gauge className="w-3 h-3 text-brand-500" />
               <span>Wave {wave}</span>
             </div>
-            <div className="text-xl sm:text-2xl font-mono font-bold text-emerald-500 flex items-baseline gap-1">
+            <div className="text-xl sm:text-2xl font-mono font-bold text-brand-500 dark:text-brand-400 flex items-baseline gap-1">
               <span>{velocity.toFixed(1)}x</span>
             </div>
           </div>
@@ -568,13 +568,13 @@ export const WordCascadeGame: React.FC = () => {
         <div className="flex items-center gap-2 sm:gap-3">
           {/* Shields Display */}
           <div className="flex items-center gap-1 bg-slate-100 dark:bg-surface-dark-muted px-3 py-1.5 rounded-xl text-xs font-medium">
-            <Shield className="w-4 h-4 text-emerald-500" />
+            <Shield className="w-4 h-4 text-sage-600 dark:text-sage-400" />
             <div className="flex gap-1 ml-1">
               {[...Array(3)].map((_, i) => (
                 <span
                   key={i}
                   className={`w-2.5 h-2.5 rounded-full transition-all ${
-                    i < shields ? 'bg-emerald-500 shadow-sm shadow-emerald-500/50' : 'bg-slate-300 dark:bg-slate-700'
+                    i < shields ? 'bg-sage-500 shadow-sm shadow-sage-500/50' : 'bg-slate-300 dark:bg-slate-700'
                   }`}
                 />
               ))}
@@ -639,7 +639,7 @@ export const WordCascadeGame: React.FC = () => {
         <div
           className="absolute inset-0 opacity-15 pointer-events-none"
           style={{
-            backgroundImage: 'radial-gradient(#10b981 1px, transparent 1px)',
+            backgroundImage: 'radial-gradient(#4a8292 1px, transparent 1px)',
             backgroundSize: '28px 28px',
           }}
         />
@@ -657,7 +657,7 @@ export const WordCascadeGame: React.FC = () => {
         {scoreBursts.map((b) => (
           <div
             key={b.id}
-            className="absolute pointer-events-none text-emerald-400 font-mono font-extrabold text-sm sm:text-base animate-bounce z-30 transition-all"
+            className="absolute pointer-events-none text-ochre-400 font-mono font-extrabold text-sm sm:text-base animate-bounce z-30 transition-all"
             style={{ left: `${b.x}%`, top: `${b.y}%`, transform: 'translate(-50%, -100%)' }}
           >
             {b.text}
@@ -665,8 +665,8 @@ export const WordCascadeGame: React.FC = () => {
         ))}
 
         {/* Defense Barrier Laser Line */}
-        <div className="absolute bottom-[8%] left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-rose-500 to-transparent shadow-[0_0_8px_#f43f5e]" />
-        <div className="absolute bottom-[4%] left-0 right-0 text-center text-[10px] uppercase font-mono tracking-widest text-rose-500/80 pointer-events-none">
+        <div className="absolute bottom-[8%] left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-terracotta-500 to-transparent shadow-[0_0_8px_#b96c54]" />
+        <div className="absolute bottom-[4%] left-0 right-0 text-center text-[10px] uppercase font-mono tracking-widest text-terracotta-400/90 pointer-events-none">
           Defensive Perimeter • Do Not Let Words Breach
         </div>
 
@@ -682,7 +682,7 @@ export const WordCascadeGame: React.FC = () => {
                 key={word.id}
                 className={`absolute px-2.5 py-1 rounded-lg text-sm sm:text-base font-bold transition-transform duration-75 ${
                   isTarget
-                    ? 'bg-slate-900/90 text-white border-2 border-emerald-400 shadow-[0_0_15px_rgba(16,185,129,0.5)] scale-110 z-20'
+                    ? 'bg-slate-900/95 text-white border-2 border-brand-400 shadow-[0_0_15px_rgba(74,130,146,0.6)] scale-110 z-20'
                     : 'bg-slate-900/70 text-slate-300 border border-slate-700'
                 }`}
                 style={{
@@ -691,7 +691,7 @@ export const WordCascadeGame: React.FC = () => {
                   transform: 'translateX(-50%)',
                 }}
               >
-                <span className="text-emerald-400 underline decoration-emerald-400">{typedPart}</span>
+                <span className="text-ochre-400 underline decoration-ochre-400">{typedPart}</span>
                 <span className={isTarget ? 'text-white' : 'text-slate-300'}>{remainingPart}</span>
               </div>
             );
@@ -724,7 +724,7 @@ export const WordCascadeGame: React.FC = () => {
         {/* Game Over Modal */}
         {gameState === 'gameover' && (
           <div className="absolute inset-0 bg-slate-950/90 backdrop-blur-md flex flex-col items-center justify-center p-6 text-center z-30 animate-in fade-in duration-200">
-            <div className="w-12 h-12 rounded-xl bg-rose-500/10 border border-rose-500/30 flex items-center justify-center text-rose-400 mb-3">
+            <div className="w-12 h-12 rounded-xl bg-terracotta-500/10 border border-terracotta-500/30 flex items-center justify-center text-terracotta-400 mb-3">
               <Shield className="w-6 h-6" />
             </div>
             <h2 className="text-2xl font-bold text-white mb-1">Defense Perimeter Breached</h2>
@@ -733,7 +733,7 @@ export const WordCascadeGame: React.FC = () => {
             <div className="grid grid-cols-3 gap-2.5 max-w-sm w-full mb-6">
               <div className="p-3 rounded-xl bg-slate-900 border border-slate-800 text-left">
                 <div className="text-[10px] text-slate-400 uppercase">Final Score</div>
-                <div className="text-lg font-bold font-mono text-emerald-400">{score.toLocaleString()}</div>
+                <div className="text-lg font-bold font-mono text-brand-400">{score.toLocaleString()}</div>
               </div>
               <div className="p-3 rounded-xl bg-slate-900 border border-slate-800 text-left">
                 <div className="text-[10px] text-slate-400 uppercase">Words Hit</div>
@@ -741,7 +741,7 @@ export const WordCascadeGame: React.FC = () => {
               </div>
               <div className="p-3 rounded-xl bg-slate-900 border border-slate-800 text-left">
                 <div className="text-[10px] text-slate-400 uppercase">Top Wave</div>
-                <div className="text-lg font-bold font-mono text-amber-400">Wave {wave}</div>
+                <div className="text-lg font-bold font-mono text-ochre-400">Wave {wave}</div>
               </div>
             </div>
 

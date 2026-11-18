@@ -88,19 +88,19 @@ export const HowWpmIsCalculatedPage: React.FC<HowWpmIsCalculatedPageProps> = ({ 
                   <td className="p-3">Speed tracking & drills</td>
                 </tr>
                 <tr>
-                  <td className="p-3 font-bold text-emerald-600 dark:text-emerald-400">Net WPM</td>
+                  <td className="p-3 font-bold text-sage-600 dark:text-sage-400">Net WPM</td>
                   <td className="p-3 font-mono">Gross WPM - (Errors / 5) / Minutes</td>
                   <td className="p-3">True usable typing speed</td>
                   <td className="p-3">Employment & exams</td>
                 </tr>
                 <tr>
-                  <td className="p-3 font-bold text-blue-600 dark:text-blue-400">Accuracy %</td>
+                  <td className="p-3 font-bold text-brand-600 dark:text-brand-400">Accuracy %</td>
                   <td className="p-3 font-mono">(Correct / Total) * 100</td>
                   <td className="p-3">Percentage of keystrokes without errors</td>
                   <td className="p-3">Quality & certification</td>
                 </tr>
                 <tr>
-                  <td className="p-3 font-bold text-amber-600 dark:text-amber-400">CPM</td>
+                  <td className="p-3 font-bold text-ochre-600 dark:text-ochre-400">CPM</td>
                   <td className="p-3 font-mono">Characters / Minutes</td>
                   <td className="p-3">Characters per minute (approx. WPM * 5)</td>
                   <td className="p-3">European & Asian standards</td>
@@ -138,7 +138,7 @@ export const HowWpmIsCalculatedPage: React.FC<HowWpmIsCalculatedPageProps> = ({ 
         </Card>
 
         {/* CTAs */}
-        <div className="p-6 rounded-2xl bg-gradient-to-r from-brand-600 to-emerald-700 text-white flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div className="p-6 rounded-2xl bg-gradient-to-r from-brand-700 via-brand-600 to-sage-700 text-white flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
             <h3 className="text-lg font-bold">Ready to Benchmark Your Real WPM?</h3>
             <p className="text-xs text-white/80 mt-1">

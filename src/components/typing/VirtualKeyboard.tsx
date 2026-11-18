@@ -149,18 +149,18 @@ export const VirtualKeyboard: React.FC<VirtualKeyboardProps> = ({ activeChar = '
 
   return (
     <div
-      className={`w-full max-w-3xl mx-auto p-3 sm:p-4 rounded-2xl bg-slate-900 text-slate-100 shadow-lg border border-slate-800 transition-all ${className}`}
+      className={`w-full max-w-3xl mx-auto p-3 sm:p-4 rounded-2xl bg-surface-dark-card text-slate-100 shadow-lg border border-surface-dark-border transition-all ${className}`}
       aria-label="Virtual touch-typing guide keyboard"
     >
       {/* Keyboard Status Bar */}
       <div className="flex items-center justify-between text-[11px] font-mono text-slate-400 mb-2 px-1">
         <div className="flex items-center gap-2">
-          <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+          <span className="w-2 h-2 rounded-full bg-brand-400 animate-pulse" />
           <span>Interactive QWERTY Finger Placement Guide</span>
         </div>
         {activeFinger !== -1 && (
-          <div className="text-emerald-400 font-semibold">
-            Finger: <span className="text-white underline decoration-emerald-500">{FINGER_LABELS[activeFinger]}</span>
+          <div className="text-brand-400 font-semibold">
+            Finger: <span className="text-white underline decoration-brand-400">{FINGER_LABELS[activeFinger]}</span>
           </div>
         )}
       </div>
@@ -191,10 +191,10 @@ export const VirtualKeyboard: React.FC<VirtualKeyboardProps> = ({ activeChar = '
                     k.width || 'w-7 sm:w-10'
                   } ${
                     isMatch
-                      ? 'bg-emerald-500 text-white font-bold ring-2 ring-emerald-300 shadow-md shadow-emerald-500/50 scale-105 z-10'
+                      ? 'bg-brand-600 text-white font-bold ring-2 ring-brand-300 shadow-md shadow-brand-500/50 scale-105 z-10'
                       : isShiftKey
-                        ? 'bg-amber-500/80 text-white font-bold ring-1 ring-amber-300'
-                        : 'bg-slate-800/90 text-slate-300 border border-slate-700/80 hover:bg-slate-700'
+                        ? 'bg-ochre-500/90 text-white font-bold ring-1 ring-ochre-300'
+                        : 'bg-surface-dark-muted/90 text-slate-300 border border-surface-dark-border hover:bg-surface-dark'
                   }`}
                 >
                   <span>{k.display}</span>
@@ -214,7 +214,7 @@ export const VirtualKeyboard: React.FC<VirtualKeyboardProps> = ({ activeChar = '
       </div>
 
       {/* Legend / Tip */}
-      <div className="mt-2.5 pt-2 border-t border-slate-800 flex items-center justify-between text-[10px] text-slate-400">
+      <div className="mt-2.5 pt-2 border-t border-surface-dark-border flex items-center justify-between text-[10px] text-slate-400">
         <span>Keep wrists elevated • Rest index fingers on F and J</span>
         <span className="hidden sm:inline">Spacebar: Alternate thumbs naturally</span>
       </div>

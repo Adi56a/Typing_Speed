@@ -63,8 +63,8 @@ Test your typing speed free at: https://typingtest.example.com`;
                 Test Completed
               </span>
               {isPersonalBest && (
-                <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-amber-100 text-amber-800 dark:bg-amber-950 dark:text-amber-300 text-[10px] font-bold">
-                  <Trophy className="w-3 h-3 text-amber-600 dark:text-amber-400" />
+                <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-ochre-100 text-ochre-800 dark:bg-ochre-950 dark:text-ochre-300 text-[10px] font-bold">
+                  <Trophy className="w-3 h-3 text-ochre-600 dark:text-ochre-400" />
                   <span>New Personal Best!</span>
                 </span>
               )}
@@ -129,7 +129,7 @@ Test your typing speed free at: https://typingtest.example.com`;
           </div>
           <div>
             <div className="text-slate-400 text-[10px] uppercase font-semibold">Correct</div>
-            <div className="font-mono font-bold text-emerald-600 dark:text-emerald-400 mt-0.5">
+            <div className="font-mono font-bold text-sage-600 dark:text-sage-400 mt-0.5">
               {metrics.correctChars}
             </div>
           </div>

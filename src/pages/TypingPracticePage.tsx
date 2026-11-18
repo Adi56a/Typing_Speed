@@ -135,7 +135,7 @@ export const TypingPracticePage: React.FC<TypingPracticePageProps> = () => {
         </Card>
 
         <Card className="p-5 space-y-2">
-          <div className="flex items-center gap-2 text-blue-600 dark:text-blue-400 font-bold text-sm">
+          <div className="flex items-center gap-2 text-sage-600 dark:text-sage-400 font-bold text-sm">
             <CheckCircle2 className="w-4 h-4" />
             <h3>2. Return to the Home Row</h3>
           </div>
@@ -146,7 +146,7 @@ export const TypingPracticePage: React.FC<TypingPracticePageProps> = () => {
         </Card>
 
         <Card className="p-5 space-y-2">
-          <div className="flex items-center gap-2 text-amber-600 dark:text-amber-400 font-bold text-sm">
+          <div className="flex items-center gap-2 text-ochre-600 dark:text-ochre-400 font-bold text-sm">
             <Award className="w-4 h-4" />
             <h3>3. Daily 15-Minute Habit</h3>
           </div>

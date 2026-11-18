@@ -4,19 +4,19 @@
 
 @layer base {
   :root {
-    --color-bg: #f8fafc;
+    --color-bg: #f8f6f1;
     --color-surface: #ffffff;
-    --color-border: #e2e8f0;
-    --color-text-main: #0f172a;
-    --color-text-muted: #64748b;
+    --color-border: #e4ded4;
+    --color-text-main: #1d2524;
+    --color-text-muted: #5e6b68;
   }
 
   .dark {
-    --color-bg: #121316;
-    --color-surface: #1a1c22;
-    --color-border: #2e323b;
-    --color-text-main: #f1f5f9;
-    --color-text-muted: #94a3b8;
+    --color-bg: #131716;
+    --color-surface: #1b2220;
+    --color-border: #2d3835;
+    --color-text-main: #f1f4f2;
+    --color-text-muted: #8d9a95;
   }
 
   body {
@@ -33,7 +33,7 @@
   }
 }
 
-/* Modern sleek vertical typing cursor */
+/* Modern sleek vertical typing cursor matching logo spruce teal & amber */
 @keyframes smoothCaretBlink {
   0%, 100% {
     opacity: 1;
@@ -50,9 +50,13 @@
   height: 80%;
   width: 2.5px;
   border-radius: 9999px;
-  background-color: #10b981;
+  background-color: #4a8292;
   animation: smoothCaretBlink 1s cubic-bezier(0.4, 0, 0.6, 1) infinite;
   pointer-events: none;
+}
+
+.dark .caret-blinker {
+  background-color: #68a1b2;
 }
 
 /* Reduced motion preference */
@@ -66,4 +70,3 @@
     scroll-behavior: auto !important;
   }
 }
-
