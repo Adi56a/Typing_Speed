@@ -1,51 +1,57 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" fill="none">
-  <rect width="1200" height="630" fill="#121316"/>
+  <!-- Deep Mountain Slate Background -->
+  <rect width="1200" height="630" fill="#131716"/>
   
-  <!-- Subtle Gradient Background Element -->
-  <circle cx="950" cy="180" r="300" fill="#10B981" fill-opacity="0.12" filter="blur(80px)"/>
-  <circle cx="200" cy="500" r="250" fill="#3B82F6" fill-opacity="0.08" filter="blur(80px)"/>
+  <!-- Subtle Ambient Glows from Logo Palette -->
+  <circle cx="980" cy="160" r="320" fill="#4a8292" fill-opacity="0.14" filter="blur(90px)"/>
+  <circle cx="200" cy="500" r="280" fill="#d59744" fill-opacity="0.10" filter="blur(90px)"/>
 
   <!-- Border Card Frame -->
-  <rect x="60" y="60" width="1080" height="510" rx="24" stroke="#2E323B" stroke-width="2" fill="#1A1C22" fill-opacity="0.7"/>
+  <rect x="50" y="50" width="1100" height="530" rx="24" stroke="#2d3835" stroke-width="2" fill="#1b2220" fill-opacity="0.8"/>
 
-  <!-- Logo & Brand Header -->
-  <g transform="translate(120, 130)">
-    <rect width="64" height="64" rx="16" fill="#10B981"/>
-    <rect x="14" y="16" width="36" height="32" rx="6" stroke="#FFFFFF" stroke-width="3"/>
-    <path d="M22 26H26M30 26H34M38 26H42" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round"/>
-    <path d="M22 34H42" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round"/>
+  <!-- Logo Crest Monogram -->
+  <g transform="translate(110, 115)">
+    <rect width="68" height="68" rx="18" fill="#4a8292"/>
+    <circle cx="34" cy="24" r="11" fill="#d59744" opacity="0.9"/>
+    <!-- Mountain Silhouette -->
+    <path d="M12 54L28 30L38 42L47 32L58 54H12Z" fill="#131716"/>
+    <path d="M28 30L38 42L32 54H24L28 30Z" fill="#648568"/>
+    <path d="M47 32L58 54H45L38 42L47 32Z" fill="#b96c54"/>
+    <rect x="18" y="58" width="32" height="3" rx="1.5" fill="#f8f6f1"/>
     
-    <text x="84" y="44" fill="#FFFFFF" font-family="system-ui, -apple-system, sans-serif" font-size="38" font-weight="800" letter-spacing="-1">
-      Type<tspan fill="#10B981">Fast</tspan>
+    <!-- Brand Typography -->
+    <text x="88" y="47" fill="#f1f4f2" font-family="system-ui, -apple-system, sans-serif" font-size="38" font-weight="800" letter-spacing="-1">
+      Check<tspan fill="#4a8292">TypingSpeeds</tspan>
     </text>
+    <rect x="540" y="20" width="70" height="28" rx="6" fill="#4a8292" fill-opacity="0.2" stroke="#4a8292" stroke-width="1.5"/>
+    <text x="575" y="39" fill="#68a1b2" font-family="system-ui, -apple-system, sans-serif" font-size="13" font-weight="700" text-anchor="middle">FREE</text>
   </g>
 
-  <!-- Tagline & Heading -->
-  <text x="120" y="270" fill="#FFFFFF" font-family="system-ui, -apple-system, sans-serif" font-size="52" font-weight="800" letter-spacing="-1">
-    Free Online Typing Speed Test
+  <!-- Main Hero Tagline -->
+  <text x="110" y="270" fill="#ffffff" font-family="system-ui, -apple-system, sans-serif" font-size="52" font-weight="800" letter-spacing="-1">
+    Check Your Typing Speed Online
   </text>
-  <text x="120" y="330" fill="#94A3B8" font-family="system-ui, -apple-system, sans-serif" font-size="24" font-weight="500">
-    Measure WPM • Timed Tests (1, 2, 5, 10 min) • 100% Private &amp; Ad-Free
+  <text x="110" y="330" fill="#8d9a95" font-family="system-ui, -apple-system, sans-serif" font-size="24" font-weight="500">
+    Measure WPM &amp; Accuracy • 1, 2, 5 &amp; 10 Min Timed Tests • 100% Client-Side Privacy
   </text>
 
-  <!-- Feature Pills -->
-  <g transform="translate(120, 400)">
-    <!-- Pill 1 -->
-    <rect x="0" y="0" width="260" height="54" rx="12" fill="#252830" stroke="#2E323B"/>
-    <text x="24" y="34" fill="#10B981" font-family="system-ui, -apple-system, sans-serif" font-size="18" font-weight="700">⚡ Sub-Second Speed</text>
+  <!-- Feature Value Proposition Badges -->
+  <g transform="translate(110, 395)">
+    <!-- Pill 1: Monotonic Precision -->
+    <rect x="0" y="0" width="280" height="56" rx="14" fill="#242c2a" stroke="#2d3835"/>
+    <text x="24" y="35" fill="#68a1b2" font-family="system-ui, -apple-system, sans-serif" font-size="17" font-weight="700">⚡ Hardware Monotonic Clock</text>
 
-    <!-- Pill 2 -->
-    <rect x="280" y="0" width="290" height="54" rx="12" fill="#252830" stroke="#2E323B"/>
-    <text x="304" y="34" fill="#60A5FA" font-family="system-ui, -apple-system, sans-serif" font-size="18" font-weight="700">🔒 Zero Keystroke Logging</text>
+    <!-- Pill 2: Privacy -->
+    <rect x="300" y="0" width="310" height="56" rx="14" fill="#242c2a" stroke="#2d3835"/>
+    <text x="324" y="35" fill="#7f9f82" font-family="system-ui, -apple-system, sans-serif" font-size="17" font-weight="700">🔒 100% Private • No Keystroke Logs</text>
 
-    <!-- Pill 3 -->
-    <rect x="590" y="0" width="290" height="54" rx="12" fill="#252830" stroke="#2E323B"/>
-    <text x="614" y="34" fill="#FBBF24" font-family="system-ui, -apple-system, sans-serif" font-size="18" font-weight="700">🎯 SSC &amp; Exam Standards</text>
+    <!-- Pill 3: ANSI Standard -->
+    <rect x="630" y="0" width="300" height="56" rx="14" fill="#242c2a" stroke="#2d3835"/>
+    <text x="654" y="35" fill="#e1b267" font-family="system-ui, -apple-system, sans-serif" font-size="17" font-weight="700">🎯 ANSI 5-Char Norm &amp; Exam Prep</text>
   </g>
 
-  <!-- Canonical URL footer -->
-  <text x="120" y="515" fill="#64748B" font-family="monospace" font-size="16">
-    https://typingtest.example.com
+  <!-- Live Deployment Domain Footer -->
+  <text x="110" y="525" fill="#5e6b68" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="18" font-weight="600">
+    https://checktypingspeeds.com
   </text>
 </svg>
-

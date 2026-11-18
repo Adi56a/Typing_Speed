@@ -155,7 +155,12 @@ export const WordCascadeGame: React.FC = () => {
   const [score, setScore] = useState(0);
   const [highScore, setHighScore] = useState<number>(() => {
     if (typeof window !== 'undefined') {
-      return parseInt(localStorage.getItem('typefast_cascade_highscore') || '0', 10);
+      return parseInt(
+        localStorage.getItem('cts_cascade_highscore') ||
+          localStorage.getItem('typefast_cascade_highscore') ||
+          '0',
+        10
+      );
     }
     return 0;
   });
@@ -364,7 +369,7 @@ export const WordCascadeGame: React.FC = () => {
           if (newScore > highScore) {
             setHighScore(newScore);
             if (typeof window !== 'undefined') {
-              localStorage.setItem('typefast_cascade_highscore', String(newScore));
+              localStorage.setItem('cts_cascade_highscore', String(newScore));
             }
           }
 

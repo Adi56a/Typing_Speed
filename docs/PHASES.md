@@ -271,7 +271,7 @@ Only use `[x]` when acceptance criteria and verification evidence are recorded.
 ## 9. Phase 6 — Launch and search-engine submission
 
 ### Tasks
-- [x] Confirm domain, HTTPS, DNS and production canonical host (`https://typingtest.example.com`).
+- [x] Confirm domain, HTTPS, DNS and production canonical host (`https://checktypingspeeds.com`).
 - [x] Confirm environment configuration and production build (`.env.example`, `npm run build` generates 15 prerendered routes).
 - [x] Confirm no development/staging URLs are indexable (strictly canonical production URLs in sitemap).
 - [x] Publish privacy, terms, contact and methodology pages (`/privacy/`, `/terms/`, `/contact/`, `/methodology/`).

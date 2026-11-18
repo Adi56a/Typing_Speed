@@ -1,155 +1,155 @@
 import { RouteMeta } from '../types';
 
-export const SITE_URL = 'https://typingtest.example.com';
-export const SITE_NAME = 'TypeFast - Free Online Typing Speed Test & Practice';
+export const SITE_URL = 'https://checktypingspeeds.com';
+export const SITE_NAME = 'CheckTypingSpeeds - Free Online Typing Speed Test (WPM)';
 
 export const ROUTES: Record<string, RouteMeta> = {
   '/': {
     path: '/',
-    title: 'Typing Speed Test | Free Online Typing Test & Practice',
+    title: 'Check Typing Speeds | Free Online Typing Speed Test (WPM)',
     description:
-      'Test your typing speed and accuracy in WPM with our clean, ad-free online typing test. Instant results, timed tests (1, 2, 5 min), and practice drills.',
-    heading: 'Free Online Typing Speed Test',
-    subheading: 'Measure your words per minute (WPM), improve accuracy, and master touch typing with zero distractions.',
+      'Check your typing speed and accuracy in WPM with CheckTypingSpeeds. Fast, ad-free online typing test with 1-min, 2-min, 5-min checks and instant results.',
+    heading: 'Check Typing Speeds Online Free',
+    subheading: 'Check your words per minute (WPM), track keystroke accuracy, and master touch typing with instant client-side scoring.',
     canonical: `${SITE_URL}/`,
   },
   '/typing-speed-test/': {
     path: '/typing-speed-test/',
-    title: 'Typing Speed Test (WPM) - Check Your Keyboard Speed Online',
+    title: 'Typing Speed Test | Check Typing Speed & Accuracy Online',
     description:
-      'Accurate, real-time typing speed test. Check raw WPM, net WPM, accuracy percentage, and keystroke errors instantly with deterministic scoring.',
+      'Check typing speed online in words per minute. Accurate WPM measurement, character accuracy percentage, and touch typing error analysis.',
     heading: 'Typing Speed Test (WPM)',
-    subheading: 'Benchmark your keyboard speed with real-time metrics and error tracking.',
+    subheading: 'Check your keyboard speed with real-time metrics, live error penalties, and instant feedback.',
     canonical: `${SITE_URL}/typing-speed-test/`,
   },
   '/typing-test/1-minute/': {
     path: '/typing-test/1-minute/',
-    title: '1 Minute Typing Test - Fast 60-Second WPM Speed Check',
+    title: '1 Minute Typing Test | Check Typing Speed in 60 Seconds',
     description:
-      'Take a quick 1-minute typing test to measure your typing speed in 60 seconds. Ideal for quick daily warm-ups, speed benchmarking, and job readiness.',
-    heading: '1 Minute Typing Test',
-    subheading: 'A fast 60-second challenge to measure your baseline typing speed and accuracy.',
+      'Check typing speed in 60 seconds with our 1-minute typing test. Instant WPM calculation, accuracy score, and error breakdown. Free with no login.',
+    heading: '1 Minute Typing Speed Test',
+    subheading: 'A quick 60-second speed challenge to check your typing speed benchmark and daily progress.',
     canonical: `${SITE_URL}/typing-test/1-minute/`,
     presetDuration: 60,
   },
   '/typing-test/2-minute/': {
     path: '/typing-test/2-minute/',
-    title: '2 Minute Typing Test - Medium Duration Typing Speed Exam',
+    title: '2 Minute Typing Test | Check Typing Speed & Endurance',
     description:
-      'Measure sustained typing pace and concentration with a 2-minute (120-second) typing test. Perfect balance between burst speed and endurance.',
-    heading: '2 Minute Typing Test',
-    subheading: 'Test sustained typing stamina and accuracy over 120 seconds.',
+      'Check typing speed and cadence with a 2-minute (120-second) typing test. Test concentration and touch-typing stamina with accurate Net WPM scoring.',
+    heading: '2 Minute Typing Speed Test',
+    subheading: 'Test sustained typing cadence and error resilience over 120 seconds.',
     canonical: `${SITE_URL}/typing-test/2-minute/`,
     presetDuration: 120,
   },
   '/typing-test/5-minute/': {
     path: '/typing-test/5-minute/',
-    title: '5 Minute Typing Test - Professional & Exam Typing Practice',
+    title: '5 Minute Typing Test | Check Typing Speed for Exam Prep',
     description:
-      'Take a 5-minute online typing test for employment screening, competitive typing exams, and deep typing endurance evaluation.',
-    heading: '5 Minute Typing Test',
-    subheading: 'Standard endurance evaluation required by corporate job screenings and government exams.',
+      'Check typing speed for job interviews and government recruitment exams. 5-minute timed typing test with ANSI standard 5-character word scoring.',
+    heading: '5 Minute Typing Speed Test',
+    subheading: 'Official 5-minute test simulating employment screening benchmarks and competitive exams.',
     canonical: `${SITE_URL}/typing-test/5-minute/`,
     presetDuration: 300,
   },
   '/typing-test/10-minute/': {
     path: '/typing-test/10-minute/',
-    title: '10 Minute Typing Test - Full Stamina & Government Exam Prep',
+    title: '10 Minute Typing Test | Check Typing Speed & Stamina',
     description:
-      'Comprehensive 10-minute typing speed test designed for government recruitment exams (SSC, High Court) and serious transcriptionists.',
-    heading: '10 Minute Typing Test',
-    subheading: 'Full endurance test simulating formal government exam environments and long-form transcription.',
+      'Check typing speed and long-form stamina with a 10-minute typing test. Ideal for SSC CGL, CHSL, High Court typist exams, and transcriptionists.',
+    heading: '10 Minute Typing Speed Test',
+    subheading: 'Full endurance test simulating formal government exam environments and long-form typing.',
     canonical: `${SITE_URL}/typing-test/10-minute/`,
     presetDuration: 600,
   },
   '/typing-practice/': {
     path: '/typing-practice/',
-    title: 'Typing Practice - Free Touch Typing Lessons & Drills',
+    title: 'Typing Practice & Drills | Check Typing Speeds & Form',
     description:
-      'Master touch typing with focused practice exercises. Practice home row keys, common English bigrams, punctuation, and number keys.',
+      'Practice touch typing with interactive drills. Master home row keys, common English bigrams, punctuation, and numbers to check typing speed growth.',
     heading: 'Free Typing Practice & Drills',
-    subheading: 'Targeted drills to build muscle memory, reduce typos, and steadily raise your WPM.',
+    subheading: 'Targeted exercises to build neuromuscular muscle memory and steadily increase your WPM.',
     canonical: `${SITE_URL}/typing-practice/`,
   },
   '/typing-games/': {
     path: '/typing-games/',
-    title: 'Free Online Typing Games - Kinetic Speed & Reflex Practice',
+    title: 'Free Online Typing Games | Check Typing Speeds Arcade',
     description:
-      'Play free online typing games to increase your typing speed and muscle memory. Play Word Cascade: Kinetic Defense, sharpen keystroke reflexes, and crush WPM plateaus.',
+      'Play Word Cascade typing defense game to check typing speeds and reflexes. Vaporize descending vocabulary, build finger agility, and beat high scores.',
     heading: 'Free Online Typing Games',
-    subheading: 'Kinetic, arcade-style typing challenges designed to sharpen reflexes and eliminate finger hesitation.',
+    subheading: 'Kinetic arcade typing challenges designed to sharpen reflexes and eliminate finger hesitation.',
     canonical: `${SITE_URL}/typing-games/`,
   },
   '/wpm-calculator/': {
     path: '/wpm-calculator/',
-    title: 'WPM Calculator - Calculate Words Per Minute, Accuracy & CPM',
+    title: 'WPM Calculator | Check Typing Speed Formulas & CPM',
     description:
-      'Interactive WPM calculator. Convert characters typed, elapsed time, and errors into gross WPM, net WPM, and accuracy percentage.',
+      'Interactive WPM calculator to check typing speed metrics. Convert total keystrokes, elapsed time, and errors into Gross WPM, Net WPM, and CPM.',
     heading: 'Interactive WPM Calculator',
-    subheading: 'Learn the exact math behind Words Per Minute and calculate your typing metrics with custom values.',
+    subheading: 'Explore the exact mathematical formulas behind Words Per Minute and calculate your typing metrics.',
     canonical: `${SITE_URL}/wpm-calculator/`,
   },
   '/how-wpm-is-calculated/': {
     path: '/how-wpm-is-calculated/',
-    title: 'How WPM Is Calculated - The Standard Typing Speed Formula',
+    title: 'How WPM Is Calculated | Check Typing Speed Formulas',
     description:
-      'Transparent guide to typing speed measurement formulas: Gross WPM, Net WPM penalty calculations, standard 5-character word rule, and CPM.',
+      'Learn how to check typing speed accurately. Complete guide to Gross WPM, Net WPM error penalties, ANSI 5-character word standard, and CPM calculation.',
     heading: 'How WPM Is Calculated: The Complete Guide',
-    subheading: 'Everything you need to know about standard typing formulas, error penalties, and industry scoring conventions.',
+    subheading: 'Transparent breakdown of standard touch typing formulas, error deductions, and exam scoring.',
     canonical: `${SITE_URL}/how-wpm-is-calculated/`,
   },
   '/about/': {
     path: '/about/',
-    title: 'About Us - Fast, Free & Private Typing Platform',
+    title: 'About CheckTypingSpeeds | Fast, Free & Private Platform',
     description:
-      'Our mission is to provide the fastest, cleanest, most accessible ad-free typing test on the web for global learners and students in India.',
-    heading: 'About Our Typing Platform',
-    subheading: 'Built on privacy-by-design, local-first performance, and distraction-free learning.',
+      'Learn about CheckTypingSpeeds. Our mission is to provide the cleanest, fastest, ad-free typing test with 100% client-side privacy for typists worldwide.',
+    heading: 'About CheckTypingSpeeds',
+    subheading: 'Built on privacy-by-design, local-first performance, and distraction-free typing evaluation.',
     canonical: `${SITE_URL}/about/`,
   },
   '/methodology/': {
     path: '/methodology/',
-    title: 'Typing Test Scoring Methodology - Formulas, Clock Sync & Standards',
+    title: 'Typing Test Methodology | Check Typing Speed Precision',
     description:
-      'Detailed engineering and mathematical specification of our typing engine: monotonic performance.now timers, 5-character word convention, and Net WPM penalty rules.',
+      'Technical specifications of CheckTypingSpeeds: monotonic hardware timers, 5-character word norm, IME composition handling, and Net WPM formulas.',
     heading: 'Engine & Scoring Methodology',
-    subheading: 'Mathematical precision, clock drift immunity, and standardized metrics.',
+    subheading: 'Mathematical precision, zero timer drift, and standardized touch-typing metrics.',
     canonical: `${SITE_URL}/methodology/`,
   },
   '/contact/': {
     path: '/contact/',
-    title: 'Contact Us & Feedback - Global Typing Speed Platform',
+    title: 'Contact CheckTypingSpeeds | Feedback & Suggestions',
     description:
-      'Get in touch with the TypeFast team. Send feedback, report bugs, suggest exam formats, or discuss school/educator partnerships.',
-    heading: 'Contact & Feedback',
-    subheading: 'We welcome ideas, bug reports, and exam format suggestions.',
+      'Get in touch with the CheckTypingSpeeds team. Submit feedback, report bugs, suggest exam passage formats, or inquire about educational use.',
+    heading: 'Contact CheckTypingSpeeds',
+    subheading: 'We welcome community feedback, bug reports, and exam format suggestions.',
     canonical: `${SITE_URL}/contact/`,
   },
   '/privacy/': {
     path: '/privacy/',
-    title: 'Privacy Policy - Zero Keystroke Logging Guarantee',
+    title: 'Privacy Policy | CheckTypingSpeeds Zero Keystroke Log',
     description:
-      'Read our privacy policy. We do not log, transmit, or store your typed keystrokes or text passages. 100% client-side typing evaluation.',
+      'CheckTypingSpeeds privacy policy: We guarantee zero keystroke logging, no account requirement, and 100% local client-side typing speed calculation.',
     heading: 'Privacy Policy',
-    subheading: 'Our promise: Zero keystroke tracking, no required accounts, and complete data privacy.',
+    subheading: 'Our privacy pledge: No keystroke tracking, no required sign-ups, and complete client-side security.',
     canonical: `${SITE_URL}/privacy/`,
   },
   '/terms/': {
     path: '/terms/',
-    title: 'Terms of Service - Free Typing Test Platform',
-    description: 'Terms of service and usage guidelines for our free online typing test and practice platform.',
+    title: 'Terms of Service | CheckTypingSpeeds Usage Guidelines',
+    description:
+      'Terms of service and usage guidelines for CheckTypingSpeeds. Free educational typing test and touch-typing practice platform for everyone.',
     heading: 'Terms of Service',
-    subheading: 'Clear, transparent terms for using our open educational typing platform.',
+    subheading: 'Clear, transparent terms for using our open educational typing speed platform.',
     canonical: `${SITE_URL}/terms/`,
   },
   '/404/': {
     path: '/404/',
-    title: 'Page Not Found (404) | TypeFast Typing Test',
-    description: 'The requested page could not be found. Return to our free online typing speed test.',
+    title: 'Page Not Found (404) | CheckTypingSpeeds',
+    description: 'The requested page could not be found. Return to CheckTypingSpeeds to check your typing speed free online.',
     heading: 'Page Not Found',
     canonical: `${SITE_URL}/404/`,
   },
 };
 
 export const ROUTE_LIST = Object.values(ROUTES);
-

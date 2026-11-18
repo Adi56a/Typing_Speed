@@ -12,7 +12,7 @@ export const AboutPage: React.FC = () => {
           <Badge variant="brand">Our Mission</Badge>
         </div>
         <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white mb-3">
-          About TypeSpeed
+          About CheckTypingSpeeds
         </h1>
         <p className="max-w-2xl mx-auto text-sm sm:text-base text-slate-600 dark:text-slate-400">
           The fastest, most accessible, and trustworthy free typing speed platform for global learners and students in India.
@@ -20,10 +20,10 @@ export const AboutPage: React.FC = () => {
       </div>
 
       {/* Brand Hero Artwork */}
-      <div className="w-full max-w-3xl mx-auto mb-10 rounded-2xl overflow-hidden border border-slate-200 dark:border-surface-dark-border shadow-md">
+      <div className="w-full max-w-3xl mx-auto mb-10 rounded-2xl overflow-hidden border border-surface-light-border dark:border-surface-dark-border shadow-md">
         <img
           src="/logo.webp"
-          alt="TypeSpeed TS Crest - Focus, Elevation and Precision"
+          alt="CheckTypingSpeeds TS Crest - Focus, Elevation and Precision"
           className="w-full h-auto object-cover"
         />
       </div>
@@ -32,7 +32,7 @@ export const AboutPage: React.FC = () => {
         {/* Why We Built This */}
         <Card className="p-6 sm:p-8 space-y-4">
           <h2 className="text-xl font-bold text-slate-900 dark:text-white">
-            Why We Built TypeSpeed
+            Why We Built CheckTypingSpeeds
           </h2>
           <p>
             The web is flooded with typing speed tests that have lost sight of their core utility: they are bloated
@@ -40,8 +40,8 @@ export const AboutPage: React.FC = () => {
             unnecessary mandatory account registrations.
           </p>
           <p>
-            <strong>TypeSpeed was engineered on an uncompromising principle: Utility First.</strong> When you arrive
-            at our website, you can start typing immediately without a single click, without an account, and with zero
+            <strong>CheckTypingSpeeds was engineered on an uncompromising principle: Utility First.</strong> When you arrive
+            at our website, you can check your typing speed immediately without a single click, without an account, and with zero
             tracking scripts recording your keystrokes.
           </p>
         </Card>
@@ -91,7 +91,7 @@ export const AboutPage: React.FC = () => {
             used by exam boards.
           </p>
           <p>
-            TypeFast is specifically designed to provide free, realistic timed simulations (including 5 and 10-minute
+            CheckTypingSpeeds is specifically designed to provide free, realistic timed simulations (including 5 and 10-minute
             tests) with rigorous accuracy tracking to help students pass their skill qualification tests with confidence.
           </p>
         </Card>
@@ -107,7 +107,7 @@ export const AboutPage: React.FC = () => {
             learners, trainers, and educators worldwide.
           </p>
           <div className="pt-2 text-xs font-mono text-brand-600 dark:text-brand-400">
-            Email: contact@typingtest.example.com
+            Email: contact@checktypingspeeds.com
           </div>
         </Card>
       </div>

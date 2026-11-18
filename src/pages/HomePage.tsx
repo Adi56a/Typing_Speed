@@ -25,11 +25,11 @@ export const HomePage: React.FC<HomePageProps> = ({ initialDuration = 60, onNavi
           <span>ANSI Standard 5-Char Norm • Monotonic Timer • 100% Client-Side Privacy</span>
         </div>
         <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-slate-900 dark:text-white mb-3">
-          Free Online <span className="text-brand-600 dark:text-brand-400">Typing Speed Test</span>
+          Check <span className="text-brand-600 dark:text-brand-400">Typing Speeds</span> Online Free
         </h1>
         <p className="max-w-2xl mx-auto text-sm sm:text-base text-slate-600 dark:text-slate-400">
-          Measure words per minute (WPM), track keystroke accuracy, and build touch typing muscle memory with
-          deterministic scoring. Zero ads, zero tracking, instant start.
+          Check your words per minute (WPM), track keystroke accuracy, and build touch typing muscle memory with
+          instant deterministic scoring. 100% free, zero ads, zero tracking, instant start.
         </p>
       </section>
 
@@ -267,9 +267,9 @@ export const HomePage: React.FC<HomePageProps> = ({ initialDuration = 60, onNavi
         </div>
       </section>
 
-      {/* Direct Answer Educational Section (AEO/GEO Optimized) */}
+      {/* Direct Answer Educational Section (AEO/GEO & FAQ Snippet Optimized) */}
       <section className="w-full max-w-5xl mx-auto px-4 sm:px-6 mb-16">
-        <div className="border-t border-slate-200 dark:border-surface-dark-border pt-12">
+        <div className="border-t border-surface-light-border dark:border-surface-dark-border pt-12">
           <div className="flex items-center gap-2 mb-3">
             <HelpCircle className="w-5 h-5 text-brand-500" />
             <h2 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white">
@@ -277,11 +277,22 @@ export const HomePage: React.FC<HomePageProps> = ({ initialDuration = 60, onNavi
             </h2>
           </div>
           <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 mb-8">
-            Clear, transparent answers about how typing speed is evaluated and how to improve.
+            Clear, transparent answers on how to check your typing speed, how WPM is calculated, and how to improve.
           </p>
 
           <div className="space-y-6">
-            <div className="p-5 rounded-xl bg-white dark:bg-surface-dark-card border border-slate-200 dark:border-surface-dark-border">
+            <div className="p-5 rounded-xl bg-white dark:bg-surface-dark-card border border-surface-light-border dark:border-surface-dark-border">
+              <h3 className="text-sm font-bold text-slate-900 dark:text-white mb-2">
+                How do I check my typing speed on CheckTypingSpeeds?
+              </h3>
+              <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+                To check your typing speed, simply start typing the words displayed on screen above. The monotonic timer starts
+                automatically with your first keystroke. No login, account creation, or software installation is required. When
+                the timer expires, you instantly get your Net WPM, Gross WPM, accuracy %, and error analysis.
+              </p>
+            </div>
+
+            <div className="p-5 rounded-xl bg-white dark:bg-surface-dark-card border border-surface-light-border dark:border-surface-dark-border">
               <h3 className="text-sm font-bold text-slate-900 dark:text-white mb-2">
                 What is WPM and how is it calculated?
               </h3>
@@ -289,21 +300,21 @@ export const HomePage: React.FC<HomePageProps> = ({ initialDuration = 60, onNavi
                 <strong>WPM stands for Words Per Minute</strong>. Under standard international typing conventions,
                 one standardized &quot;word&quot; is equal to <strong>5 characters</strong> (including letters, spaces,
                 and punctuation). Gross WPM is calculated as{' '}
-                <code className="px-1.5 py-0.5 rounded bg-slate-100 dark:bg-surface-dark-muted font-mono text-xs">
+                <code className="px-1.5 py-0.5 rounded bg-surface-light-muted dark:bg-surface-dark-muted font-mono text-xs">
                   (Total Characters / 5) / Elapsed Minutes
                 </code>
                 . Net WPM subtracts uncorrected errors to measure true usable speed.
               </p>
             </div>
 
-            <div className="p-5 rounded-xl bg-white dark:bg-surface-dark-card border border-slate-200 dark:border-surface-dark-border">
+            <div className="p-5 rounded-xl bg-white dark:bg-surface-dark-card border border-surface-light-border dark:border-surface-dark-border">
               <h3 className="text-sm font-bold text-slate-900 dark:text-white mb-2">
                 What is the difference between Gross WPM and Net WPM?
               </h3>
               <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed mb-2">
                 <strong>Gross WPM (Raw Speed)</strong> measures how quickly you press keys regardless of mistakes. <strong>Net WPM (Accurate Speed)</strong> imposes penalties for errors made:
               </p>
-              <div className="p-3 rounded-lg bg-slate-50 dark:bg-surface-dark-muted font-mono text-xs text-slate-700 dark:text-slate-300">
+              <div className="p-3 rounded-lg bg-surface-light-muted dark:bg-surface-dark-muted font-mono text-xs text-slate-700 dark:text-slate-300">
                 Net WPM = Gross WPM - (Errors / Test Duration in Minutes)
               </div>
               <p className="text-xs text-slate-500 dark:text-slate-400 mt-2">
@@ -311,7 +322,17 @@ export const HomePage: React.FC<HomePageProps> = ({ initialDuration = 60, onNavi
               </p>
             </div>
 
-            <div className="p-5 rounded-xl bg-white dark:bg-surface-dark-card border border-slate-200 dark:border-surface-dark-border">
+            <div className="p-5 rounded-xl bg-white dark:bg-surface-dark-card border border-surface-light-border dark:border-surface-dark-border">
+              <h3 className="text-sm font-bold text-slate-900 dark:text-white mb-2">
+                Does CheckTypingSpeeds log or record what I type?
+              </h3>
+              <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+                <strong>Zero keystroke logging.</strong> CheckTypingSpeeds executes 100% in your local browser memory. No keystrokes,
+                typed passages, or personal data are ever recorded or transmitted across the network.
+              </p>
+            </div>
+
+            <div className="p-5 rounded-xl bg-white dark:bg-surface-dark-card border border-surface-light-border dark:border-surface-dark-border">
               <h3 className="text-sm font-bold text-slate-900 dark:text-white mb-2">
                 How can I increase my typing speed quickly?
               </h3>
@@ -337,7 +358,7 @@ export const HomePage: React.FC<HomePageProps> = ({ initialDuration = 60, onNavi
                 <li className="flex items-start gap-2">
                   <CheckCircle2 className="w-4 h-4 text-brand-500 flex-shrink-0 mt-0.5" />
                   <span>
-                    <strong>Play Kinetic Typing Games:</strong> Play Word Cascade to break visual verification dependencies and eliminate hesitation.
+                    <strong>Play Kinetic Typing Games:</strong> Play Word Cascade on CheckTypingSpeeds to break visual verification dependencies and eliminate finger hesitation.
                   </span>
                 </li>
               </ul>

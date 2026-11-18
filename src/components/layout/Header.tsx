@@ -39,11 +39,11 @@ export const Header: React.FC<HeaderProps> = ({ currentPath = '/', onNavigate })
         >
           <img
             src="/logo.webp"
-            alt="TypeSpeed TS Crest"
+            alt="CheckTypingSpeeds TS Crest"
             className="w-9 h-9 rounded-lg object-cover shadow-sm border border-surface-light-border dark:border-surface-dark-border"
           />
           <span>
-            Type<span className="text-brand-500">Speed</span>
+            Check<span className="text-brand-500">TypingSpeeds</span>
           </span>
           <span className="hidden sm:inline-block px-1.5 py-0.5 text-[10px] font-semibold tracking-wider uppercase rounded bg-brand-100 text-brand-800 dark:bg-brand-950 dark:text-brand-400">
             Free

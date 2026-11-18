@@ -28,13 +28,12 @@ export const ResultsModal: React.FC<ResultsModalProps> = ({ metrics, onRestart, 
   }, [metrics]);
 
   const handleShare = async () => {
-    const summaryText = `🚀 TypeFast Speed Test Results:
+    const summaryText = `🚀 CheckTypingSpeeds Results:
 • Speed: ${metrics.netWPM} Net WPM (Raw: ${metrics.grossWPM} WPM)
 • Accuracy: ${metrics.accuracy}%
 • Duration: ${metrics.durationSeconds}s
 • Consistency: ${metrics.cpm} CPM | ${metrics.incorrectChars} errors
-${isPersonalBest ? '🏆 New Personal Best!' : ''}
-Test your typing speed free at: https://typingtest.example.com`;
+${isPersonalBest ? '🏆 New Personal Best!\n' : ''}Check your typing speed free at: https://checktypingspeeds.com`;
 
     if (navigator.clipboard) {
       try {

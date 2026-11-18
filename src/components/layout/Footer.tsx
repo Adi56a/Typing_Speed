@@ -22,16 +22,16 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
             <div className="flex items-center gap-2.5 font-bold text-lg text-slate-900 dark:text-white">
               <img
                 src="/logo.webp"
-                alt="TypeSpeed TS Crest"
-                className="w-8 h-8 rounded-lg object-cover shadow-sm border border-slate-200/80 dark:border-surface-dark-border"
+                alt="CheckTypingSpeeds TS Crest"
+                className="w-8 h-8 rounded-lg object-cover shadow-sm border border-surface-light-border dark:border-surface-dark-border"
               />
               <span>
-                Type<span className="text-brand-500">Speed</span>
+                Check<span className="text-brand-500">TypingSpeeds</span>
               </span>
             </div>
             <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
-              Fast, distraction-free typing platform designed for global learners and students in India.
-              Measure speed, master touch typing, and pass typing exams.
+              Fast, distraction-free typing platform designed for global typists and students in India.
+              Check typing speed, master touch typing, and pass typing exams.
             </p>
             <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-brand-50 dark:bg-brand-950/40 border border-brand-200 dark:border-brand-800 text-[11px] text-brand-800 dark:text-brand-300 font-medium">
               <ShieldCheck className="w-3.5 h-3.5 flex-shrink-0" />
@@ -186,7 +186,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
 
         {/* Bottom bar */}
         <div className="pt-6 border-t border-slate-200 dark:border-surface-dark-border flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-500 dark:text-slate-400">
-          <p>© {new Date().getFullYear()} TypeFast. All rights reserved. Free and accessible for everyone.</p>
+          <p>© {new Date().getFullYear()} CheckTypingSpeeds. All rights reserved. Free and accessible for everyone.</p>
           <div className="flex items-center gap-1 text-[11px]">
             <span>Engineered with</span>
             <Heart className="w-3.5 h-3.5 text-terracotta-500 fill-terracotta-500" />

@@ -63,13 +63,13 @@ export const LegalPage: React.FC<LegalPageProps> = ({ type }) => {
           <>
             <h2 className="text-lg font-bold text-slate-900 dark:text-white">1. Acceptance of Terms</h2>
             <p className="text-xs sm:text-sm">
-              By accessing and using TypeFast, you agree to these Terms of Service. If you do not agree, you may discontinue
+              By accessing and using CheckTypingSpeeds, you agree to these Terms of Service. If you do not agree, you may discontinue
               using the service at any time.
             </p>
 
             <h2 className="text-lg font-bold text-slate-900 dark:text-white">2. Free Educational Service</h2>
             <p className="text-xs sm:text-sm">
-              TypeFast is provided free of charge for educational, practice, and personal skill evaluation purposes.
+              CheckTypingSpeeds is provided free of charge for educational, practice, and personal skill evaluation purposes.
               While our scoring follows international typing standards, test results do not constitute an official
               government or commercial certificate unless verified under supervised proctored examination.
             </p>

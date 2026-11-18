@@ -2,5 +2,4 @@ User-agent: *
 Allow: /
 
 # Sitemap
-Sitemap: https://typingtest.example.com/sitemap.xml
-
+Sitemap: https://checktypingspeeds.com/sitemap.xml

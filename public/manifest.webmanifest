@@ -1,0 +1,21 @@
+{
+  "name": "CheckTypingSpeeds - Free Online Typing Speed Test",
+  "short_name": "CheckTypingSpeeds",
+  "description": "Check your typing speed and accuracy in words per minute (WPM). 100% free, private, and ad-free.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#131716",
+  "theme_color": "#4a8292",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    },
+    {
+      "src": "/logo.webp",
+      "sizes": "512x512",
+      "type": "image/webp"
+    }
+  ]
+}

@@ -1,13 +1,14 @@
-# Global + India Typing Test Platform
+# CheckTypingSpeeds (checktypingspeeds.com)
 
-A high-performance, accessible, and privacy-first typing test and practice platform designed to achieve search and answer-engine dominance (#1 ranking target) across global and Indian typing queries.
+A high-performance, accessible, and privacy-first typing test and touch-typing platform designed for maximum organic search dominance and high traffic on **checktypingspeeds.com**.
 
 ## Key Features & Architecture
-- **Speed & Latency**: Local keystroke calculation via monotonic time (`performance.now()`); zero network requests per key.
-- **SEO & Discoverability**: Full static HTML prerendering for public routes, valid JSON-LD structured data, clean canonical URLs, and XML sitemaps.
-- **Topical Intent Coverage**: Pre-configured timed test routes (1m, 2m, 5m, 10m), touch typing lessons, and WPM calculators.
-- **UX & Accessibility**: WCAG 2.2 AA engineering target, light/dark themes, responsive down to 360px viewport, and keyboard-first accessibility.
-- **Privacy by Design**: No account required for core testing; zero keystrokes or typed text logged or transmitted.
+- **Canonical Domain**: `https://checktypingspeeds.com`
+- **Speed & Precision**: Monotonic hardware timestamps (`performance.now()`); sub-millisecond precision with zero interval drift and zero network keystroke latency.
+- **Organic Search (SEO/AEO/GEO)**: Full static HTML prerendering (SSG) for 16 canonical routes, rich JSON-LD structured data (`WebSite`, `Organization`, `WebApplication`, `FAQPage`, `BreadcrumbList`), OpenGraph / Twitter Cards, XML sitemap, and robots.txt.
+- **Topical Intent Coverage**: 1-minute, 2-minute, 5-minute, and 10-minute speed checks, touch-typing finger guide, WPM calculators, and kinetic typing arcade defense (Word Cascade).
+- **UX & Accessibility**: WCAG 2.2 AA compliant contrast, custom Logo Spruce & Mountain Sunset color palette, light/dark modes, full-screen distraction-free mode.
+- **Privacy by Design**: No mandatory account registration, zero keystroke logging, 100% client-side scoring in browser memory.
 
 ## Project Documentation
 - [Product Requirements Document (PRD)](./docs/PRD.md)
@@ -37,7 +38,6 @@ npm run lint
 # Format code
 npm run format
 
-# Production build (Client + SSR + Prerender)
+# Production build (Client + SSR + SSG Prerender for checktypingspeeds.com)
 npm run build
 ```
-

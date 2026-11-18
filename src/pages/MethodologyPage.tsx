@@ -15,7 +15,7 @@ export const MethodologyPage: React.FC = () => {
           Typing Engine & Measurement Methodology
         </h1>
         <p className="max-w-2xl mx-auto text-sm sm:text-base text-slate-600 dark:text-slate-400">
-          How TypeFast ensures sub-millisecond precision, clock drift immunity, and mathematically sound touch-typing scoring.
+          How CheckTypingSpeeds ensures sub-millisecond precision, clock drift immunity, and mathematically sound touch-typing scoring.
         </p>
       </div>
 
@@ -33,7 +33,7 @@ export const MethodologyPage: React.FC = () => {
             error over a 5-minute test).
           </p>
           <p>
-            <strong>TypeFast eliminates timer drift by using monotonic hardware timestamps:</strong>
+            <strong>CheckTypingSpeeds eliminates timer drift by using monotonic hardware timestamps:</strong>
           </p>
           <div className="p-4 rounded-xl bg-slate-50 dark:bg-surface-dark font-mono text-xs text-slate-800 dark:text-slate-200 border border-slate-200 dark:border-surface-dark-border">
             elapsedMilliseconds = performance.now() - testStartTime;

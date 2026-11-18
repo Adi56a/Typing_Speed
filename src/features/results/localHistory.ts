@@ -18,12 +18,13 @@ export interface PersonalBests {
   totalMinutesPracticed: number;
 }
 
-const STORAGE_KEY = 'typefast_local_history_v1';
+const STORAGE_KEY = 'cts_local_history_v1';
+const LEGACY_STORAGE_KEY = 'typefast_local_history_v1';
 
 export function getSavedResults(): SavedResult[] {
   if (typeof window === 'undefined') return [];
   try {
-    const raw = localStorage.getItem(STORAGE_KEY);
+    const raw = localStorage.getItem(STORAGE_KEY) || localStorage.getItem(LEGACY_STORAGE_KEY);
     if (!raw) return [];
     return JSON.parse(raw);
   } catch {

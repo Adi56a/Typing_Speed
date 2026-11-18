@@ -34,7 +34,10 @@ export const TypingWorkspaceShell: React.FC<TypingWorkspaceShellProps> = ({
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [showKeyboard, setShowKeyboard] = useState<boolean>(() => {
     if (typeof window !== 'undefined') {
-      return localStorage.getItem('typefast_show_keyboard') === 'true';
+      return (
+        localStorage.getItem('cts_show_keyboard') === 'true' ||
+        localStorage.getItem('typefast_show_keyboard') === 'true'
+      );
     }
     return false;
   });
@@ -91,7 +94,7 @@ export const TypingWorkspaceShell: React.FC<TypingWorkspaceShellProps> = ({
     setShowKeyboard((prev) => {
       const next = !prev;
       if (typeof window !== 'undefined') {
-        localStorage.setItem('typefast_show_keyboard', String(next));
+        localStorage.setItem('cts_show_keyboard', String(next));
       }
       return next;
     });

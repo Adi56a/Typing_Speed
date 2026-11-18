@@ -20,7 +20,20 @@ async function prerender() {
     throw new Error(`Server entry not found at ${serverEntryPath}. Run vite build --ssr first.`);
   }
 
-  const template = fs.readFileSync(templatePath, 'utf-8');
+  let template;
+  const backupTemplatePath = path.resolve(distDir, '__template.html');
+  if (fs.existsSync(backupTemplatePath)) {
+    template = fs.readFileSync(backupTemplatePath, 'utf-8');
+  } else {
+    template = fs.readFileSync(templatePath, 'utf-8');
+    fs.writeFileSync(backupTemplatePath, template, 'utf-8');
+  }
+
+  // Pre-strip fallback title and meta description so each route injects its exact title/meta
+  const cleanTemplate = template
+    .replace(/<title>.*?<\/title>\s*/i, '')
+    .replace(/<meta name="description" content=".*?" \/>\s*/i, '');
+
   // Use pathToFileURL for Windows compatibility with ESM imports
   const { render, getRoutes } = await import(pathToFileURL(serverEntryPath).href);
 
@@ -30,20 +43,9 @@ async function prerender() {
   for (const route of routes) {
     const { html: appHtml, head: appHead } = render(route.path);
 
-    let pageHtml = template
+    const pageHtml = cleanTemplate
       .replace('<!--app-html-->', appHtml)
       .replace('<!--app-head-->', appHead);
-
-    // Also replace default title and meta description if present in template
-    if (route.title) {
-      pageHtml = pageHtml.replace(/<title>.*?<\/title>/, `<title>${route.title}</title>`);
-    }
-    if (route.description) {
-      pageHtml = pageHtml.replace(
-        /<meta name="description" content=".*?" \/>/,
-        `<meta name="description" content="${route.description}" />`
-      );
-    }
 
     const relativePath =
       route.path === '/'
@@ -70,7 +72,7 @@ async function prerender() {
 }
 
 function generateSitemap(routes) {
-  const siteUrl = 'https://typingtest.example.com';
+  const siteUrl = 'https://checktypingspeeds.com';
   const today = new Date().toISOString().split('T')[0];
 
   // Exclude error/utility routes from sitemap

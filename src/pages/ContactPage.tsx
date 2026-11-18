@@ -43,7 +43,7 @@ export const ContactPage: React.FC = () => {
               For general inquiries, school partnerships, and developer questions:
             </p>
             <div className="text-xs font-mono text-brand-600 dark:text-brand-400">
-              support@typingtest.example.com
+              support@checktypingspeeds.com
             </div>
           </Card>
 
@@ -70,7 +70,7 @@ export const ContactPage: React.FC = () => {
                   Thank You for Your Feedback!
                 </h2>
                 <p className="text-xs text-slate-600 dark:text-slate-400 max-w-sm mx-auto">
-                  We review feedback and suggestions regularly to keep TypeFast accurate, fast, and helpful for typists worldwide.
+                  We review feedback and suggestions regularly to keep CheckTypingSpeeds accurate, fast, and helpful for typists worldwide.
                 </p>
               </div>
             ) : (
@@ -112,7 +112,7 @@ export const ContactPage: React.FC = () => {
                     rows={4}
                     value={message}
                     onChange={(e) => setMessage(e.target.value)}
-                    placeholder="How can we make TypeFast better for you?"
+                    placeholder="How can we make CheckTypingSpeeds better for you?"
                     className="w-full px-3.5 py-2.5 rounded-lg border border-slate-200 dark:border-surface-dark-border bg-white dark:bg-surface-dark text-slate-900 dark:text-white text-sm focus-ring"
                   />
                 </div>
