@@ -19,6 +19,11 @@
     --color-text-muted: #8d9a95;
   }
 
+  html, body {
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+  }
+
   body {
     background-color: var(--color-bg);
     color: var(--color-text-main);

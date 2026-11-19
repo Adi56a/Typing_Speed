@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import {
   RotateCcw,
   Clock,
@@ -9,6 +9,7 @@ import {
   Maximize2,
   Minimize2,
   Keyboard as KeyboardIcon,
+  Smartphone,
 } from 'lucide-react';
 import { TestDuration, TestMode, TestDifficulty } from '../../types';
 import { useTypingEngine } from '../../features/typing-engine/useTypingEngine';
@@ -32,6 +33,7 @@ export const TypingWorkspaceShell: React.FC<TypingWorkspaceShellProps> = ({
   const [withPunctuation, setWithPunctuation] = useState(false);
   const [withNumbers, setWithNumbers] = useState(false);
   const [isFullscreen, setIsFullscreen] = useState(false);
+  const [isInputFocused, setIsInputFocused] = useState<boolean>(false);
   const [showKeyboard, setShowKeyboard] = useState<boolean>(() => {
     if (typeof window !== 'undefined') {
       return (
@@ -43,14 +45,19 @@ export const TypingWorkspaceShell: React.FC<TypingWorkspaceShellProps> = ({
   });
 
   const workspaceRef = useRef<HTMLDivElement>(null);
+  const passageContainerRef = useRef<HTMLDivElement>(null);
+  const currentCaretRef = useRef<HTMLSpanElement>(null);
 
   const {
     status,
     chars,
+    currentIndex,
     remainingSeconds,
     metrics,
     inputRef,
     handleKeyDown,
+    handleBeforeInput,
+    handleChange,
     handleCompositionStart,
     handleCompositionEnd,
     restart,
@@ -61,6 +68,37 @@ export const TypingWorkspaceShell: React.FC<TypingWorkspaceShellProps> = ({
     punctuation: withPunctuation,
     numbers: withNumbers,
   });
+
+  const focusInput = useCallback(() => {
+    if (inputRef.current) {
+      inputRef.current.focus();
+      setIsInputFocused(true);
+    }
+  }, [inputRef]);
+
+  // Keep active caret visible on mobile screens when typing long passages
+  useEffect(() => {
+    if (currentCaretRef.current && passageContainerRef.current) {
+      const container = passageContainerRef.current;
+      const caret = currentCaretRef.current;
+      const containerRect = container.getBoundingClientRect();
+      const caretRect = caret.getBoundingClientRect();
+
+      if (caretRect.bottom > containerRect.bottom - 36) {
+        container.scrollTop += caretRect.bottom - containerRect.bottom + 36;
+      } else if (caretRect.top < containerRect.top + 24) {
+        container.scrollTop = Math.max(0, container.scrollTop - (containerRect.top - caretRect.top + 24));
+      }
+    }
+  }, [currentIndex, status]);
+
+  const handleRestart = (customOptions?: any) => {
+    restart(customOptions);
+    if (passageContainerRef.current) {
+      passageContainerRef.current.scrollTop = 0;
+    }
+    focusInput();
+  };
 
   // Re-initialize when duration, mode or difficulty changes
   const handleDurationChange = (d: TestDuration) => {
@@ -265,7 +303,7 @@ export const TypingWorkspaceShell: React.FC<TypingWorkspaceShellProps> = ({
               <button
                 onClick={toggleKeyboard}
                 type="button"
-                className={`p-2 rounded-lg border transition-all ${
+                className={`hidden md:inline-flex p-2 rounded-lg border transition-all ${
                   showKeyboard
                     ? 'border-brand-500 bg-brand-50 dark:bg-brand-950/40 text-brand-600 dark:text-brand-400'
                     : 'border-surface-light-border dark:border-surface-dark-border text-slate-600 dark:text-slate-400 hover:bg-surface-light-muted dark:hover:bg-surface-dark-muted'
@@ -293,91 +331,123 @@ export const TypingWorkspaceShell: React.FC<TypingWorkspaceShellProps> = ({
           </div>
         </div>
 
-        {/* Live Metrics Header */}
-        <div className="grid grid-cols-4 gap-2.5 sm:gap-4">
+        {/* Live Metrics Header: Fully Responsive (cram-free on small mobile screens) */}
+        <div className="grid grid-cols-4 gap-1.5 sm:gap-4">
           {/* Time Remaining */}
-          <div className="flex items-center gap-2.5 sm:gap-3 p-3 rounded-xl bg-white dark:bg-surface-dark-card border border-surface-light-border dark:border-surface-dark-border">
-            <div className="p-2 rounded-lg bg-brand-50 dark:bg-brand-950/40 text-brand-600 dark:text-brand-400">
-              <Clock className="w-4 h-4 sm:w-5 sm:h-5" />
+          <div className="flex flex-col sm:flex-row items-center sm:items-start text-center sm:text-left gap-1 sm:gap-3 p-2 sm:p-3 rounded-xl bg-white dark:bg-surface-dark-card border border-surface-light-border dark:border-surface-dark-border shadow-sm">
+            <div className="p-1.5 sm:p-2 rounded-lg bg-brand-50 dark:bg-brand-950/40 text-brand-600 dark:text-brand-400">
+              <Clock className="w-3.5 h-3.5 sm:w-5 sm:h-5" />
             </div>
-            <div>
-              <div className="text-[10px] sm:text-[11px] font-medium uppercase text-slate-500 dark:text-slate-400 tracking-wider">
+            <div className="min-w-0">
+              <div className="text-[9px] sm:text-[11px] font-medium uppercase text-slate-500 dark:text-slate-400 tracking-wider truncate">
                 Time
               </div>
-              <div className="text-lg sm:text-2xl font-bold font-mono text-slate-900 dark:text-white">
+              <div className="text-base sm:text-2xl font-bold font-mono text-slate-900 dark:text-white leading-tight">
                 {remainingSeconds}s
               </div>
             </div>
           </div>
 
           {/* Net Speed (WPM) */}
-          <div className="flex items-center gap-2.5 sm:gap-3 p-3 rounded-xl bg-white dark:bg-surface-dark-card border border-surface-light-border dark:border-surface-dark-border">
-            <div className="p-2 rounded-lg bg-ochre-50 dark:bg-ochre-950/40 text-ochre-600 dark:text-ochre-400">
-              <Gauge className="w-4 h-4 sm:w-5 sm:h-5" />
+          <div className="flex flex-col sm:flex-row items-center sm:items-start text-center sm:text-left gap-1 sm:gap-3 p-2 sm:p-3 rounded-xl bg-white dark:bg-surface-dark-card border border-surface-light-border dark:border-surface-dark-border shadow-sm">
+            <div className="p-1.5 sm:p-2 rounded-lg bg-ochre-50 dark:bg-ochre-950/40 text-ochre-600 dark:text-ochre-400">
+              <Gauge className="w-3.5 h-3.5 sm:w-5 sm:h-5" />
             </div>
-            <div>
-              <div className="text-[10px] sm:text-[11px] font-medium uppercase text-slate-500 dark:text-slate-400 tracking-wider">
+            <div className="min-w-0">
+              <div className="text-[9px] sm:text-[11px] font-medium uppercase text-slate-500 dark:text-slate-400 tracking-wider truncate">
                 Speed
               </div>
-              <div className="text-lg sm:text-2xl font-bold font-mono text-slate-900 dark:text-white">
-                {metrics.netWPM} <span className="text-[10px] sm:text-xs font-normal text-slate-400">WPM</span>
+              <div className="text-base sm:text-2xl font-bold font-mono text-slate-900 dark:text-white leading-tight">
+                {metrics.netWPM} <span className="text-[9px] sm:text-xs font-normal text-slate-400">WPM</span>
               </div>
             </div>
           </div>
 
           {/* Accuracy % */}
-          <div className="flex items-center gap-2.5 sm:gap-3 p-3 rounded-xl bg-white dark:bg-surface-dark-card border border-surface-light-border dark:border-surface-dark-border">
-            <div className="p-2 rounded-lg bg-sage-50 dark:bg-sage-950/40 text-sage-600 dark:text-sage-400">
-              <Target className="w-4 h-4 sm:w-5 sm:h-5" />
+          <div className="flex flex-col sm:flex-row items-center sm:items-start text-center sm:text-left gap-1 sm:gap-3 p-2 sm:p-3 rounded-xl bg-white dark:bg-surface-dark-card border border-surface-light-border dark:border-surface-dark-border shadow-sm">
+            <div className="p-1.5 sm:p-2 rounded-lg bg-sage-50 dark:bg-sage-950/40 text-sage-600 dark:text-sage-400">
+              <Target className="w-3.5 h-3.5 sm:w-5 sm:h-5" />
             </div>
-            <div>
-              <div className="text-[10px] sm:text-[11px] font-medium uppercase text-slate-500 dark:text-slate-400 tracking-wider">
+            <div className="min-w-0">
+              <div className="text-[9px] sm:text-[11px] font-medium uppercase text-slate-500 dark:text-slate-400 tracking-wider truncate">
                 Accuracy
               </div>
-              <div className="text-lg sm:text-2xl font-bold font-mono text-slate-900 dark:text-white">
+              <div className="text-base sm:text-2xl font-bold font-mono text-slate-900 dark:text-white leading-tight">
                 {metrics.accuracy}%
               </div>
             </div>
           </div>
 
           {/* Errors Committed */}
-          <div className="flex items-center gap-2.5 sm:gap-3 p-3 rounded-xl bg-white dark:bg-surface-dark-card border border-surface-light-border dark:border-surface-dark-border">
-            <div className="p-2 rounded-lg bg-terracotta-50 dark:bg-terracotta-950/40 text-terracotta-600 dark:text-terracotta-400">
-              <AlertCircle className="w-4 h-4 sm:w-5 sm:h-5" />
+          <div className="flex flex-col sm:flex-row items-center sm:items-start text-center sm:text-left gap-1 sm:gap-3 p-2 sm:p-3 rounded-xl bg-white dark:bg-surface-dark-card border border-surface-light-border dark:border-surface-dark-border shadow-sm">
+            <div className="p-1.5 sm:p-2 rounded-lg bg-terracotta-50 dark:bg-terracotta-950/40 text-terracotta-600 dark:text-terracotta-400">
+              <AlertCircle className="w-3.5 h-3.5 sm:w-5 sm:h-5" />
             </div>
-            <div>
-              <div className="text-[10px] sm:text-[11px] font-medium uppercase text-slate-500 dark:text-slate-400 tracking-wider">
+            <div className="min-w-0">
+              <div className="text-[9px] sm:text-[11px] font-medium uppercase text-slate-500 dark:text-slate-400 tracking-wider truncate">
                 Errors
               </div>
-              <div className="text-lg sm:text-2xl font-bold font-mono text-slate-900 dark:text-white">
+              <div className="text-base sm:text-2xl font-bold font-mono text-slate-900 dark:text-white leading-tight">
                 {metrics.incorrectChars}
               </div>
             </div>
           </div>
         </div>
 
-        {/* Typing Surface: Distraction-free with Sleek Vertical Caret Blinker */}
+        {/* Mobile Tap-to-Type Status Pill (Visible only on mobile screens < sm) */}
+        <div className="sm:hidden flex items-center justify-between px-3 py-1.5 rounded-xl bg-brand-50/80 dark:bg-brand-950/40 border border-brand-200/70 dark:border-brand-800/50 text-xs">
+          <div className="flex items-center gap-1.5 text-brand-800 dark:text-brand-300 font-medium">
+            <Smartphone className="w-3.5 h-3.5 text-brand-600 dark:text-brand-400 flex-shrink-0" />
+            <span>{isInputFocused ? 'Keyboard active • Type now' : 'Tap below to open keyboard'}</span>
+          </div>
+          <button
+            onClick={focusInput}
+            type="button"
+            className="text-[11px] font-semibold text-brand-600 dark:text-brand-400 underline underline-offset-2"
+          >
+            {isInputFocused ? 'Ready' : 'Tap to Type'}
+          </button>
+        </div>
+
+        {/* Typing Surface: Distraction-free with Full-Surface Touch Input */}
         <div
-          onClick={() => inputRef.current?.focus()}
-          className="relative rounded-2xl bg-white dark:bg-surface-dark-card border-2 border-surface-light-border dark:border-surface-dark-border p-6 sm:p-8 shadow-sm transition-all focus-within:border-brand-500 dark:focus-within:border-brand-500 cursor-text"
+          onClick={focusInput}
+          className={`relative rounded-2xl bg-white dark:bg-surface-dark-card border-2 p-4 sm:p-8 shadow-sm transition-all cursor-text ${
+            isInputFocused
+              ? 'border-brand-500 ring-2 ring-brand-500/20 dark:border-brand-500'
+              : 'border-surface-light-border dark:border-surface-dark-border'
+          }`}
         >
-          {/* Hidden accessible input for mobile keyboards and key capture */}
+          {/* Hidden full-coverage accessible input:
+              - 16px font-size prevents iOS Safari auto-zoom
+              - Full inset-0 overlay guarantees native touch focus on iOS & Android
+              - onBeforeInput & onChange capture virtual keyboard text & backspace */}
           <input
             ref={inputRef}
             type="text"
-            className="absolute opacity-0 pointer-events-none w-0 h-0"
+            className="absolute inset-0 w-full h-full opacity-0 cursor-text z-10 text-base"
+            style={{ fontSize: '16px' }}
             autoCapitalize="none"
             autoCorrect="off"
             autoComplete="off"
-            spellCheck="false"
+            spellCheck={false}
+            inputMode="text"
+            enterKeyHint="done"
+            aria-label="Typing test input area. Tap anywhere here to open your mobile keyboard."
             onKeyDown={handleKeyDown}
+            onBeforeInput={handleBeforeInput}
+            onChange={handleChange}
             onCompositionStart={handleCompositionStart}
             onCompositionEnd={handleCompositionEnd}
-            aria-label="Typing test input area"
+            onFocus={() => setIsInputFocused(true)}
+            onBlur={() => setIsInputFocused(false)}
           />
 
           {/* Character-by-Character Rendering with Modern Vertical Caret */}
-          <div className="font-mono text-lg sm:text-2xl sm:leading-relaxed leading-relaxed select-none tracking-wide min-h-[140px] max-h-[300px] overflow-y-auto">
+          <div
+            ref={passageContainerRef}
+            className="font-mono text-base sm:text-2xl sm:leading-relaxed leading-relaxed select-none tracking-wide min-h-[140px] max-h-[220px] sm:max-h-[300px] overflow-y-auto"
+          >
             {chars.map((item, idx) => {
               if (item.status === 'correct') {
                 return (
@@ -408,6 +478,7 @@ export const TypingWorkspaceShell: React.FC<TypingWorkspaceShellProps> = ({
                 return (
                   <span
                     key={idx}
+                    ref={currentCaretRef}
                     className="relative text-slate-900 dark:text-white font-semibold"
                   >
                     <span className="caret-blinker" aria-hidden="true" />
@@ -424,18 +495,28 @@ export const TypingWorkspaceShell: React.FC<TypingWorkspaceShellProps> = ({
           </div>
 
           {/* Helper Footer: Status, Shortcuts & Reset */}
-          <div className="mt-6 pt-4 border-t border-surface-light-border dark:border-surface-dark-border flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-500 dark:text-slate-400">
-            <div className="flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-brand-500" />
-              <span>
+          <div className="mt-4 pt-3 sm:mt-6 sm:pt-4 border-t border-surface-light-border dark:border-surface-dark-border flex flex-col sm:flex-row items-center justify-between gap-2.5 text-xs text-slate-500 dark:text-slate-400">
+            <div className="flex items-center gap-2 text-center sm:text-left">
+              <span className="w-2 h-2 rounded-full bg-brand-500 flex-shrink-0" />
+              <span className="text-[11px] sm:text-xs">
                 {status === 'ready'
                   ? 'Type the first letter to begin timer. All calculations run client-side in browser memory.'
                   : 'Maintain a steady cadence. Consistent rhythm prevents finger fatigue.'}
               </span>
             </div>
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-1.5 sm:gap-2">
+              {!isInputFocused && (
+                <button
+                  onClick={focusInput}
+                  type="button"
+                  className="sm:hidden inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-brand-600 hover:bg-brand-500 text-white font-medium text-xs shadow-sm transition-colors"
+                >
+                  <KeyboardIcon className="w-3.5 h-3.5" />
+                  <span>Open Keyboard</span>
+                </button>
+              )}
               <button
-                onClick={() => restart()}
+                onClick={() => handleRestart()}
                 type="button"
                 className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-surface-light-border dark:border-surface-dark-border hover:bg-surface-light-muted dark:hover:bg-surface-dark-muted font-medium text-slate-700 dark:text-slate-300 transition-colors"
               >
@@ -443,14 +524,13 @@ export const TypingWorkspaceShell: React.FC<TypingWorkspaceShellProps> = ({
                 <span>Retry</span>
               </button>
               <button
-                onClick={() => restart({})}
+                onClick={() => handleRestart({})}
                 type="button"
                 className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-surface-light-border dark:border-surface-dark-border hover:bg-surface-light-muted dark:hover:bg-surface-dark-muted font-medium text-slate-700 dark:text-slate-300 transition-colors"
               >
                 <RefreshCw className="w-3.5 h-3.5" />
                 <span>New Text</span>
               </button>
-              <span className="hidden md:inline text-[11px] text-slate-400 font-mono">[Esc: Reset]</span>
             </div>
           </div>
         </div>

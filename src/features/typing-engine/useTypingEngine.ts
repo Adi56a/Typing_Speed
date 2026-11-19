@@ -38,6 +38,16 @@ export function useTypingEngine(props: UseTypingEngineProps = {}) {
   const isComposingRef = useRef<boolean>(false);
   const inputRef = useRef<HTMLInputElement | null>(null);
   const animationFrameRef = useRef<number | null>(null);
+  const lastProcessedTimeRef = useRef<number>(0);
+  const lastProcessedCharRef = useRef<string>('');
+
+  // Normalize iOS / mobile smart punctuation (curly quotes, smart dashes)
+  const normalizeChar = (char: string): string => {
+    if (char === '\u2018' || char === '\u2019' || char === '`') return "'";
+    if (char === '\u201C' || char === '\u201D') return '"';
+    if (char === '\u2013' || char === '\u2014') return '-';
+    return char;
+  };
 
   // Sync state from engine
   const syncState = useCallback(() => {
@@ -116,7 +126,7 @@ export function useTypingEngine(props: UseTypingEngineProps = {}) {
     };
   }, [status, engine, syncState]);
 
-  // Key event handler
+  // Key event handler for physical keyboards
   const handleKeyDown = useCallback(
     (e: React.KeyboardEvent<HTMLInputElement | HTMLDivElement>) => {
       // Ignore if user is composing via IME
@@ -131,23 +141,115 @@ export function useTypingEngine(props: UseTypingEngineProps = {}) {
 
       if (engine.getStatus() === 'completed') return;
 
+      // On Android / mobile virtual keyboards, key is 'Unidentified' or keyCode 229;
+      // let handleBeforeInput / handleChange handle it to avoid dropped keys
+      if (e.key === 'Unidentified' || e.keyCode === 229) {
+        return;
+      }
+
       const now = performance.now();
 
       if (e.key === 'Backspace') {
         e.preventDefault();
         engine.handleBackspace();
+        lastProcessedTimeRef.current = now;
+        lastProcessedCharRef.current = 'Backspace';
         syncState();
+        if (inputRef.current) inputRef.current.value = '';
         return;
       }
 
       // Ignore modifiers and non-printable keys
       if (e.key.length === 1 && !e.ctrlKey && !e.metaKey && !e.altKey) {
         e.preventDefault();
-        engine.handleInput(e.key, now);
+        const normalized = normalizeChar(e.key);
+        engine.handleInput(normalized, now);
+        lastProcessedTimeRef.current = now;
+        lastProcessedCharRef.current = normalized;
         syncState();
+        if (inputRef.current) inputRef.current.value = '';
       }
     },
     [engine, syncState, restart]
+  );
+
+  // InputEvent handler for mobile / virtual keyboards (iOS Safari, Android Chrome, Gboard, SwiftKey)
+  const handleBeforeInput = useCallback(
+    (e: React.FormEvent<HTMLInputElement>) => {
+      const nativeEvent = e.nativeEvent as InputEvent;
+      if (!nativeEvent || engine.getStatus() === 'completed') return;
+
+      const now = performance.now();
+      const inputType = nativeEvent.inputType;
+      const data = nativeEvent.data;
+
+      // Handle Backspace on mobile keyboards
+      if (
+        inputType === 'deleteContentBackward' ||
+        inputType === 'deleteWordBackward' ||
+        inputType === 'deleteHardLineBackward'
+      ) {
+        // Prevent duplicate if already handled by keydown
+        if (lastProcessedCharRef.current === 'Backspace' && now - lastProcessedTimeRef.current < 50) {
+          return;
+        }
+        e.preventDefault();
+        engine.handleBackspace();
+        lastProcessedTimeRef.current = now;
+        lastProcessedCharRef.current = 'Backspace';
+        syncState();
+        if (inputRef.current) inputRef.current.value = '';
+        return;
+      }
+
+      // Handle text input on mobile keyboards
+      if (
+        inputType === 'insertText' ||
+        inputType === 'insertCompositionText' ||
+        inputType === 'insertReplacementText'
+      ) {
+        if (data) {
+          // Prevent duplicate if physical keydown already handled this exact character
+          if (
+            data.length === 1 &&
+            data === lastProcessedCharRef.current &&
+            now - lastProcessedTimeRef.current < 50
+          ) {
+            e.preventDefault();
+            if (inputRef.current) inputRef.current.value = '';
+            return;
+          }
+
+          e.preventDefault();
+          for (const rawChar of data) {
+            const normalized = normalizeChar(rawChar);
+            engine.handleInput(normalized, now);
+            lastProcessedCharRef.current = normalized;
+          }
+          lastProcessedTimeRef.current = now;
+          syncState();
+          if (inputRef.current) inputRef.current.value = '';
+        }
+      }
+    },
+    [engine, syncState]
+  );
+
+  // Safety net change handler for mobile devices where beforeinput default cannot be cancelled
+  const handleChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      const val = e.target.value;
+      if (!val || engine.getStatus() === 'completed') return;
+
+      const now = performance.now();
+      for (const rawChar of val) {
+        const normalized = normalizeChar(rawChar);
+        engine.handleInput(normalized, now);
+      }
+      syncState();
+      e.target.value = '';
+    },
+    [engine, syncState]
   );
 
   const handleCompositionStart = () => {
@@ -158,10 +260,12 @@ export function useTypingEngine(props: UseTypingEngineProps = {}) {
     isComposingRef.current = false;
     if (e.data && engine.getStatus() !== 'completed') {
       const now = performance.now();
-      for (const char of e.data) {
-        engine.handleInput(char, now);
+      for (const rawChar of e.data) {
+        const normalized = normalizeChar(rawChar);
+        engine.handleInput(normalized, now);
       }
       syncState();
+      if (inputRef.current) inputRef.current.value = '';
     }
   };
 
@@ -176,6 +280,8 @@ export function useTypingEngine(props: UseTypingEngineProps = {}) {
     duration,
     inputRef,
     handleKeyDown,
+    handleBeforeInput,
+    handleChange,
     handleCompositionStart,
     handleCompositionEnd,
     restart,

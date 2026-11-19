@@ -35,6 +35,20 @@ export const ResultsModal: React.FC<ResultsModalProps> = ({ metrics, onRestart, 
 • Consistency: ${metrics.cpm} CPM | ${metrics.incorrectChars} errors
 ${isPersonalBest ? '🏆 New Personal Best!\n' : ''}Check your typing speed free at: https://checktypingspeeds.com`;
 
+    // Native mobile share sheet (iOS Safari & Android Chrome)
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: 'CheckTypingSpeeds - My Typing Speed Result',
+          text: summaryText,
+          url: 'https://checktypingspeeds.com',
+        });
+        return;
+      } catch {
+        // User cancelled share or failed, proceed to clipboard copy
+      }
+    }
+
     if (navigator.clipboard) {
       try {
         await navigator.clipboard.writeText(summaryText);
