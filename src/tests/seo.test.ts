@@ -57,4 +57,12 @@ describe('SEO & Metadata Integrity', () => {
       }
     }
   });
+
+  it('includes a compliant Google Search Organization logo in structured data', () => {
+    const jsonString = generateStructuredData(ROUTE_LIST[0]);
+    const parsed = JSON.parse(jsonString);
+    const org = parsed.find((item: { '@type': string }) => item['@type'] === 'Organization');
+    expect(org).toBeDefined();
+    expect(org.logo).toBe('https://checktypingspeeds.com/favicon-512x512.png');
+  });
 });

@@ -24,7 +24,7 @@ export function generateStructuredData(route: RouteMeta): string {
       '@type': 'Organization',
       name: 'CheckTypingSpeeds',
       url: SITE_URL,
-      logo: `${SITE_URL}/logo.webp`,
+      logo: `${SITE_URL}/favicon-512x512.png`,
       contactPoint: {
         '@type': 'ContactPoint',
         email: 'support@checktypingspeeds.com',
