@@ -42,7 +42,6 @@ export const Header: React.FC<HeaderProps> = ({ currentPath = '/', onNavigate })
             alt="CheckTypingSpeeds TS Crest"
             width="36"
             height="36"
-            fetchpriority="high"
             decoding="async"
             className="w-9 h-9 rounded-lg object-cover shadow-sm border border-surface-light-border dark:border-surface-dark-border"
           />
