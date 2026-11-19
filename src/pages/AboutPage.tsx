@@ -22,8 +22,12 @@ export const AboutPage: React.FC = () => {
       {/* Brand Hero Artwork */}
       <div className="w-full max-w-3xl mx-auto mb-10 rounded-2xl overflow-hidden border border-surface-light-border dark:border-surface-dark-border shadow-md">
         <img
-          src="/logo.webp"
+          src="/logo-md.webp"
           alt="CheckTypingSpeeds TS Crest - Focus, Elevation and Precision"
+          width="512"
+          height="512"
+          loading="lazy"
+          decoding="async"
           className="w-full h-auto object-cover"
         />
       </div>

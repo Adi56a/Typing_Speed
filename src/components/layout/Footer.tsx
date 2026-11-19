@@ -21,8 +21,12 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
           <div className="space-y-3">
             <div className="flex items-center gap-2.5 font-bold text-lg text-slate-900 dark:text-white">
               <img
-                src="/logo.webp"
+                src="/logo-sm.webp"
                 alt="CheckTypingSpeeds TS Crest"
+                width="32"
+                height="32"
+                loading="lazy"
+                decoding="async"
                 className="w-8 h-8 rounded-lg object-cover shadow-sm border border-surface-light-border dark:border-surface-dark-border"
               />
               <span>

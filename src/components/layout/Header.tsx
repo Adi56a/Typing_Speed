@@ -38,8 +38,12 @@ export const Header: React.FC<HeaderProps> = ({ currentPath = '/', onNavigate })
           className="flex items-center gap-2.5 font-bold text-lg sm:text-xl tracking-tight text-slate-900 dark:text-white focus-ring rounded-md py-1"
         >
           <img
-            src="/logo.webp"
+            src="/logo-sm.webp"
             alt="CheckTypingSpeeds TS Crest"
+            width="36"
+            height="36"
+            fetchpriority="high"
+            decoding="async"
             className="w-9 h-9 rounded-lg object-cover shadow-sm border border-surface-light-border dark:border-surface-dark-border"
           />
           <span>

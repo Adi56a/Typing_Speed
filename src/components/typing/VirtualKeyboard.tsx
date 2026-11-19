@@ -187,7 +187,7 @@ export const VirtualKeyboard: React.FC<VirtualKeyboardProps> = ({ activeChar = '
               return (
                 <div
                   key={kIdx}
-                  className={`relative flex items-center justify-center rounded-md sm:rounded-lg text-xs sm:text-sm font-medium transition-all duration-150 h-8 sm:h-10 ${
+                  className={`relative flex items-center justify-center rounded-md sm:rounded-lg text-xs sm:text-sm font-medium transition-colors duration-75 h-8 sm:h-10 ${
                     k.width || 'w-7 sm:w-10'
                   } ${
                     isMatch

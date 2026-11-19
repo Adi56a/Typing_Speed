@@ -142,10 +142,10 @@ export const TypingWorkspaceShell: React.FC<TypingWorkspaceShellProps> = ({
     };
   }, [isFullscreen]);
 
-  // Keep focus on hidden input automatically
+  // Keep focus on hidden input automatically without triggering forced layout reflow
   useEffect(() => {
     if (inputRef.current) {
-      inputRef.current.focus();
+      inputRef.current.focus({ preventScroll: true });
     }
   }, [inputRef, status, isFullscreen]);
 
@@ -416,7 +416,7 @@ export const TypingWorkspaceShell: React.FC<TypingWorkspaceShellProps> = ({
                 );
               }
               return (
-                <span key={idx} className="text-slate-400 dark:text-slate-500">
+                <span key={idx} className="text-slate-500 dark:text-slate-400">
                   {item.char}
                 </span>
               );
