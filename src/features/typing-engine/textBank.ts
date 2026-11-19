@@ -150,6 +150,9 @@ export const CURATED_QUOTES: CuratedQuote[] = [
   { quote: 'Whether you are composing code, drafting legal briefs, or preparing for national qualification examinations, treat each session as a deliberate craft worthy of your deepest concentration and unwavering care.', source: 'Dedication to Excellence', difficulty: 'hard' },
 ];
 
+export const CANONICAL_INITIAL_TEXT =
+  'the system and program for modern computer keyboard practice builds accuracy and continuous progress every day in typing speed with rhythm discipline and steady cadence learning new words and practicing daily typing checks reinforces muscle memory and confidence on the keyboard focus on accuracy first and natural speed will follow effortlessly with deliberate practice every single time you sit down to test your typing performance';
+
 export interface TextOptions {
   mode: TestMode;
   difficulty?: TestDifficulty;

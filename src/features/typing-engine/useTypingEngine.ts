@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { TypingEngine, CharState, EngineStatus, WpmSample } from './engine';
-import { generateTestText, TextOptions } from './textBank';
+import { generateTestText, TextOptions, CANONICAL_INITIAL_TEXT } from './textBank';
 import { TestDuration, TestMode, TestDifficulty, TypingMetrics } from '../../types';
 
 export interface UseTypingEngineProps {
@@ -21,7 +21,11 @@ export function useTypingEngine(props: UseTypingEngineProps = {}) {
   } = props;
 
   const [engine, setEngine] = useState<TypingEngine>(() => {
-    const initialText = generateTestText({ mode, difficulty, punctuation, numbers, wordCount: 80 });
+    // Deterministic canonical text for initial render to guarantee 100% SSR-client hydration match and 0 CLS
+    const isDefaultInitial = mode === 'words' && !punctuation && !numbers;
+    const initialText = isDefaultInitial
+      ? CANONICAL_INITIAL_TEXT
+      : generateTestText({ mode, difficulty, punctuation, numbers, wordCount: 80 });
     return new TypingEngine(initialText, duration);
   });
 

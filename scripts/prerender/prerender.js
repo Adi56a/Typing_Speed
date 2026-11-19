@@ -20,14 +20,8 @@ async function prerender() {
     throw new Error(`Server entry not found at ${serverEntryPath}. Run vite build --ssr first.`);
   }
 
-  let template;
-  const backupTemplatePath = path.resolve(distDir, '__template.html');
-  if (fs.existsSync(backupTemplatePath)) {
-    template = fs.readFileSync(backupTemplatePath, 'utf-8');
-  } else {
-    template = fs.readFileSync(templatePath, 'utf-8');
-    fs.writeFileSync(backupTemplatePath, template, 'utf-8');
-  }
+  // Always read the freshly built template from vite build
+  const template = fs.readFileSync(templatePath, 'utf-8');
 
   // Pre-strip fallback title and meta description so each route injects its exact title/meta
   const cleanTemplate = template

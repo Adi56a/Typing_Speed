@@ -1,40 +1,41 @@
 <!doctype html>
-<html lang="en" class="dark">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="apple-touch-icon" href="/logo.webp" />
+    <link rel="apple-touch-icon" href="/logo-md.webp" />
     <link rel="manifest" href="/manifest.webmanifest" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#131716" media="(prefers-color-scheme: dark)" />
     <meta name="theme-color" content="#f8f6f1" media="(prefers-color-scheme: light)" />
     <title>Check Typing Speeds | Free Online Typing Speed Test (WPM)</title>
     <meta name="description" content="Check your typing speed and accuracy in WPM with CheckTypingSpeeds. Fast, ad-free online typing test with 1-min, 2-min, 5-min checks and instant results." />
+    <!-- Immediate theme resolution script: avoids theme flash, forced reflow, and visual layout shift -->
+    <script>
+      (function () {
+        try {
+          var key = 'typing_platform_theme_preference';
+          var stored = localStorage.getItem(key);
+          var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+          if (stored === 'dark' || (!stored && prefersDark) || (stored === 'system' && prefersDark)) {
+            document.documentElement.classList.add('dark');
+          } else {
+            document.documentElement.classList.remove('dark');
+          }
+        } catch (e) {}
+      })();
+    </script>
     <!-- Preconnect to Google Fonts for Inter and JetBrains Mono -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <!-- Non-render-blocking asynchronous font loading -->
-    <link
-      rel="preload"
-      as="style"
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap"
-    />
     <link
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap"
-      media="print"
-      onload="this.media='all'"
     />
-    <noscript>
-      <link
-        rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap"
-      />
-    </noscript>
     <!-- Initial SSR / Prerender Injections -->
     <!--app-head-->
   </head>
-  <body class="bg-surface-light text-slate-900 dark:bg-surface-dark dark:text-slate-100 min-h-screen font-sans antialiased selection:bg-brand-500 selection:text-white transition-colors duration-200">
+  <body class="bg-surface-light text-slate-900 dark:bg-surface-dark dark:text-slate-100 min-h-screen font-sans antialiased selection:bg-brand-500 selection:text-white">
     <div id="root"><!--app-html--></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>

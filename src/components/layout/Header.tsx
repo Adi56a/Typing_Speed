@@ -29,7 +29,7 @@ export const Header: React.FC<HeaderProps> = ({ currentPath = '/', onNavigate })
   };
 
   return (
-    <header className="sticky top-0 z-40 w-full backdrop-blur-md bg-white/80 dark:bg-surface-dark/80 border-b border-surface-light-border dark:border-surface-dark-border transition-colors">
+    <header className="sticky top-0 z-40 w-full backdrop-blur-md bg-white/80 dark:bg-surface-dark/80 border-b border-surface-light-border dark:border-surface-dark-border">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
         {/* Logo */}
         <a
