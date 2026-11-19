@@ -18,8 +18,10 @@
 /manifest.webmanifest
   Cache-Control: public, max-age=86400
 
-# HTML pages and canonical routes (always fresh for search engines and users)
+# HTML pages, verification files, and canonical routes (always fresh for search engines and users)
 /*.html
+  Cache-Control: public, max-age=0, must-revalidate
+/*.xml
   Cache-Control: public, max-age=0, must-revalidate
 
 # Global security & privacy headers

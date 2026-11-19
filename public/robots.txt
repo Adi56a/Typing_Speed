@@ -7,5 +7,8 @@ Allow: /
 User-agent: Googlebot-Image
 Allow: /
 
+User-agent: Bingbot
+Allow: /
+
 # Sitemap
 Sitemap: https://checktypingspeeds.com/sitemap.xml
