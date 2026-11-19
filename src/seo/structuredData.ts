@@ -12,12 +12,7 @@ export function generateStructuredData(route: RouteMeta): string {
       alternateName: ['Check Typing Speeds', 'CheckTypingSpeeds.com', 'Check Typing Speed'],
       url: SITE_URL,
       description: 'Check your typing speed and accuracy in WPM with clean, ad-free online typing tests.',
-      image: `${SITE_URL}/logo.webp`,
-      potentialAction: {
-        '@type': 'SearchAction',
-        target: `${SITE_URL}/typing-test/{search_term_string}/`,
-        'query-input': 'required name=search_term_string',
-      },
+      image: `${SITE_URL}/favicon-512x512.png`,
     },
     {
       '@context': 'https://schema.org',

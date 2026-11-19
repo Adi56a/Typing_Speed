@@ -30,5 +30,6 @@ export interface RouteMeta {
   canonical?: string;
   presetDuration?: TestDuration;
   presetMode?: TestMode;
+  noIndex?: boolean;
 }
 

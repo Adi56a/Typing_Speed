@@ -20,14 +20,21 @@ export function render(url: string) {
 
   const structuredData = generateStructuredData(route);
   const canonicalUrl = route.canonical || `${SITE_URL}${route.path}`;
+  const isNoIndex = route.path === '/404/' || route.noIndex;
+  const robotsDirective = isNoIndex
+    ? 'noindex, nofollow'
+    : 'index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1';
 
   const head = `
     <title>${route.title}</title>
     <meta name="description" content="${route.description}" />
     <link rel="canonical" href="${canonicalUrl}" />
+    <meta name="robots" content="${robotsDirective}" />
     
-    <!-- Open Graph / Facebook -->
+    <!-- Open Graph / Social (Google, Bing, Teams, LinkedIn) -->
     <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="CheckTypingSpeeds" />
+    <meta property="og:locale" content="en_US" />
     <meta property="og:url" content="${canonicalUrl}" />
     <meta property="og:title" content="${route.title}" />
     <meta property="og:description" content="${route.description}" />
@@ -35,7 +42,7 @@ export function render(url: string) {
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="670" />
     
-    <!-- Twitter -->
+    <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:url" content="${canonicalUrl}" />
     <meta name="twitter:title" content="${route.title}" />
