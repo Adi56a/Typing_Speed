@@ -24,18 +24,15 @@ interface TypingWorkspaceShellProps {
 
 export const TypingWorkspaceShell: React.FC<TypingWorkspaceShellProps> = ({
   initialDuration = 60,
-  initialMode = 'time',
+  initialMode = 'words',
   initialDifficulty = 'medium',
 }) => {
   const [duration, setDuration] = useState<TestDuration>(initialDuration);
   const [mode, setMode] = useState<TestMode>(initialMode);
-  const [wordCount, setWordCount] = useState<number>(50);
   const [difficulty, setDifficulty] = useState<TestDifficulty>(initialDifficulty);
   const [withPunctuation, setWithPunctuation] = useState(false);
   const [withNumbers, setWithNumbers] = useState(false);
   const [isFullscreen, setIsFullscreen] = useState(false);
-  const [showCustomModal, setShowCustomModal] = useState<boolean>(false);
-  const [customInputText, setCustomInputText] = useState<string>('');
   const [isInputFocused, setIsInputFocused] = useState<boolean>(false);
   const [showKeyboard, setShowKeyboard] = useState<boolean>(() => {
     if (typeof window !== 'undefined') {
@@ -70,7 +67,6 @@ export const TypingWorkspaceShell: React.FC<TypingWorkspaceShellProps> = ({
     difficulty,
     punctuation: withPunctuation,
     numbers: withNumbers,
-    wordCount,
   });
 
   const focusInput = useCallback(() => {
@@ -112,23 +108,7 @@ export const TypingWorkspaceShell: React.FC<TypingWorkspaceShellProps> = ({
 
   const handleModeChange = (m: TestMode) => {
     setMode(m);
-    if (m === 'custom') {
-      setShowCustomModal(true);
-      return;
-    }
-    restart({ mode: m, wordCount: m === 'words' ? wordCount : 60 });
-  };
-
-  const handleWordCountChange = (count: number) => {
-    setWordCount(count);
-    restart({ mode: 'words', wordCount: count });
-  };
-
-  const handleApplyCustomText = () => {
-    if (customInputText.trim().length > 0) {
-      restart({ customText: customInputText.trim(), mode: 'custom' });
-      setShowCustomModal(false);
-    }
+    restart({ mode: m });
   };
 
   const handleDifficultyChange = (diff: TestDifficulty) => {
@@ -233,16 +213,6 @@ export const TypingWorkspaceShell: React.FC<TypingWorkspaceShellProps> = ({
             {/* Mode Selector */}
             <div className="flex items-center rounded-xl bg-surface-light-muted dark:bg-surface-dark-muted p-1 text-xs font-medium">
               <button
-                onClick={() => handleModeChange('time')}
-                className={`px-3 py-1.5 rounded-lg transition-all ${
-                  mode === 'time'
-                    ? 'bg-white dark:bg-surface-dark-card text-brand-600 dark:text-brand-400 font-semibold shadow-sm'
-                    : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
-                }`}
-              >
-                Time
-              </button>
-              <button
                 onClick={() => handleModeChange('words')}
                 className={`px-3 py-1.5 rounded-lg transition-all ${
                   mode === 'words'
@@ -260,38 +230,9 @@ export const TypingWorkspaceShell: React.FC<TypingWorkspaceShellProps> = ({
                     : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
                 }`}
               >
-                Quotes
-              </button>
-              <button
-                onClick={() => handleModeChange('custom')}
-                className={`px-3 py-1.5 rounded-lg transition-all ${
-                  mode === 'custom'
-                    ? 'bg-white dark:bg-surface-dark-card text-brand-600 dark:text-brand-400 font-semibold shadow-sm'
-                    : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
-                }`}
-              >
-                Custom
+                Statements
               </button>
             </div>
-
-            {/* Word Count Selector (When mode === 'words') */}
-            {mode === 'words' && (
-              <div className="flex items-center rounded-xl bg-surface-light-muted dark:bg-surface-dark-muted p-1 text-xs font-mono font-medium">
-                {[10, 25, 50, 100].map((count) => (
-                  <button
-                    key={count}
-                    onClick={() => handleWordCountChange(count)}
-                    className={`px-2 py-1 rounded-md transition-all ${
-                      wordCount === count
-                        ? 'bg-brand-600 text-white font-bold shadow-xs'
-                        : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
-                    }`}
-                  >
-                    {count}
-                  </button>
-                ))}
-              </div>
-            )}
 
             {/* Difficulty Selector: Easy / Medium / Hard */}
             <div className="flex items-center rounded-xl bg-surface-light-muted dark:bg-surface-dark-muted p-1 text-xs font-medium">
@@ -312,7 +253,7 @@ export const TypingWorkspaceShell: React.FC<TypingWorkspaceShellProps> = ({
             </div>
 
             {/* Modifiers (Punctuation / Numbers) */}
-            {(mode === 'words' || mode === 'time') && (
+            {mode === 'words' && (
               <div className="hidden sm:flex items-center gap-1 text-xs">
                 <button
                   onClick={togglePunctuation}
@@ -341,23 +282,21 @@ export const TypingWorkspaceShell: React.FC<TypingWorkspaceShellProps> = ({
           {/* Right: Duration Presets & View Controls (Fullscreen + Keyboard) */}
           <div className="flex items-center gap-2">
             {/* Duration Selector */}
-            {mode === 'time' && (
-              <div className="flex items-center gap-1 rounded-xl bg-surface-light-muted dark:bg-surface-dark-muted p-1 text-xs font-mono font-medium">
-                {durations.map((d) => (
-                  <button
-                    key={d}
-                    onClick={() => handleDurationChange(d)}
-                    className={`px-2.5 py-1.5 rounded-lg transition-all ${
-                      duration === d
-                        ? 'bg-brand-600 text-white font-bold shadow-sm'
-                        : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
-                    }`}
-                  >
-                    {d >= 60 ? `${d / 60}m` : `${d}s`}
-                  </button>
-                ))}
-              </div>
-            )}
+            <div className="flex items-center gap-1 rounded-xl bg-surface-light-muted dark:bg-surface-dark-muted p-1 text-xs font-mono font-medium">
+              {durations.map((d) => (
+                <button
+                  key={d}
+                  onClick={() => handleDurationChange(d)}
+                  className={`px-2.5 py-1.5 rounded-lg transition-all ${
+                    duration === d
+                      ? 'bg-brand-600 text-white font-bold shadow-sm'
+                      : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
+                  }`}
+                >
+                  {d >= 60 ? `${d / 60}m` : `${d}s`}
+                </button>
+              ))}
+            </div>
 
             {/* View Controls: Keyboard Guide & Fullscreen */}
             <div className="flex items-center gap-1 border-l border-surface-light-border dark:border-surface-dark-border pl-2">
@@ -616,43 +555,6 @@ export const TypingWorkspaceShell: React.FC<TypingWorkspaceShellProps> = ({
           </div>
         )}
       </div>
-
-      {/* Custom Text Input Modal */}
-      {showCustomModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-200">
-          <div className="w-full max-w-lg bg-white dark:bg-surface-dark-card border border-surface-light-border dark:border-surface-dark-border rounded-2xl p-6 shadow-2xl space-y-4">
-            <h3 className="text-lg font-bold text-slate-900 dark:text-white">
-              Custom Text Practice
-            </h3>
-            <p className="text-xs text-slate-500 dark:text-slate-400">
-              Paste any custom interview prompt, article paragraph, or exam passage to practice:
-            </p>
-            <textarea
-              value={customInputText}
-              onChange={(e) => setCustomInputText(e.target.value)}
-              placeholder="Paste or type your custom text here..."
-              className="w-full h-36 p-3 font-mono text-xs sm:text-sm rounded-xl border border-slate-200 dark:border-surface-dark-border bg-slate-50 dark:bg-surface-dark-muted text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-brand-500 resize-none leading-relaxed"
-            />
-            <div className="flex items-center justify-end gap-2 pt-2">
-              <button
-                type="button"
-                onClick={() => setShowCustomModal(false)}
-                className="px-4 py-2 rounded-lg border border-surface-light-border dark:border-surface-dark-border text-xs font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-surface-dark-muted"
-              >
-                Cancel
-              </button>
-              <button
-                type="button"
-                onClick={handleApplyCustomText}
-                disabled={!customInputText.trim()}
-                className="px-4 py-2 rounded-lg bg-brand-600 hover:bg-brand-500 disabled:opacity-50 text-white text-xs font-semibold shadow-sm"
-              >
-                Load Custom Text
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
 
       {/* Completion Results Modal */}
       {status === 'completed' && (

@@ -88,12 +88,48 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
             </ul>
           </div>
 
-          {/* Practice & Tools */}
+          {/* Practice, Lessons & Tools */}
           <div>
             <h3 className="text-xs font-semibold uppercase tracking-wider text-slate-900 dark:text-white mb-3">
-              Practice & Tools
+              Practice & Guides
             </h3>
             <ul className="space-y-2 text-xs">
+              <li>
+                <a
+                  href="/typing-lessons/"
+                  onClick={(e) => handleLinkClick(e, '/typing-lessons/')}
+                  className="text-slate-600 dark:text-slate-400 hover:text-brand-600 dark:hover:text-brand-400 transition-colors"
+                >
+                  Typing Lessons & Academy
+                </a>
+              </li>
+              <li>
+                <a
+                  href="/touch-typing/"
+                  onClick={(e) => handleLinkClick(e, '/touch-typing/')}
+                  className="text-slate-600 dark:text-slate-400 hover:text-brand-600 dark:hover:text-brand-400 transition-colors"
+                >
+                  Touch Typing Guide
+                </a>
+              </li>
+              <li>
+                <a
+                  href="/typing-speed-chart/"
+                  onClick={(e) => handleLinkClick(e, '/typing-speed-chart/')}
+                  className="text-slate-600 dark:text-slate-400 hover:text-brand-600 dark:hover:text-brand-400 transition-colors"
+                >
+                  Typing Speed Percentile Chart
+                </a>
+              </li>
+              <li>
+                <a
+                  href="/ssc-typing-test/"
+                  onClick={(e) => handleLinkClick(e, '/ssc-typing-test/')}
+                  className="text-slate-600 dark:text-slate-400 hover:text-brand-600 dark:hover:text-brand-400 transition-colors"
+                >
+                  SSC Exam Typing Simulator
+                </a>
+              </li>
               <li>
                 <a
                   href="/typing-practice/"
@@ -118,7 +154,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
                   onClick={(e) => handleLinkClick(e, '/wpm-calculator/')}
                   className="text-slate-600 dark:text-slate-400 hover:text-brand-600 dark:hover:text-brand-400 transition-colors"
                 >
-                  WPM Calculator
+                  WPM & KDPH Calculator
                 </a>
               </li>
               <li>
