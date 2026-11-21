@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { TypingMetrics } from '../../types';
 import { getSpeedRating } from '../typing-engine/scoring';
 import { saveResult, getPersonalBests } from './localHistory';
-import { RotateCcw, Share2, Check, Award, ArrowRight, Target, Trophy } from 'lucide-react';
+import { RotateCcw, Share2, Check, Award, Target, Trophy, RefreshCw } from 'lucide-react';
 import { Button } from '../../components/ui/Button';
 
 export interface ResultsModalProps {
@@ -170,13 +170,23 @@ ${isPersonalBest ? '🏆 New Personal Best!\n' : ''}Check your typing speed free
         {/* Action Buttons */}
         <div className="flex flex-col sm:flex-row items-center justify-between gap-3 pt-2">
           <div className="flex items-center gap-2 w-full sm:w-auto">
-            <Button onClick={onRestart} variant="primary" className="flex-1 sm:flex-none gap-1.5">
+            <Button
+              type="button"
+              onClick={onRestart}
+              variant="primary"
+              className="flex-1 sm:flex-none gap-1.5 cursor-pointer"
+            >
               <RotateCcw className="w-4 h-4" />
               <span>Retry Test</span>
             </Button>
-            <Button onClick={onNewTest} variant="secondary" className="flex-1 sm:flex-none gap-1.5">
-              <span>New Passage</span>
-              <ArrowRight className="w-4 h-4" />
+            <Button
+              type="button"
+              onClick={onNewTest}
+              variant="secondary"
+              className="flex-1 sm:flex-none gap-1.5 cursor-pointer"
+            >
+              <RefreshCw className="w-4 h-4" />
+              <span>New Test</span>
             </Button>
           </div>
 

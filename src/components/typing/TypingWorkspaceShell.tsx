@@ -409,93 +409,98 @@ export const TypingWorkspaceShell: React.FC<TypingWorkspaceShellProps> = ({
           </button>
         </div>
 
-        {/* Typing Surface: Distraction-free with Full-Surface Touch Input */}
+        {/* Typing Surface: Distraction-free with Scoped Touch Input */}
         <div
-          onClick={focusInput}
-          className={`relative rounded-2xl bg-white dark:bg-surface-dark-card border-2 p-4 sm:p-8 shadow-sm transition-all cursor-text ${
+          className={`rounded-2xl bg-white dark:bg-surface-dark-card border-2 p-4 sm:p-8 shadow-sm transition-all ${
             isInputFocused
               ? 'border-brand-500 ring-2 ring-brand-500/20 dark:border-brand-500'
               : 'border-surface-light-border dark:border-surface-dark-border'
           }`}
         >
-          {/* Hidden full-coverage accessible input:
-              - 16px font-size prevents iOS Safari auto-zoom
-              - Full inset-0 overlay guarantees native touch focus on iOS & Android
-              - onBeforeInput & onChange capture virtual keyboard text & backspace */}
-          <input
-            ref={inputRef}
-            type="text"
-            className="absolute inset-0 w-full h-full opacity-0 cursor-text z-10 text-base"
-            style={{ fontSize: '16px' }}
-            autoCapitalize="none"
-            autoCorrect="off"
-            autoComplete="off"
-            spellCheck={false}
-            inputMode="text"
-            enterKeyHint="done"
-            aria-label="Typing test input area. Tap anywhere here to open your mobile keyboard."
-            onKeyDown={handleKeyDown}
-            onBeforeInput={handleBeforeInput}
-            onChange={handleChange}
-            onCompositionStart={handleCompositionStart}
-            onCompositionEnd={handleCompositionEnd}
-            onFocus={() => setIsInputFocused(true)}
-            onBlur={() => setIsInputFocused(false)}
-          />
-
-          {/* Character-by-Character Rendering with Modern Vertical Caret */}
+          {/* Passage Container with Scoped Input Overlay */}
           <div
-            ref={passageContainerRef}
-            className="font-mono text-base sm:text-2xl sm:leading-relaxed leading-relaxed select-none tracking-wide min-h-[140px] max-h-[220px] sm:max-h-[300px] overflow-y-auto"
+            onClick={focusInput}
+            className="relative cursor-text"
           >
-            {chars.map((item, idx) => {
-              if (item.status === 'correct') {
+            {/* Hidden full-coverage accessible input scoped strictly to the text passage:
+                - 16px font-size prevents iOS Safari auto-zoom
+                - Absolute overlay guarantees native touch focus on iOS & Android
+                - onBeforeInput & onChange capture virtual keyboard text & backspace */}
+            <input
+              ref={inputRef}
+              type="text"
+              className="absolute inset-0 w-full h-full opacity-0 cursor-text z-10 text-base"
+              style={{ fontSize: '16px' }}
+              autoCapitalize="none"
+              autoCorrect="off"
+              autoComplete="off"
+              spellCheck={false}
+              inputMode="text"
+              enterKeyHint="done"
+              aria-label="Typing test input area. Tap anywhere here to open your mobile keyboard."
+              onKeyDown={handleKeyDown}
+              onBeforeInput={handleBeforeInput}
+              onChange={handleChange}
+              onCompositionStart={handleCompositionStart}
+              onCompositionEnd={handleCompositionEnd}
+              onFocus={() => setIsInputFocused(true)}
+              onBlur={() => setIsInputFocused(false)}
+            />
+
+            {/* Character-by-Character Rendering with Modern Vertical Caret */}
+            <div
+              ref={passageContainerRef}
+              className="font-mono text-base sm:text-2xl sm:leading-relaxed leading-relaxed select-none tracking-wide min-h-[140px] max-h-[220px] sm:max-h-[300px] overflow-y-auto"
+            >
+              {chars.map((item, idx) => {
+                if (item.status === 'correct') {
+                  return (
+                    <span
+                      key={idx}
+                      className={
+                        item.hadError
+                          ? 'text-ochre-700 dark:text-ochre-400 font-medium'
+                          : 'text-sage-700 dark:text-sage-400 font-medium'
+                      }
+                      title={item.hadError ? 'Corrected typo' : undefined}
+                    >
+                      {item.char}
+                    </span>
+                  );
+                }
+                if (item.status === 'incorrect') {
+                  return (
+                    <span
+                      key={idx}
+                      className="text-terracotta-700 dark:text-terracotta-400 bg-terracotta-100/70 dark:bg-terracotta-950/70 underline decoration-terracotta-500 font-medium"
+                    >
+                      {item.char === ' ' ? '␣' : item.char}
+                    </span>
+                  );
+                }
+                if (item.status === 'current') {
+                  return (
+                    <span
+                      key={idx}
+                      ref={currentCaretRef}
+                      className="relative text-slate-900 dark:text-white font-semibold"
+                    >
+                      <span className="caret-blinker" aria-hidden="true" />
+                      {item.char}
+                    </span>
+                  );
+                }
                 return (
-                  <span
-                    key={idx}
-                    className={
-                      item.hadError
-                        ? 'text-ochre-700 dark:text-ochre-400 font-medium'
-                        : 'text-sage-700 dark:text-sage-400 font-medium'
-                    }
-                    title={item.hadError ? 'Corrected typo' : undefined}
-                  >
+                  <span key={idx} className="text-slate-500 dark:text-slate-400">
                     {item.char}
                   </span>
                 );
-              }
-              if (item.status === 'incorrect') {
-                return (
-                  <span
-                    key={idx}
-                    className="text-terracotta-700 dark:text-terracotta-400 bg-terracotta-100/70 dark:bg-terracotta-950/70 underline decoration-terracotta-500 font-medium"
-                  >
-                    {item.char === ' ' ? '␣' : item.char}
-                  </span>
-                );
-              }
-              if (item.status === 'current') {
-                return (
-                  <span
-                    key={idx}
-                    ref={currentCaretRef}
-                    className="relative text-slate-900 dark:text-white font-semibold"
-                  >
-                    <span className="caret-blinker" aria-hidden="true" />
-                    {item.char}
-                  </span>
-                );
-              }
-              return (
-                <span key={idx} className="text-slate-500 dark:text-slate-400">
-                  {item.char}
-                </span>
-              );
-            })}
+              })}
+            </div>
           </div>
 
-          {/* Helper Footer: Status, Shortcuts & Reset */}
-          <div className="mt-4 pt-3 sm:mt-6 sm:pt-4 border-t border-surface-light-border dark:border-surface-dark-border flex flex-col sm:flex-row items-center justify-between gap-2.5 text-xs text-slate-500 dark:text-slate-400">
+          {/* Helper Footer: Status, Shortcuts & Reset Buttons */}
+          <div className="relative z-20 mt-4 pt-3 sm:mt-6 sm:pt-4 border-t border-surface-light-border dark:border-surface-dark-border flex flex-col sm:flex-row items-center justify-between gap-2.5 text-xs text-slate-500 dark:text-slate-400">
             <div className="flex items-center gap-2 text-center sm:text-left">
               <span className="w-2 h-2 rounded-full bg-brand-500 flex-shrink-0" />
               <span className="text-[11px] sm:text-xs">
@@ -507,29 +512,38 @@ export const TypingWorkspaceShell: React.FC<TypingWorkspaceShellProps> = ({
             <div className="flex items-center gap-1.5 sm:gap-2">
               {!isInputFocused && (
                 <button
-                  onClick={focusInput}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    focusInput();
+                  }}
                   type="button"
-                  className="sm:hidden inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-brand-600 hover:bg-brand-500 text-white font-medium text-xs shadow-sm transition-colors"
+                  className="sm:hidden inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-brand-600 hover:bg-brand-500 text-white font-medium text-xs shadow-sm transition-colors cursor-pointer"
                 >
                   <KeyboardIcon className="w-3.5 h-3.5" />
                   <span>Open Keyboard</span>
                 </button>
               )}
               <button
-                onClick={() => handleRestart()}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleRestart({ keepSameText: true });
+                }}
                 type="button"
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-surface-light-border dark:border-surface-dark-border hover:bg-surface-light-muted dark:hover:bg-surface-dark-muted font-medium text-slate-700 dark:text-slate-300 transition-colors"
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-surface-light-border dark:border-surface-dark-border hover:bg-surface-light-muted dark:hover:bg-surface-dark-muted font-medium text-slate-700 dark:text-slate-300 transition-colors cursor-pointer"
               >
                 <RotateCcw className="w-3.5 h-3.5" />
                 <span>Retry</span>
               </button>
               <button
-                onClick={() => handleRestart({})}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleRestart({});
+                }}
                 type="button"
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-surface-light-border dark:border-surface-dark-border hover:bg-surface-light-muted dark:hover:bg-surface-dark-muted font-medium text-slate-700 dark:text-slate-300 transition-colors"
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-surface-light-border dark:border-surface-dark-border hover:bg-surface-light-muted dark:hover:bg-surface-dark-muted font-medium text-slate-700 dark:text-slate-300 transition-colors cursor-pointer"
               >
                 <RefreshCw className="w-3.5 h-3.5" />
-                <span>New Text</span>
+                <span>New Test</span>
               </button>
             </div>
           </div>

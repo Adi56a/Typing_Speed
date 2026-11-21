@@ -36,6 +36,9 @@ export function useTypingEngine(props: UseTypingEngineProps = {}) {
     return new TypingEngine(initialText, duration);
   });
 
+  const engineRef = useRef<TypingEngine>(engine);
+  engineRef.current = engine;
+
   const [status, setStatus] = useState<EngineStatus>('ready');
   const [chars, setChars] = useState<CharState[]>(() => engine.getChars());
   const [currentIndex, setCurrentIndex] = useState<number>(0);
@@ -69,7 +72,7 @@ export function useTypingEngine(props: UseTypingEngineProps = {}) {
 
   // Restart or generate new test
   const restart = useCallback(
-    (customOptions?: Partial<TextOptions & { duration: TestDuration; customText?: string }>) => {
+    (customOptions?: Partial<TextOptions & { duration: TestDuration; customText?: string; keepSameText?: boolean }>) => {
       const activeDuration = customOptions?.duration || duration;
       const activeMode = customOptions?.mode || mode;
       const activeDiff = customOptions?.difficulty || difficulty;
@@ -78,7 +81,9 @@ export function useTypingEngine(props: UseTypingEngineProps = {}) {
       const activeWordCount = customOptions?.wordCount || wordCount || 60;
 
       let newText: string;
-      if (customOptions?.customText) {
+      if (customOptions?.keepSameText) {
+        newText = engineRef.current ? engineRef.current.getTargetText() : CANONICAL_INITIAL_TEXT;
+      } else if (customOptions?.customText) {
         newText = customOptions.customText;
       } else {
         newText = generateTestText({
@@ -91,6 +96,7 @@ export function useTypingEngine(props: UseTypingEngineProps = {}) {
       }
 
       const newEngine = new TypingEngine(newText, activeDuration);
+      engineRef.current = newEngine;
       setEngine(newEngine);
       setStatus('ready');
       setChars(newEngine.getChars());
