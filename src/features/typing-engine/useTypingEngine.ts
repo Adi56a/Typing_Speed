@@ -9,23 +9,30 @@ export interface UseTypingEngineProps {
   difficulty?: TestDifficulty;
   punctuation?: boolean;
   numbers?: boolean;
+  wordCount?: number;
+  customText?: string;
 }
 
 export function useTypingEngine(props: UseTypingEngineProps = {}) {
   const {
     duration = 60,
-    mode = 'words',
+    mode = 'time',
     difficulty = 'easy',
     punctuation = false,
     numbers = false,
+    wordCount = 60,
+    customText,
   } = props;
 
   const [engine, setEngine] = useState<TypingEngine>(() => {
     // Deterministic canonical text for initial render to guarantee 100% SSR-client hydration match and 0 CLS
-    const isDefaultInitial = mode === 'words' && !punctuation && !numbers;
+    if (customText) {
+      return new TypingEngine(customText, duration);
+    }
+    const isDefaultInitial = (mode === 'time' || mode === 'words') && !punctuation && !numbers && wordCount === 60;
     const initialText = isDefaultInitial
       ? CANONICAL_INITIAL_TEXT
-      : generateTestText({ mode, difficulty, punctuation, numbers, wordCount: 80 });
+      : generateTestText({ mode, difficulty, punctuation, numbers, wordCount });
     return new TypingEngine(initialText, duration);
   });
 
@@ -62,20 +69,26 @@ export function useTypingEngine(props: UseTypingEngineProps = {}) {
 
   // Restart or generate new test
   const restart = useCallback(
-    (customOptions?: Partial<TextOptions & { duration: TestDuration }>) => {
+    (customOptions?: Partial<TextOptions & { duration: TestDuration; customText?: string }>) => {
       const activeDuration = customOptions?.duration || duration;
       const activeMode = customOptions?.mode || mode;
       const activeDiff = customOptions?.difficulty || difficulty;
       const activePunct = customOptions?.punctuation !== undefined ? customOptions.punctuation : punctuation;
       const activeNums = customOptions?.numbers !== undefined ? customOptions.numbers : numbers;
+      const activeWordCount = customOptions?.wordCount || wordCount || 60;
 
-      const newText = generateTestText({
-        mode: activeMode,
-        difficulty: activeDiff,
-        punctuation: activePunct,
-        numbers: activeNums,
-        wordCount: 80,
-      });
+      let newText: string;
+      if (customOptions?.customText) {
+        newText = customOptions.customText;
+      } else {
+        newText = generateTestText({
+          mode: activeMode,
+          difficulty: activeDiff,
+          punctuation: activePunct,
+          numbers: activeNums,
+          wordCount: activeWordCount,
+        });
+      }
 
       const newEngine = new TypingEngine(newText, activeDuration);
       setEngine(newEngine);
@@ -91,7 +104,7 @@ export function useTypingEngine(props: UseTypingEngineProps = {}) {
         inputRef.current.focus();
       }
     },
-    [duration, mode, difficulty, punctuation, numbers]
+    [duration, mode, difficulty, punctuation, numbers, wordCount]
   );
 
   // Run monotonic clock loop while engine is running

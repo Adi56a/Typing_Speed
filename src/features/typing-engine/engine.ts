@@ -33,6 +33,7 @@ export class TypingEngine {
   private totalTypedCount: number = 0;
   private wpmHistory: WpmSample[] = [];
   private lastSampleSecond: number = -1;
+  private mistakeKeysCount: Record<string, number> = {};
 
   // Word-level tracking
   private currentWordIndex: number = 0;
@@ -78,6 +79,13 @@ export class TypingEngine {
     return this.wpmHistory;
   }
 
+  public getWeakKeys(): string[] {
+    return Object.entries(this.mistakeKeysCount)
+      .sort((a, b) => b[1] - a[1])
+      .slice(0, 3)
+      .map(([k]) => k.toUpperCase());
+  }
+
   /**
    * Processes a single incoming character.
    * Monotonic timestamp currentTime should be performance.now() or equivalent.
@@ -121,6 +129,10 @@ export class TypingEngine {
       this.uncorrectedErrorsCount++;
       this.currentWordHadError = true;
 
+      // Track weak key
+      const keyNormalized = expectedChar === ' ' ? 'SPACE' : expectedChar.toLowerCase();
+      this.mistakeKeysCount[keyNormalized] = (this.mistakeKeysCount[keyNormalized] || 0) + 1;
+
       this.chars[this.currentIndex] = {
         char: expectedChar,
         status: 'incorrect',
@@ -158,9 +170,6 @@ export class TypingEngine {
 
   /**
    * Handles backspace action
-   * Notice: Backspacing allows correcting the text on-screen,
-   * but the historical mistake count remains logged so accuracy and Net WPM
-   * accurately reflect that an error was committed!
    */
   public handleBackspace(): void {
     if (this.status !== 'running' || this.currentIndex <= 0) return;
@@ -259,12 +268,14 @@ export class TypingEngine {
     return calculateTypingMetrics({
       totalCharsTyped: this.totalTypedCount,
       correctChars: this.correctCount,
-      incorrectChars: this.totalMistakesCount, // Cumulative errors committed
+      incorrectChars: this.totalMistakesCount,
       elapsedMs,
       durationSeconds: this.durationSeconds,
       uncorrectedErrors: this.uncorrectedErrorsCount,
       wordsWithErrors: this.wordsWithErrors + (this.currentWordHadError ? 1 : 0),
       cleanWords: this.cleanWords,
+      wpmHistory: this.wpmHistory,
+      weakKeys: this.getWeakKeys(),
     });
   }
 }

@@ -212,6 +212,87 @@ export const HomePage: React.FC<HomePageProps> = ({ initialDuration = 60, onNavi
         </div>
       </section>
 
+      {/* Platform Learning & Exam Pathways */}
+      <section className="w-full max-w-5xl mx-auto px-4 sm:px-6 mb-16">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <a
+            href="/ssc-typing-test/"
+            onClick={(e) => handleLinkClick(e, '/ssc-typing-test/')}
+            className="p-5 rounded-2xl bg-white dark:bg-surface-dark-card border border-surface-light-border dark:border-surface-dark-border hover:border-ochre-500 dark:hover:border-ochre-500 transition-all shadow-xs group space-y-2"
+          >
+            <div className="flex items-center justify-between">
+              <span className="px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-ochre-100 text-ochre-800 dark:bg-ochre-950 dark:text-ochre-300">
+                Exam Prep
+              </span>
+              <ArrowRight className="w-4 h-4 text-slate-400 group-hover:text-ochre-500 transition-colors" />
+            </div>
+            <h3 className="font-bold text-base text-slate-900 dark:text-white group-hover:text-ochre-600 dark:group-hover:text-ochre-400 transition-colors">
+              SSC Exam Simulator
+            </h3>
+            <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
+              Official 15m CGL DEST & 10m CHSL format with KDPH metrics and Full/Half mistake grading.
+            </p>
+          </a>
+
+          <a
+            href="/typing-lessons/"
+            onClick={(e) => handleLinkClick(e, '/typing-lessons/')}
+            className="p-5 rounded-2xl bg-white dark:bg-surface-dark-card border border-surface-light-border dark:border-surface-dark-border hover:border-brand-500 dark:hover:border-brand-500 transition-all shadow-xs group space-y-2"
+          >
+            <div className="flex items-center justify-between">
+              <span className="px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-brand-100 text-brand-800 dark:bg-brand-950 dark:text-brand-300">
+                Academy
+              </span>
+              <ArrowRight className="w-4 h-4 text-slate-400 group-hover:text-brand-500 transition-colors" />
+            </div>
+            <h3 className="font-bold text-base text-slate-900 dark:text-white group-hover:text-brand-600 dark:group-hover:text-brand-400 transition-colors">
+              Typing Lessons
+            </h3>
+            <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
+              10-step touch-typing curriculum. Master home row anchors (ASDF JKL;) and finger coordination.
+            </p>
+          </a>
+
+          <a
+            href="/touch-typing/"
+            onClick={(e) => handleLinkClick(e, '/touch-typing/')}
+            className="p-5 rounded-2xl bg-white dark:bg-surface-dark-card border border-surface-light-border dark:border-surface-dark-border hover:border-brand-500 dark:hover:border-brand-500 transition-all shadow-xs group space-y-2"
+          >
+            <div className="flex items-center justify-between">
+              <span className="px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-slate-100 text-slate-800 dark:bg-surface-dark-muted dark:text-slate-300">
+                Guide
+              </span>
+              <ArrowRight className="w-4 h-4 text-slate-400 group-hover:text-brand-500 transition-colors" />
+            </div>
+            <h3 className="font-bold text-base text-slate-900 dark:text-white group-hover:text-brand-600 dark:group-hover:text-brand-400 transition-colors">
+              Touch Typing Guide
+            </h3>
+            <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
+              Ergonomic posture, tactile anchor bump mechanics, and the 5 golden rules of keyboarding.
+            </p>
+          </a>
+
+          <a
+            href="/typing-speed-chart/"
+            onClick={(e) => handleLinkClick(e, '/typing-speed-chart/')}
+            className="p-5 rounded-2xl bg-white dark:bg-surface-dark-card border border-surface-light-border dark:border-surface-dark-border hover:border-brand-500 dark:hover:border-brand-500 transition-all shadow-xs group space-y-2"
+          >
+            <div className="flex items-center justify-between">
+              <span className="px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-slate-100 text-slate-800 dark:bg-surface-dark-muted dark:text-slate-300">
+                Benchmarks
+              </span>
+              <ArrowRight className="w-4 h-4 text-slate-400 group-hover:text-brand-500 transition-colors" />
+            </div>
+            <h3 className="font-bold text-base text-slate-900 dark:text-white group-hover:text-brand-600 dark:group-hover:text-brand-400 transition-colors">
+              Speed Percentiles
+            </h3>
+            <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
+              Global WPM distribution percentiles, age demographics, and career typing prerequisites.
+            </p>
+          </a>
+        </div>
+      </section>
+
       {/* Practice & Duration Hub */}
       <section className="w-full max-w-5xl mx-auto px-4 sm:px-6 mb-16">
         <div className="rounded-2xl bg-slate-100 dark:bg-surface-dark-card border border-slate-200 dark:border-surface-dark-border p-6 sm:p-8">

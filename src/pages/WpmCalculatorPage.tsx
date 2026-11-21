@@ -14,6 +14,12 @@ export const WpmCalculatorPage: React.FC<WpmCalculatorPageProps> = ({ onNavigate
   const [seconds, setSeconds] = useState<number>(0);
   const [errors, setErrors] = useState<number>(3);
 
+  const [kdphInput, setKdphInput] = useState<number>(10500);
+  const [wpmInput, setWpmInput] = useState<number>(35);
+
+  const computedWpmFromKdph = Math.round((kdphInput / 300) * 10) / 10;
+  const computedKdphFromWpm = Math.round(wpmInput * 300);
+
   const elapsedMs = Math.max(1000, (minutes * 60 + seconds) * 1000);
   const correctChars = Math.max(0, totalChars - errors);
 
@@ -168,6 +174,74 @@ export const WpmCalculatorPage: React.FC<WpmCalculatorPageProps> = ({ onNavigate
           </div>
         </Card>
       </div>
+
+      {/* KDPH to WPM Exam Converter Card */}
+      <Card className="p-6 mb-12 bg-white dark:bg-surface-dark-card border border-surface-light-border dark:border-surface-dark-border shadow-sm space-y-5">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-100 dark:border-surface-dark-border pb-3">
+          <div>
+            <h2 className="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2">
+              <Calculator className="w-5 h-5 text-ochre-500" />
+              <span>KDPH to WPM Converter (Indian Government Exams)</span>
+            </h2>
+            <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
+              Instant conversion between Key Depressions Per Hour (KDPH) and Words Per Minute (WPM) for SSC CGL, CHSL, and High Court exams.
+            </p>
+          </div>
+          <span className="text-xs font-mono font-bold px-2.5 py-1 rounded-md bg-ochre-100 text-ochre-800 dark:bg-ochre-950 dark:text-ochre-300">
+            Formula: WPM = KDPH / 300
+          </span>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {/* Convert KDPH -> WPM */}
+          <div className="p-4 rounded-xl bg-slate-50 dark:bg-surface-dark-muted border border-slate-200 dark:border-surface-dark-border space-y-3">
+            <label className="block text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-400">
+              Convert KDPH to WPM
+            </label>
+            <div className="flex items-center gap-3">
+              <input
+                type="number"
+                step={100}
+                value={kdphInput}
+                onChange={(e) => setKdphInput(Math.max(0, parseInt(e.target.value) || 0))}
+                className="w-full px-3 py-2 rounded-lg border border-slate-200 dark:border-surface-dark-border bg-white dark:bg-surface-dark font-mono text-base focus-ring"
+                placeholder="e.g. 10500"
+              />
+              <span className="font-mono text-xs text-slate-400 font-bold">KDPH</span>
+            </div>
+            <div className="p-3 rounded-lg bg-white dark:bg-surface-dark border border-slate-200 dark:border-surface-dark-border flex items-center justify-between">
+              <span className="text-xs text-slate-500">Equivalent Speed:</span>
+              <span className="text-xl font-black font-mono text-brand-600 dark:text-brand-400">
+                {computedWpmFromKdph} WPM
+              </span>
+            </div>
+          </div>
+
+          {/* Convert WPM -> KDPH */}
+          <div className="p-4 rounded-xl bg-slate-50 dark:bg-surface-dark-muted border border-slate-200 dark:border-surface-dark-border space-y-3">
+            <label className="block text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-400">
+              Convert WPM to KDPH
+            </label>
+            <div className="flex items-center gap-3">
+              <input
+                type="number"
+                step={1}
+                value={wpmInput}
+                onChange={(e) => setWpmInput(Math.max(0, parseInt(e.target.value) || 0))}
+                className="w-full px-3 py-2 rounded-lg border border-slate-200 dark:border-surface-dark-border bg-white dark:bg-surface-dark font-mono text-base focus-ring"
+                placeholder="e.g. 35"
+              />
+              <span className="font-mono text-xs text-slate-400 font-bold">WPM</span>
+            </div>
+            <div className="p-3 rounded-lg bg-white dark:bg-surface-dark border border-slate-200 dark:border-surface-dark-border flex items-center justify-between">
+              <span className="text-xs text-slate-500">Equivalent Depressions:</span>
+              <span className="text-xl font-black font-mono text-ochre-600 dark:text-ochre-400">
+                {computedKdphFromWpm} KDPH
+              </span>
+            </div>
+          </div>
+        </div>
+      </Card>
 
       {/* Educational Guide & Exam Benchmarks */}
       <div className="space-y-6">

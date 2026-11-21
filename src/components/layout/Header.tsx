@@ -12,12 +12,12 @@ export const Header: React.FC<HeaderProps> = ({ currentPath = '/', onNavigate })
 
   const navLinks = [
     { label: 'Speed Test', path: '/typing-speed-test/' },
-    { label: '1 Min', path: '/typing-test/1-minute/' },
-    { label: '5 Min', path: '/typing-test/5-minute/' },
+    { label: 'SSC Exam', path: '/ssc-typing-test/', badge: 'Exam' },
+    { label: 'Lessons', path: '/typing-lessons/' },
     { label: 'Practice', path: '/typing-practice/' },
+    { label: 'Speed Chart', path: '/typing-speed-chart/' },
     { label: 'Games', path: '/typing-games/' },
     { label: 'WPM Calc', path: '/wpm-calculator/' },
-    { label: 'About', path: '/about/' },
   ];
 
   const handleLinkClick = (e: React.MouseEvent<HTMLAnchorElement>, path: string) => {
@@ -54,7 +54,7 @@ export const Header: React.FC<HeaderProps> = ({ currentPath = '/', onNavigate })
         </a>
 
         {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center gap-1 text-sm font-medium">
+        <nav className="hidden lg:flex items-center gap-1 text-sm font-medium">
           {navLinks.map((link) => {
             const isActive = currentPath === link.path;
             return (
@@ -62,78 +62,74 @@ export const Header: React.FC<HeaderProps> = ({ currentPath = '/', onNavigate })
                 key={link.path}
                 href={link.path}
                 onClick={(e) => handleLinkClick(e, link.path)}
-                className={`px-3 py-1.5 rounded-md transition-colors focus-ring ${
+                className={`px-3 py-1.5 rounded-lg transition-all flex items-center gap-1.5 ${
                   isActive
-                    ? 'text-brand-600 dark:text-brand-400 bg-brand-50 dark:bg-brand-950/40 font-semibold'
-                    : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-surface-dark-muted'
+                    ? 'text-brand-600 dark:text-brand-400 font-semibold bg-brand-50 dark:bg-brand-950/40 shadow-xs'
+                    : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-surface-light-muted dark:hover:bg-surface-dark-muted'
                 }`}
               >
-                {link.label}
+                <span>{link.label}</span>
+                {link.badge && (
+                  <span className="px-1.5 py-0.2 rounded text-[9px] font-bold uppercase bg-ochre-100 text-ochre-800 dark:bg-ochre-950 dark:text-ochre-300">
+                    {link.badge}
+                  </span>
+                )}
               </a>
             );
           })}
         </nav>
 
-        {/* Controls */}
+        {/* Actions: Theme Toggle & Mobile Menu Trigger */}
         <div className="flex items-center gap-2">
           <ThemeToggle />
 
-          {/* Quick Start Button */}
+          {/* Quick CTA button for Desktop */}
           <a
-            href="/"
-            onClick={(e) => handleLinkClick(e, '/')}
-            className="hidden sm:inline-flex items-center px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-brand-600 hover:bg-brand-500 text-white transition-colors focus-ring shadow-sm"
+            href="/typing-speed-test/"
+            onClick={(e) => handleLinkClick(e, '/typing-speed-test/')}
+            className="hidden sm:inline-flex items-center justify-center px-3.5 py-1.5 rounded-lg bg-brand-600 hover:bg-brand-500 text-white text-xs font-semibold shadow-xs transition-colors"
           >
-            <span>Start Test</span>
+            Start Test
           </a>
 
-          {/* Mobile Menu Trigger */}
+          {/* Mobile Menu Hamburger */}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            type="button"
-            className="md:hidden p-2 rounded-lg border border-surface-light-border dark:border-surface-dark-border text-slate-700 dark:text-slate-300 hover:bg-surface-light-muted dark:hover:bg-surface-dark-muted focus-ring"
-            aria-label="Toggle navigation menu"
-            aria-expanded={mobileMenuOpen}
+            className="lg:hidden p-2 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-surface-light-muted dark:hover:bg-surface-dark-muted focus-ring"
+            aria-label={mobileMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
           >
             {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
           </button>
         </div>
       </div>
 
-      {/* Mobile Drawer */}
+      {/* Mobile Drawer Navigation */}
       {mobileMenuOpen && (
-        <div className="md:hidden border-b border-surface-light-border dark:border-surface-dark-border bg-white dark:bg-surface-dark px-4 pt-2 pb-6 shadow-xl transition-all">
-          <nav className="flex flex-col gap-1.5">
-            {navLinks.map((link) => {
-              const isActive = currentPath === link.path;
-              return (
-                <a
-                  key={link.path}
-                  href={link.path}
-                  onClick={(e) => handleLinkClick(e, link.path)}
-                  className={`px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${
-                    isActive
-                      ? 'text-brand-600 dark:text-brand-400 bg-brand-50 dark:bg-brand-950/40 font-semibold'
-                      : 'text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-surface-dark-muted'
-                  }`}
-                >
-                  {link.label}
-                </a>
-              );
-            })}
-            <div className="pt-2">
+        <div className="lg:hidden border-b border-surface-light-border dark:border-surface-dark-border bg-white dark:bg-surface-dark-card px-4 pt-2 pb-6 space-y-1 animate-in slide-in-from-top-2 duration-150">
+          {navLinks.map((link) => {
+            const isActive = currentPath === link.path;
+            return (
               <a
-                href="/"
-                onClick={(e) => handleLinkClick(e, '/')}
-                className="w-full flex items-center justify-center py-2.5 rounded-lg text-sm font-semibold bg-brand-600 hover:bg-brand-500 text-white transition-colors"
+                key={link.path}
+                href={link.path}
+                onClick={(e) => handleLinkClick(e, link.path)}
+                className={`flex items-center justify-between px-3 py-2.5 rounded-xl text-sm font-medium ${
+                  isActive
+                    ? 'bg-brand-50 dark:bg-brand-950/40 text-brand-600 dark:text-brand-400 font-bold'
+                    : 'text-slate-700 dark:text-slate-200 hover:bg-surface-light-muted dark:hover:bg-surface-dark-muted'
+                }`}
               >
-                <span>Start Free Typing Test</span>
+                <span>{link.label}</span>
+                {link.badge && (
+                  <span className="px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-ochre-100 text-ochre-800 dark:bg-ochre-950 dark:text-ochre-300">
+                    {link.badge}
+                  </span>
+                )}
               </a>
-            </div>
-          </nav>
+            );
+          })}
         </div>
       )}
     </header>
   );
 };
-

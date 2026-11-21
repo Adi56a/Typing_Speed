@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { TypingEngine } from '../features/typing-engine/engine';
-import { calculateTypingMetrics, getSpeedRating } from '../features/typing-engine/scoring';
+import { calculateTypingMetrics, getSpeedRating, calculateConsistency, evaluateSscPassage } from '../features/typing-engine/scoring';
 import { generateTestText, CURATED_QUOTES } from '../features/typing-engine/textBank';
 
 describe('Scoring Module', () => {
@@ -221,6 +221,80 @@ describe('TextBank', () => {
     const text = generateTestText({ mode: 'words', numbers: true, wordCount: 30 });
     const hasNumbers = /\d/.test(text);
     expect(hasNumbers).toBe(true);
+  });
+});
+
+describe('Consistency & Weak Key Analysis', () => {
+  it('calculates 100% consistency when WPM is stable or samples are sparse', () => {
+    expect(calculateConsistency([])).toBe(100);
+    expect(calculateConsistency([{ wpm: 50 }, { wpm: 50 }])).toBe(100);
+  });
+
+  it('calculates lower consistency when WPM fluctuates wildly', () => {
+    const erratic = [
+      { wpm: 20 },
+      { wpm: 80 },
+      { wpm: 30 },
+      { wpm: 90 },
+      { wpm: 25 },
+    ];
+    const score = calculateConsistency(erratic);
+    expect(score).toBeLessThan(70);
+  });
+
+  it('tracks weak keys when errors are committed in TypingEngine', () => {
+    const engine = new TypingEngine('abcd', 60);
+    const t0 = 1000;
+
+    // Type 'x' instead of 'a', 'y' instead of 'b', 'x' instead of 'c'
+    engine.handleInput('x', t0);
+    engine.handleInput('y', t0 + 100);
+    engine.handleInput('x', t0 + 200);
+
+    const weakKeys = engine.getWeakKeys();
+    expect(weakKeys).toBeDefined();
+    expect(weakKeys.length).toBeGreaterThan(0);
+    expect(weakKeys).toContain('A');
+  });
+});
+
+describe('SSC Government Exam Evaluation Model', () => {
+  it('accurately distinguishes full mistakes and half mistakes according to official SSC rules', () => {
+    const master = 'The economic progress of India is rapid and steady';
+    // Typed with:
+    // 'india' (capitalization error = 0.5 mistake)
+    // 'speedy' instead of 'steady' (substitution = 1.0 mistake)
+    const typed = 'The economic progress of india is rapid and speedy';
+
+    const result = evaluateSscPassage(master, typed, 1, 'UR');
+    expect(result.fullMistakes).toBe(1); // 'steady' -> 'speedy'
+    expect(result.halfMistakes).toBe(1); // 'India' -> 'india'
+    expect(result.totalMistakes).toBe(1.5); // 1 + 0.5 = 1.5 mistakes
+  });
+
+  it('correctly qualifies candidates within the permissible error cut-off (7% for UR)', () => {
+    // 100-word master passage
+    const words = Array(100).fill('word').join(' ');
+    // 5 errors out of 100 words = 5% error (under 7% cutoff)
+    const typedWords = Array(95).fill('word').concat(Array(5).fill('typo')).join(' ');
+
+    const result = evaluateSscPassage(words, typedWords, 10, 'UR');
+    expect(result.errorPercentage).toBe(5.0);
+    expect(result.isQualified).toBe(true);
+  });
+
+  it('correctly disqualifies candidates exceeding the permissible error cut-off', () => {
+    const words = Array(100).fill('word').join(' ');
+    // 8 errors out of 100 words = 8% error (exceeds 7% UR cutoff)
+    const typedWords = Array(92).fill('word').concat(Array(8).fill('typo')).join(' ');
+
+    const result = evaluateSscPassage(words, typedWords, 10, 'UR');
+    expect(result.errorPercentage).toBe(8.0);
+    expect(result.isQualified).toBe(false); // Disqualified for UR!
+
+    // But should qualify under Reserved category (10% ceiling)
+    const resReserved = evaluateSscPassage(words, typedWords, 10, 'RESERVED');
+    expect(resReserved.isQualified).toBe(true);
   });
 });
 

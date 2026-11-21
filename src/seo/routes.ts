@@ -62,6 +62,42 @@ export const ROUTES: Record<string, RouteMeta> = {
     canonical: `${SITE_URL}/typing-test/10-minute/`,
     presetDuration: 600,
   },
+  '/ssc-typing-test/': {
+    path: '/ssc-typing-test/',
+    title: 'SSC CGL & CHSL Typing Test Simulator | Official KDPH & Error Rules',
+    description:
+      'Practice SSC CGL DEST (15 min / 2000 strokes) and SSC CHSL (10 min / 35 WPM) typing test online. Official full/half mistake evaluation and KDPH scoring.',
+    heading: 'SSC CGL & CHSL Typing Test Simulator',
+    subheading: 'Simulate the official Staff Selection Commission skill test with live KDPH tracking and category cut-off evaluation.',
+    canonical: `${SITE_URL}/ssc-typing-test/`,
+  },
+  '/typing-lessons/': {
+    path: '/typing-lessons/',
+    title: 'Free Online Typing Lessons | Learn Touch Typing Step-by-Step',
+    description:
+      'Learn touch typing with free interactive typing lessons. Master home row keys, finger placement, and 10 structured drills without looking at the keyboard.',
+    heading: 'Free Online Typing Lessons',
+    subheading: 'Master touch-typing foundations with our step-by-step interactive curriculum and finger placement guides.',
+    canonical: `${SITE_URL}/typing-lessons/`,
+  },
+  '/touch-typing/': {
+    path: '/touch-typing/',
+    title: 'What Is Touch Typing? Complete Guide & Ergonomics',
+    description:
+      'Complete guide to touch typing: anchor keys (ASDF JKL;), tactile bumps, muscle memory, proper ergonomics, and the 5 golden rules to double your WPM.',
+    heading: 'What Is Touch Typing? The Complete Guide',
+    subheading: 'Learn how touch typing works, why the home row is essential, and how proper ergonomics prevent fatigue.',
+    canonical: `${SITE_URL}/touch-typing/`,
+  },
+  '/typing-speed-chart/': {
+    path: '/typing-speed-chart/',
+    title: 'Typing Speed Chart & WPM Benchmarks | Average Typing Speed',
+    description:
+      'Check typing speed charts and global WPM percentiles. Compare your words per minute against age demographics, office jobs, and competitive benchmarks.',
+    heading: 'Typing Speed Chart & Global WPM Benchmarks',
+    subheading: 'See where your typing speed ranks across international percentiles, corporate careers, and competitive examinations.',
+    canonical: `${SITE_URL}/typing-speed-chart/`,
+  },
   '/typing-practice/': {
     path: '/typing-practice/',
     title: 'Typing Practice & Drills | Check Typing Speeds & Form',

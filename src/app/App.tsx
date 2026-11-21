@@ -6,6 +6,10 @@ import { WpmCalculatorPage } from '../pages/WpmCalculatorPage';
 import { TypingPracticePage } from '../pages/TypingPracticePage';
 import { TypingGamesPage } from '../pages/TypingGamesPage';
 import { HowWpmIsCalculatedPage } from '../pages/HowWpmIsCalculatedPage';
+import { TypingLessonsPage } from '../pages/TypingLessonsPage';
+import { TouchTypingGuidePage } from '../pages/TouchTypingGuidePage';
+import { SscTypingTestPage } from '../pages/SscTypingTestPage';
+import { TypingSpeedChartPage } from '../pages/TypingSpeedChartPage';
 import { AboutPage } from '../pages/AboutPage';
 import { MethodologyPage } from '../pages/MethodologyPage';
 import { ContactPage } from '../pages/ContactPage';
@@ -48,6 +52,18 @@ export const App: React.FC<AppProps> = ({ initialPath }) => {
   const renderCurrentPage = () => {
     if (currentPath === '/') {
       return <HomePage initialDuration={60} onNavigate={handleNavigate} />;
+    }
+    if (currentPath === '/ssc-typing-test/') {
+      return <SscTypingTestPage onNavigate={handleNavigate} />;
+    }
+    if (currentPath === '/typing-lessons/') {
+      return <TypingLessonsPage onNavigate={handleNavigate} />;
+    }
+    if (currentPath === '/touch-typing/') {
+      return <TouchTypingGuidePage onNavigate={handleNavigate} />;
+    }
+    if (currentPath === '/typing-speed-chart/') {
+      return <TypingSpeedChartPage onNavigate={handleNavigate} />;
     }
     if (currentPath === '/wpm-calculator/') {
       return <WpmCalculatorPage onNavigate={handleNavigate} />;
