@@ -22,7 +22,7 @@ export function generateStructuredData(route: RouteMeta): string {
       logo: `${SITE_URL}/favicon-512x512.png`,
       contactPoint: {
         '@type': 'ContactPoint',
-        email: 'support@checktypingspeeds.com',
+        email: 'checktypingspeeds@gmail.com',
         contactType: 'Customer Support',
       },
     },

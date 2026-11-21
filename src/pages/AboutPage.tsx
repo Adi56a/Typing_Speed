@@ -101,7 +101,7 @@ export const AboutPage: React.FC = () => {
         </Card>
 
         {/* Contact & Editorial Accountability */}
-        <Card className="p-6 sm:p-8 space-y-3">
+        <Card className="p-6 sm:p-8 space-y-4">
           <h2 className="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2">
             <Mail className="w-4 h-4 text-brand-500" />
             <span>Contact & Editorial Accountability</span>
@@ -110,8 +110,20 @@ export const AboutPage: React.FC = () => {
             Have suggestions, found a bug, or want specific exam passage formats added? We welcome feedback from
             learners, trainers, and educators worldwide.
           </p>
-          <div className="pt-2 text-xs font-mono text-brand-600 dark:text-brand-400">
-            Email: contact@checktypingspeeds.com
+          <div className="flex flex-wrap items-center gap-4 pt-1">
+            <a
+              href="mailto:checktypingspeeds@gmail.com"
+              className="text-xs font-mono font-semibold text-brand-600 dark:text-brand-400 hover:underline"
+            >
+              checktypingspeeds@gmail.com
+            </a>
+            <span className="text-slate-300 dark:text-slate-700">•</span>
+            <a
+              href="/contact/"
+              className="text-xs font-semibold text-brand-600 dark:text-brand-400 hover:underline"
+            >
+              Open Feedback &amp; Contact Form →
+            </a>
           </div>
         </Card>
       </div>
