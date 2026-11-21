@@ -90,7 +90,11 @@ ${urlsXml}
 
   const sitemapPath = path.resolve(distDir, 'sitemap.xml');
   fs.writeFileSync(sitemapPath, sitemapXml, 'utf-8');
-  console.log(`\n🗺️  Generated sitemap.xml with ${routes.length} canonical URLs.`);
+
+  // Also sync to public/ so it is always present in version control and dev server
+  const publicSitemapPath = path.resolve(distDir, '..', 'public', 'sitemap.xml');
+  fs.writeFileSync(publicSitemapPath, sitemapXml, 'utf-8');
+  console.log(`\n🗺️  Generated sitemap.xml with ${indexableRoutes.length} canonical URLs.`);
 }
 
 prerender().catch((err) => {
