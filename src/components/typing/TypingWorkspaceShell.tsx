@@ -215,17 +215,17 @@ export const TypingWorkspaceShell: React.FC<TypingWorkspaceShellProps> = ({
       }`}
     >
       <div className={`w-full ${isFullscreen ? 'max-w-4xl flex flex-col gap-4' : 'flex flex-col gap-4'}`}>
-        {/* Control Bar: Mode, Difficulty, Duration & View Options */}
-        <div className="flex flex-wrap items-center justify-between gap-2.5 p-2.5 sm:p-3 rounded-2xl bg-white dark:bg-surface-dark-card border border-surface-light-border dark:border-surface-dark-border shadow-sm">
-          {/* Left: Mode & Difficulty Selectors */}
-          <div className="flex flex-wrap items-center gap-2">
+        {/* Control Bar: Mode, Difficulty, Duration & View Options - Cleanly aligned in line */}
+        <div className="w-full p-2 sm:p-2.5 rounded-2xl bg-white dark:bg-surface-dark-card border border-surface-light-border dark:border-surface-dark-border shadow-xs flex flex-col lg:flex-row items-center justify-between gap-2.5">
+          {/* Group 1: Mode, Difficulty & Modifiers */}
+          <div className="flex flex-wrap items-center justify-center gap-2 w-full lg:w-auto">
             {/* Mode Selector */}
             <div className="flex items-center rounded-xl bg-surface-light-muted dark:bg-surface-dark-muted p-1 text-xs font-medium">
               <button
                 onClick={() => handleModeChange('words')}
-                className={`px-3 py-1.5 rounded-lg transition-all ${
+                className={`px-2.5 py-1 rounded-lg transition-all whitespace-nowrap ${
                   mode === 'words'
-                    ? 'bg-white dark:bg-surface-dark-card text-brand-600 dark:text-brand-400 font-semibold shadow-sm'
+                    ? 'bg-white dark:bg-surface-dark-card text-brand-600 dark:text-brand-400 font-semibold shadow-xs'
                     : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
                 }`}
               >
@@ -233,13 +233,13 @@ export const TypingWorkspaceShell: React.FC<TypingWorkspaceShellProps> = ({
               </button>
               <button
                 onClick={() => handleModeChange('quote')}
-                className={`px-3 py-1.5 rounded-lg transition-all ${
+                className={`px-2.5 py-1 rounded-lg transition-all whitespace-nowrap ${
                   mode === 'quote'
-                    ? 'bg-white dark:bg-surface-dark-card text-brand-600 dark:text-brand-400 font-semibold shadow-sm'
+                    ? 'bg-white dark:bg-surface-dark-card text-brand-600 dark:text-brand-400 font-semibold shadow-xs'
                     : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
                 }`}
               >
-                Statements
+                Quotes
               </button>
             </div>
 
@@ -249,9 +249,9 @@ export const TypingWorkspaceShell: React.FC<TypingWorkspaceShellProps> = ({
                 <button
                   key={diff.value}
                   onClick={() => handleDifficultyChange(diff.value)}
-                  className={`px-2.5 py-1.5 rounded-lg transition-all ${
+                  className={`px-2.5 py-1 rounded-lg transition-all whitespace-nowrap ${
                     difficulty === diff.value
-                      ? 'bg-white dark:bg-surface-dark-card text-brand-600 dark:text-brand-400 font-bold shadow-sm'
+                      ? 'bg-white dark:bg-surface-dark-card text-brand-600 dark:text-brand-400 font-bold shadow-xs'
                       : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
                   }`}
                   title={`Set difficulty to ${diff.label}`}
@@ -263,10 +263,10 @@ export const TypingWorkspaceShell: React.FC<TypingWorkspaceShellProps> = ({
 
             {/* Modifiers (Punctuation / Numbers) */}
             {mode === 'words' && (
-              <div className="hidden sm:flex items-center gap-1 text-xs">
+              <div className="flex items-center gap-1.5 text-xs">
                 <button
                   onClick={togglePunctuation}
-                  className={`px-2.5 py-1.5 rounded-lg border transition-all ${
+                  className={`px-2.5 py-1 rounded-lg border transition-all whitespace-nowrap ${
                     withPunctuation
                       ? 'border-brand-500 bg-brand-50 dark:bg-brand-950/40 text-brand-600 dark:text-brand-400 font-semibold'
                       : 'border-surface-light-border dark:border-surface-dark-border text-slate-500 hover:bg-surface-light-muted dark:hover:bg-surface-dark-muted'
@@ -276,7 +276,7 @@ export const TypingWorkspaceShell: React.FC<TypingWorkspaceShellProps> = ({
                 </button>
                 <button
                   onClick={toggleNumbers}
-                  className={`px-2.5 py-1.5 rounded-lg border transition-all ${
+                  className={`px-2.5 py-1 rounded-lg border transition-all whitespace-nowrap ${
                     withNumbers
                       ? 'border-brand-500 bg-brand-50 dark:bg-brand-950/40 text-brand-600 dark:text-brand-400 font-semibold'
                       : 'border-surface-light-border dark:border-surface-dark-border text-slate-500 hover:bg-surface-light-muted dark:hover:bg-surface-dark-muted'
@@ -288,17 +288,17 @@ export const TypingWorkspaceShell: React.FC<TypingWorkspaceShellProps> = ({
             )}
           </div>
 
-          {/* Right: Duration Presets & View Controls (Fullscreen + Keyboard) */}
-          <div className="flex items-center gap-2">
+          {/* Group 2: Duration Presets & View Controls (Keyboard + Fullscreen) */}
+          <div className="flex flex-wrap items-center justify-center gap-2 w-full lg:w-auto">
             {/* Duration Selector */}
-            <div className="flex items-center gap-1 rounded-xl bg-surface-light-muted dark:bg-surface-dark-muted p-1 text-xs font-mono font-medium">
+            <div className="flex items-center gap-0.5 sm:gap-1 rounded-xl bg-surface-light-muted dark:bg-surface-dark-muted p-1 text-xs font-mono font-medium">
               {durations.map((d) => (
                 <button
                   key={d}
                   onClick={() => handleDurationChange(d)}
-                  className={`px-2.5 py-1.5 rounded-lg transition-all ${
+                  className={`px-2 sm:px-2.5 py-1 rounded-lg transition-all whitespace-nowrap ${
                     duration === d
-                      ? 'bg-brand-600 text-white font-bold shadow-sm'
+                      ? 'bg-brand-600 text-white font-bold shadow-xs'
                       : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
                   }`}
                 >
@@ -308,11 +308,11 @@ export const TypingWorkspaceShell: React.FC<TypingWorkspaceShellProps> = ({
             </div>
 
             {/* View Controls: Keyboard Guide & Fullscreen */}
-            <div className="flex items-center gap-1 border-l border-surface-light-border dark:border-surface-dark-border pl-2">
+            <div className="flex items-center gap-1 border-l border-surface-light-border dark:border-surface-dark-border pl-1.5 sm:pl-2">
               <button
                 onClick={toggleKeyboard}
                 type="button"
-                className={`hidden md:inline-flex p-2 rounded-lg border transition-all ${
+                className={`hidden md:inline-flex p-1.5 rounded-lg border transition-all whitespace-nowrap ${
                   showKeyboard
                     ? 'border-brand-500 bg-brand-50 dark:bg-brand-950/40 text-brand-600 dark:text-brand-400'
                     : 'border-surface-light-border dark:border-surface-dark-border text-slate-600 dark:text-slate-400 hover:bg-surface-light-muted dark:hover:bg-surface-dark-muted'
@@ -326,7 +326,7 @@ export const TypingWorkspaceShell: React.FC<TypingWorkspaceShellProps> = ({
               <button
                 onClick={toggleFullscreen}
                 type="button"
-                className={`p-2 rounded-lg border transition-all ${
+                className={`p-1.5 rounded-lg border transition-all whitespace-nowrap ${
                   isFullscreen
                     ? 'border-brand-500 bg-brand-50 dark:bg-brand-950/40 text-brand-600 dark:text-brand-400'
                     : 'border-surface-light-border dark:border-surface-dark-border text-slate-600 dark:text-slate-400 hover:bg-surface-light-muted dark:hover:bg-surface-dark-muted'

@@ -19,17 +19,37 @@ export const HomePage: React.FC<HomePageProps> = ({ initialDuration = 60, onNavi
   return (
     <div className="flex flex-col items-center w-full">
       {/* Hero Section */}
-      <section className="w-full max-w-5xl mx-auto px-4 sm:px-6 pt-8 pb-6 text-center">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-mono font-medium border border-surface-light-border dark:border-surface-dark-border text-slate-600 dark:text-slate-300 bg-surface-light-muted dark:bg-surface-dark-card mb-4">
-          <span className="w-2 h-2 rounded-full bg-brand-500 animate-pulse" />
-          <span>No sign-up · No ads · Results in 60 seconds</span>
+      <section className="w-full max-w-5xl mx-auto px-4 sm:px-6 pt-8 pb-4 text-center">
+        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-mono font-medium border border-surface-light-border dark:border-surface-dark-border text-slate-700 dark:text-slate-200 bg-surface-light-muted dark:bg-surface-dark-card mb-4 shadow-xs">
+          <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+          <span>100% Free · No Login Required · Zero Ads · Instant Start</span>
         </div>
         <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-slate-900 dark:text-white mb-3">
           Typing Speed Test
         </h1>
-        <p className="max-w-2xl mx-auto text-sm sm:text-base text-slate-600 dark:text-slate-400">
-          Free typing test — start typing below to measure your WPM and accuracy. No sign-up, no ads.
+        <p className="max-w-2xl mx-auto text-sm sm:text-base text-slate-600 dark:text-slate-300 leading-relaxed">
+          Check your typing speed in words per minute (WPM), test keystroke accuracy, and practice touch typing. 100% free with no account or sign-up needed, zero ads, zero tracking, and instant deterministic scoring.
         </p>
+
+        {/* Value Proposition Trust Signals */}
+        <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3 mt-4 text-xs font-medium text-slate-600 dark:text-slate-300">
+          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-100 dark:bg-surface-dark-muted border border-surface-light-border dark:border-surface-dark-border">
+            <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500" />
+            No Login Required
+          </span>
+          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-100 dark:bg-surface-dark-muted border border-surface-light-border dark:border-surface-dark-border">
+            <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500" />
+            100% Free Forever
+          </span>
+          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-100 dark:bg-surface-dark-muted border border-surface-light-border dark:border-surface-dark-border">
+            <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500" />
+            Zero Ads &amp; No Tracking
+          </span>
+          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-100 dark:bg-surface-dark-muted border border-surface-light-border dark:border-surface-dark-border">
+            <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500" />
+            Instant Start — Just Type
+          </span>
+        </div>
       </section>
 
       {/* Main Interactive Typing Module */}
@@ -265,10 +285,10 @@ export const HomePage: React.FC<HomePageProps> = ({ initialDuration = 60, onNavi
             </div>
 
             <div className="p-4 rounded-xl bg-slate-50 dark:bg-surface-dark-muted border border-slate-200/60 dark:border-surface-dark-border/60">
-              <div className="text-[11px] font-mono uppercase tracking-wider text-slate-400">Clock Precision</div>
-              <div className="text-base font-bold text-slate-900 dark:text-white mt-1">&lt; 0.1ms Resolution</div>
+              <div className="text-[11px] font-mono uppercase tracking-wider text-slate-400">Access &amp; Pricing</div>
+              <div className="text-base font-bold text-slate-900 dark:text-white mt-1">100% Free · No Login</div>
               <p className="text-xs text-slate-500 dark:text-slate-400 mt-1 leading-relaxed">
-                High-resolution accurate timer via <code className="text-[11px] font-mono">performance.now()</code>. Zero drift across background tabs.
+                Zero sign-up, zero paywalls, and zero ads. Open the page and begin typing instantly without creating an account.
               </p>
             </div>
 
@@ -338,6 +358,15 @@ export const HomePage: React.FC<HomePageProps> = ({ initialDuration = 60, onNavi
               </h3>
               <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
                 Yes. The typing test is 100% free, needs no account, shows no ads and runs entirely in your browser.
+              </p>
+            </div>
+
+            <div className="p-5 rounded-xl bg-white dark:bg-surface-dark-card border border-surface-light-border dark:border-surface-dark-border">
+              <h3 className="text-sm font-bold text-slate-900 dark:text-white mb-2">
+                Do I need to create an account or log in?
+              </h3>
+              <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+                No. CheckTypingSpeeds requires zero registration and zero login. You can start typing immediately without providing an email address.
               </p>
             </div>
 

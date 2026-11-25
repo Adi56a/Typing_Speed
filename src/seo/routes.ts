@@ -60,6 +60,10 @@ export const routes: SeoRoute[] = [
         q: 'Is this typing test free?',
         a: 'Yes. The typing test is 100% free, needs no account, shows no ads and runs entirely in your browser.',
       },
+      {
+        q: 'Do I need to create an account or log in?',
+        a: 'No. CheckTypingSpeeds requires zero registration and zero login. You can start typing immediately without providing an email address.',
+      },
     ],
   },
   {

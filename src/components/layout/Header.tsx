@@ -10,10 +10,10 @@ interface HeaderProps {
 export const Header: React.FC<HeaderProps> = ({ currentPath = '/', onNavigate }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
-  const navLinks = [
-    { label: 'All Tests', path: '/typing-test/' },
+  const navLinks: { label: string; path: string; badge?: string }[] = [
     { label: 'Speed Test', path: '/' },
-    { label: 'SSC Exam', path: '/ssc-typing-test/' },
+    { label: 'All Tests', path: '/typing-test/' },
+    { label: 'SSC Exam', path: '/ssc-typing-test/', badge: 'EXAM' },
     { label: 'Lessons', path: '/typing-lessons/' },
     { label: 'Practice', path: '/typing-practice/' },
     { label: 'Speed Chart', path: '/typing-speed-chart/' },
@@ -31,31 +31,31 @@ export const Header: React.FC<HeaderProps> = ({ currentPath = '/', onNavigate })
 
   return (
     <header className="sticky top-0 z-40 w-full backdrop-blur-md bg-white/80 dark:bg-surface-dark/80 border-b border-surface-light-border dark:border-surface-dark-border">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+      <div className="max-w-7xl mx-auto px-3 sm:px-6 h-16 flex items-center justify-between gap-2">
         {/* Logo */}
         <a
           href="/"
           onClick={(e) => handleLinkClick(e, '/')}
-          className="flex items-center gap-2.5 font-bold text-lg sm:text-xl tracking-tight text-slate-900 dark:text-white focus-ring rounded-md py-1"
+          className="flex items-center gap-2 font-bold text-base sm:text-lg lg:text-xl tracking-tight text-slate-900 dark:text-white focus-ring rounded-md py-1 flex-shrink-0 whitespace-nowrap"
         >
           <img
             src="/logo-sm.webp"
             alt="CheckTypingSpeeds TS Crest"
-            width="36"
-            height="36"
+            width="32"
+            height="32"
             decoding="async"
-            className="w-9 h-9 rounded-lg object-cover shadow-sm border border-surface-light-border dark:border-surface-dark-border"
+            className="w-8 h-8 rounded-lg object-cover shadow-xs border border-surface-light-border dark:border-surface-dark-border"
           />
-          <span>
+          <span className="tracking-tight">
             Check<span className="text-brand-500">TypingSpeeds</span>
           </span>
-          <span className="hidden sm:inline-block px-1.5 py-0.5 text-[10px] font-semibold tracking-wider uppercase rounded bg-brand-100 text-brand-800 dark:bg-brand-950 dark:text-brand-400">
+          <span className="hidden xl:inline-block px-1.5 py-0.5 text-[10px] font-bold tracking-wider uppercase rounded bg-brand-100 text-brand-800 dark:bg-brand-950 dark:text-brand-400">
             Free
           </span>
         </a>
 
         {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center gap-1 text-sm font-medium">
+        <nav className="hidden lg:flex items-center gap-0.5 xl:gap-1.5 text-xs xl:text-sm font-medium whitespace-nowrap">
           {navLinks.map((link) => {
             const isActive = currentPath === link.path;
             return (
@@ -63,27 +63,32 @@ export const Header: React.FC<HeaderProps> = ({ currentPath = '/', onNavigate })
                 key={link.path}
                 href={link.path}
                 onClick={(e) => handleLinkClick(e, link.path)}
-                className={`px-3 py-1.5 rounded-md transition-colors focus-ring ${
+                className={`px-2 xl:px-2.5 py-1.5 rounded-lg whitespace-nowrap flex-shrink-0 inline-flex items-center gap-1 transition-colors focus-ring ${
                   isActive
                     ? 'text-brand-600 dark:text-brand-400 bg-brand-50 dark:bg-brand-950/40 font-semibold'
                     : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-surface-dark-muted'
                 }`}
               >
-                {link.label}
+                <span>{link.label}</span>
+                {link.badge && (
+                  <span className="px-1 py-0.5 text-[9px] font-extrabold uppercase rounded bg-amber-100 text-amber-800 dark:bg-amber-950/80 dark:text-amber-400 leading-none">
+                    {link.badge}
+                  </span>
+                )}
               </a>
             );
           })}
         </nav>
 
         {/* Controls */}
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 flex-shrink-0 whitespace-nowrap">
           <ThemeToggle />
 
           {/* Quick Start Button */}
           <a
             href="/"
             onClick={(e) => handleLinkClick(e, '/')}
-            className="hidden sm:inline-flex items-center px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-brand-600 hover:bg-brand-500 text-white transition-colors focus-ring shadow-sm"
+            className="hidden sm:inline-flex items-center px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-brand-600 hover:bg-brand-500 text-white transition-colors focus-ring shadow-sm whitespace-nowrap flex-shrink-0"
           >
             <span>Start Test</span>
           </a>
@@ -92,7 +97,7 @@ export const Header: React.FC<HeaderProps> = ({ currentPath = '/', onNavigate })
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             type="button"
-            className="md:hidden p-2 rounded-lg border border-surface-light-border dark:border-surface-dark-border text-slate-700 dark:text-slate-300 hover:bg-surface-light-muted dark:hover:bg-surface-dark-muted focus-ring"
+            className="lg:hidden p-2 rounded-lg border border-surface-light-border dark:border-surface-dark-border text-slate-700 dark:text-slate-300 hover:bg-surface-light-muted dark:hover:bg-surface-dark-muted focus-ring"
             aria-label="Toggle navigation menu"
             aria-expanded={mobileMenuOpen}
           >
@@ -103,7 +108,7 @@ export const Header: React.FC<HeaderProps> = ({ currentPath = '/', onNavigate })
 
       {/* Mobile Drawer */}
       {mobileMenuOpen && (
-        <div className="md:hidden border-b border-surface-light-border dark:border-surface-dark-border bg-white dark:bg-surface-dark px-4 pt-2 pb-6 shadow-xl transition-all">
+        <div className="lg:hidden border-b border-surface-light-border dark:border-surface-dark-border bg-white dark:bg-surface-dark px-4 pt-2 pb-6 shadow-xl transition-all">
           <nav className="flex flex-col gap-1.5">
             {navLinks.map((link) => {
               const isActive = currentPath === link.path;
