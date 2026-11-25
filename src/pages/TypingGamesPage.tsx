@@ -24,7 +24,7 @@ export const TypingGamesPage: React.FC<TypingGamesPageProps> = ({ onNavigate }) 
           <span>Interactive Kinetic Muscle Memory Training</span>
         </div>
         <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-slate-900 dark:text-white mb-3">
-          Free Online <span className="text-brand-600 dark:text-brand-400">Typing Games</span>
+          Typing Games
         </h1>
         <p className="max-w-2xl mx-auto text-sm sm:text-base text-slate-600 dark:text-slate-400">
           Sharpen keystroke reflexes, crush finger hesitation, and break through WPM plateaus with kinetic typing challenges.

@@ -708,7 +708,7 @@ export const WordCascadeGame: React.FC = () => {
             <div className="w-14 h-14 rounded-2xl bg-brand-500/10 border border-brand-500/30 flex items-center justify-center text-brand-400 mb-4 shadow-lg shadow-brand-500/20">
               <Zap className="w-7 h-7" />
             </div>
-            <h2 className="text-2xl sm:text-3xl font-extrabold text-white mb-2">Word Cascade: Kinetic Defense</h2>
+            <h2 className="text-2xl sm:text-3xl font-extrabold text-white mb-2">Word Cascade Typing Game</h2>
             <p className="max-w-md text-xs sm:text-sm text-slate-400 mb-6 leading-relaxed">
               Words descend with progressive velocity. Type words before they breach your shield barrier.
               Speed escalates with each wave completed.

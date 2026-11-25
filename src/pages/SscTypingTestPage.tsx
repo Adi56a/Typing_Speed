@@ -101,7 +101,7 @@ export const SscTypingTestPage: React.FC<SscTypingTestPageProps> = ({ onNavigate
           <span>SSC CGL DEST & CHSL Official Typing Exam Simulator</span>
         </div>
         <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-slate-900 dark:text-white">
-          Indian Government Typing Test Simulator
+          SSC Typing Test – CGL &amp; CHSL Practice
         </h1>
         <p className="text-sm sm:text-base text-slate-600 dark:text-slate-300">
           Simulate official Staff Selection Commission (SSC) typing skill tests with authentic two-pane interface, KDPH live counter, and Full/Half mistake evaluation.

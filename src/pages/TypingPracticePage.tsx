@@ -65,7 +65,7 @@ export const TypingPracticePage: React.FC<TypingPracticePageProps> = () => {
           <Badge variant="brand">Deliberate Practice</Badge>
         </div>
         <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white mb-3">
-          Touch Typing Lessons & Targeted Practice Drills
+          Typing Practice Drills
         </h1>
         <p className="max-w-2xl mx-auto text-sm sm:text-base text-slate-600 dark:text-slate-400">
           Build subconscious muscle memory, eliminate finger hesitations, and master every zone of the keyboard.

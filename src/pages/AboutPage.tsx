@@ -58,7 +58,7 @@ export const AboutPage: React.FC = () => {
             </div>
             <h3 className="font-bold text-base text-slate-900 dark:text-white">Local-First Speed</h3>
             <p className="text-xs text-slate-600 dark:text-slate-400">
-              Keystroke validation and monotonic timers run 100% locally in your browser. No network latency per key.
+              Keystroke validation and accurate timers run 100% locally in your browser. No network latency per key.
             </p>
           </Card>
 

@@ -19,7 +19,7 @@ interface LessonItem {
 const LESSONS: LessonItem[] = [
   {
     id: 1,
-    title: 'Lesson 1: The Tactile Anchor Keys',
+    title: 'Lesson 1: Home Row Keys (F and J)',
     category: 'Home Row Foundation',
     keys: ['F', 'J', 'Space'],
     fingerGuide: 'Left Index on F, Right Index on J, Thumbs on Space',
@@ -122,7 +122,7 @@ export const TypingLessonsPage: React.FC<TypingLessonsPageProps> = ({ onNavigate
           <span>Touch Typing Academy • 10-Step Curriculum</span>
         </div>
         <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-slate-900 dark:text-white">
-          Free Online Typing Lessons
+          Free Typing Lessons
         </h1>
         <p className="text-base sm:text-lg text-slate-600 dark:text-slate-300">
           Learn touch typing from scratch with step-by-step interactive drills. Master finger placement, build muscle memory, and stop looking at the keyboard.

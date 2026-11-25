@@ -41,7 +41,7 @@ export const WpmCalculatorPage: React.FC<WpmCalculatorPageProps> = ({ onNavigate
           <Badge variant="brand">Interactive Tool</Badge>
         </div>
         <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white mb-3">
-          Interactive Words Per Minute (WPM) Calculator
+          WPM Calculator
         </h1>
         <p className="max-w-2xl mx-auto text-sm sm:text-base text-slate-600 dark:text-slate-400">
           Calculate your Gross WPM, Net WPM, Accuracy, and CPM from any typing test or exam text passage.

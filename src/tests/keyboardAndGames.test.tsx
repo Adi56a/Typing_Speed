@@ -31,7 +31,7 @@ describe('WordCascadeGame & TypingGamesPage', () => {
   it('renders the WordCascadeGame arena in idle state with start and fullscreen controls', () => {
     render(<WordCascadeGame />);
 
-    expect(screen.getByText(/Word Cascade: Kinetic Defense/i)).toBeInTheDocument();
+    expect(screen.getByText(/Word Cascade Typing Game/i)).toBeInTheDocument();
     expect(screen.getByText(/Launch Game/i)).toBeInTheDocument();
     expect(screen.getByText(/Score/i)).toBeInTheDocument();
     expect(screen.getByText(/Streak/i)).toBeInTheDocument();
@@ -62,7 +62,7 @@ describe('WordCascadeGame & TypingGamesPage', () => {
   it('renders the TypingGamesPage with cognitive science educational section', () => {
     render(<TypingGamesPage />);
 
-    expect(screen.getByRole('heading', { level: 1, name: /Free Online Typing Games/i })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { level: 1, name: /^Typing Games$/i })).toBeInTheDocument();
     expect(screen.getByText(/The Cognitive Science of Gamified Typing/i)).toBeInTheDocument();
     expect(screen.getByText(/Eliminating the Visual Confirmation Feedback Loop/i)).toBeInTheDocument();
     expect(screen.getByText(/Overcoming the 60 WPM Skill Plateau/i)).toBeInTheDocument();

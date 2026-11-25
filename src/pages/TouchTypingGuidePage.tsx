@@ -16,7 +16,7 @@ export const TouchTypingGuidePage: React.FC<TouchTypingGuidePageProps> = ({ onNa
           <span>Touch Typing Complete Guide & Ergonomics</span>
         </div>
         <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-slate-900 dark:text-white">
-          What Is Touch Typing? The Definitive Guide
+          How to Touch Type
         </h1>
         <p className="text-base sm:text-lg text-slate-600 dark:text-slate-300 max-w-2xl mx-auto">
           Understand the biomechanics of touch typing, the 8 home row anchor keys, ergonomic posture, and how to double your typing speed without looking down.

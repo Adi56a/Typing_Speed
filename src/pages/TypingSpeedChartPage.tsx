@@ -16,7 +16,7 @@ export const TypingSpeedChartPage: React.FC<TypingSpeedChartPageProps> = ({ onNa
           <span>Global WPM Percentiles & Benchmarks</span>
         </div>
         <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-slate-900 dark:text-white">
-          Typing Speed Chart & WPM Benchmarks
+          Average Typing Speed &amp; WPM Chart
         </h1>
         <p className="text-sm sm:text-base text-slate-600 dark:text-slate-300">
           Discover how your typing speed compares to global percentiles, professional career requirements, and age-based typing averages.

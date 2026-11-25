@@ -245,9 +245,9 @@ Keep `/about/`, `/methodology/`, `/contact/`, `/privacy/` and `/terms/` as they 
 6. Make sure og:title, og:description, twitter:title and twitter:description all come from the same route values.
 
 ### ✅ Done when
-- [ ] For every row above, `dist/<path>/index.html` contains the exact title, description and a single `<h1>` with the exact text
-- [ ] `npm run seo:check` shows no title or description length warnings for these pages
-- [ ] The typing test still works on the homepage
+- [x] For every row above, `dist/<path>/index.html` contains the exact title, description and a single `<h1>` with the exact text
+- [x] `npm run seo:check` shows no title or description length warnings for these pages
+- [x] The typing test still works on the homepage
 
 ---
 
@@ -827,7 +827,7 @@ Do these once Issues 1–6 are deployed:
 
 - [x] Step 0 — Repo inspection, central SEO config, seo-check script
 - [x] Issue 1 — Redirect duplicate `/typing-speed-test/`
-- [ ] Issue 2 — Rewrite titles, metas, H1s, remove jargon
+- [x] Issue 2 — Rewrite titles, metas, H1s, remove jargon
 - [ ] Issue 3 — Add 3-minute + 30-second pages, de-duplicate duration pages
 - [ ] Issue 4 — Clean JSON-LD schema with @graph
 - [ ] Issue 5 — Generated sitemap + clean robots.txt

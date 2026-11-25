@@ -23,7 +23,7 @@ export const HowWpmIsCalculatedPage: React.FC<HowWpmIsCalculatedPageProps> = ({ 
           <Badge variant="brand">Definitive Guide</Badge>
         </div>
         <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white mb-3">
-          How WPM Is Calculated: Formulas, Rules & Standards
+          How WPM Is Calculated (Formula + Example)
         </h1>
         <p className="max-w-2xl mx-auto text-sm sm:text-base text-slate-600 dark:text-slate-400">
           A transparent, mathematically rigorous explanation of Gross WPM, Net WPM, CPM, and error penalty conventions.
@@ -142,7 +142,7 @@ export const HowWpmIsCalculatedPage: React.FC<HowWpmIsCalculatedPageProps> = ({ 
           <div>
             <h3 className="text-lg font-bold">Ready to Benchmark Your Real WPM?</h3>
             <p className="text-xs text-white/80 mt-1">
-              Take our clean, ad-free 1-minute test with instant deterministic scoring.
+              Take our clean, ad-free 1-minute test with instant, consistent scoring.
             </p>
           </div>
           <a
