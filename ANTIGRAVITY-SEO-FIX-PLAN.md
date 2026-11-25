@@ -304,10 +304,10 @@ Keep `/about/`, `/methodology/`, `/contact/`, `/privacy/` and `/terms/` as they 
 6. Add both new pages to: the prerender route list, the router, the duration pills in the test widget (add `3m` between `2m` and `5m`; `30s` already exists), the homepage "Typing Test by Duration" section, the footer "Timed Tests" list, and the header nav if it lists durations.
 
 ### ✅ Done when
-- [ ] `dist/typing-test/3-minute/index.html` and `dist/typing-test/30-second/index.html` exist, with the correct title and H1 in the raw HTML
-- [ ] The widget on each page starts preset to the right duration
-- [ ] `npm run seo:check` shows **zero duplicate-content errors** between any duration pages
-- [ ] Every duration page links to every other duration page
+- [x] `dist/typing-test/3-minute/index.html` and `dist/typing-test/30-second/index.html` exist, with the correct title and H1 in the raw HTML
+- [x] The widget on each page starts preset to the right duration
+- [x] `npm run seo:check` shows **zero duplicate-content errors** between any duration pages
+- [x] Every duration page links to every other duration page
 
 ---
 
@@ -828,7 +828,7 @@ Do these once Issues 1–6 are deployed:
 - [x] Step 0 — Repo inspection, central SEO config, seo-check script
 - [x] Issue 1 — Redirect duplicate `/typing-speed-test/`
 - [x] Issue 2 — Rewrite titles, metas, H1s, remove jargon
-- [ ] Issue 3 — Add 3-minute + 30-second pages, de-duplicate duration pages
+- [x] Issue 3 — Add 3-minute + 30-second pages, de-duplicate duration pages
 - [ ] Issue 4 — Clean JSON-LD schema with @graph
 - [ ] Issue 5 — Generated sitemap + clean robots.txt
 - [ ] Issue 6 — IndexNow

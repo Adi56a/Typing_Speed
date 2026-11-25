@@ -6,8 +6,10 @@ const SITE_URL = `https://${HOST}`;
 
 const CANONICAL_ROUTES = [
   '/',
+  '/typing-test/30-second/',
   '/typing-test/1-minute/',
   '/typing-test/2-minute/',
+  '/typing-test/3-minute/',
   '/typing-test/5-minute/',
   '/typing-test/10-minute/',
   '/ssc-typing-test/',

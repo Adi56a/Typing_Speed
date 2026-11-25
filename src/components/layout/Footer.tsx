@@ -51,6 +51,15 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
             <ul className="space-y-2 text-xs">
               <li>
                 <a
+                  href="/typing-test/30-second/"
+                  onClick={(e) => handleLinkClick(e, '/typing-test/30-second/')}
+                  className="text-slate-600 dark:text-slate-400 hover:text-brand-600 dark:hover:text-brand-400 transition-colors"
+                >
+                  30 Second Typing Test
+                </a>
+              </li>
+              <li>
+                <a
                   href="/typing-test/1-minute/"
                   onClick={(e) => handleLinkClick(e, '/typing-test/1-minute/')}
                   className="text-slate-600 dark:text-slate-400 hover:text-brand-600 dark:hover:text-brand-400 transition-colors"
@@ -65,6 +74,15 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
                   className="text-slate-600 dark:text-slate-400 hover:text-brand-600 dark:hover:text-brand-400 transition-colors"
                 >
                   2 Minute Typing Test
+                </a>
+              </li>
+              <li>
+                <a
+                  href="/typing-test/3-minute/"
+                  onClick={(e) => handleLinkClick(e, '/typing-test/3-minute/')}
+                  className="text-slate-600 dark:text-slate-400 hover:text-brand-600 dark:hover:text-brand-400 transition-colors"
+                >
+                  3 Minute Typing Test
                 </a>
               </li>
               <li>

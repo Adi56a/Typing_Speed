@@ -187,7 +187,7 @@ export const TypingWorkspaceShell: React.FC<TypingWorkspaceShellProps> = ({
     }
   }, [inputRef, status, isFullscreen]);
 
-  const durations: TestDuration[] = [15, 30, 60, 120, 300, 600];
+  const durations: TestDuration[] = [15, 30, 60, 120, 180, 300, 600];
   const difficulties: { label: string; value: TestDifficulty }[] = [
     { label: 'Easy', value: 'easy' },
     { label: 'Medium', value: 'medium' },

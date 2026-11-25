@@ -1,6 +1,6 @@
 export type Theme = 'light' | 'dark' | 'system';
 
-export type TestDuration = 15 | 30 | 60 | 120 | 300 | 600 | 900;
+export type TestDuration = 15 | 30 | 60 | 120 | 180 | 300 | 600 | 900;
 
 export type TestMode = 'time' | 'words' | 'quote' | 'custom' | 'exam';
 
@@ -33,6 +33,7 @@ export interface RouteMeta {
   title: string;
   description: string;
   heading: string;
+  h1?: string;
   subheading?: string;
   canonical?: string;
   presetDuration?: TestDuration;

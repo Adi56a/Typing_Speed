@@ -44,6 +44,19 @@ export const routes: SeoRoute[] = [
     canonical: `${SITE_URL}/`,
   },
   {
+    path: '/typing-test/30-second/',
+    kind: 'tool',
+    title: '30 Second Typing Test – Quick WPM Check',
+    description:
+      'Check your typing speed in just 30 seconds. Get your WPM and accuracy instantly with this free quick typing test. No sign-up needed.',
+    h1: '30 Second Typing Test',
+    heading: '30 Second Typing Test',
+    subheading: 'Quick 30-second speed burst to warm up your fingers and check immediate keystroke reflexes.',
+    breadcrumb: '30 Second',
+    canonical: `${SITE_URL}/typing-test/30-second/`,
+    presetDuration: 30,
+  },
+  {
     path: '/typing-test/1-minute/',
     kind: 'tool',
     title: '1 Minute Typing Test – Check Your WPM in 60 Seconds',
@@ -68,6 +81,19 @@ export const routes: SeoRoute[] = [
     breadcrumb: '2 Minute',
     canonical: `${SITE_URL}/typing-test/2-minute/`,
     presetDuration: 120,
+  },
+  {
+    path: '/typing-test/3-minute/',
+    kind: 'tool',
+    title: '3 Minute Typing Test – Free WPM & Accuracy Test',
+    description:
+      'Take a free 3-minute typing test, the length many employers use. Get your net WPM, accuracy and errors instantly. No sign-up.',
+    h1: '3 Minute Typing Test',
+    heading: '3 Minute Typing Test',
+    subheading: 'Official 3-minute test simulating employer screening assessments and workplace benchmarks.',
+    breadcrumb: '3 Minute',
+    canonical: `${SITE_URL}/typing-test/3-minute/`,
+    presetDuration: 180,
   },
   {
     path: '/typing-test/5-minute/',
