@@ -44,18 +44,6 @@ export const routes: SeoRoute[] = [
     canonical: `${SITE_URL}/`,
   },
   {
-    path: '/typing-speed-test/',
-    kind: 'tool',
-    title: 'Typing Speed Test | Check Typing Speed & Accuracy Online',
-    description:
-      'Check typing speed online in words per minute. Accurate WPM measurement, character accuracy percentage, and touch typing error analysis.',
-    h1: 'Typing Speed Test (WPM)',
-    heading: 'Typing Speed Test (WPM)',
-    subheading: 'Check your keyboard speed with real-time metrics, live error penalties, and instant feedback.',
-    breadcrumb: 'Speed Test',
-    canonical: `${SITE_URL}/typing-speed-test/`,
-  },
-  {
     path: '/typing-test/1-minute/',
     kind: 'tool',
     title: '1 Minute Typing Test | Check Typing Speed in 60 Seconds',

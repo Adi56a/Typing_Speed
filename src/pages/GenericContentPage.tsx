@@ -11,7 +11,7 @@ interface GenericContentPageProps {
 }
 
 export const GenericContentPage: React.FC<GenericContentPageProps> = ({ route, onNavigate }) => {
-  const isTypingTestRoute = route.presetDuration !== undefined || route.path.includes('typing-speed-test');
+  const isTypingTestRoute = route.presetDuration !== undefined;
 
   return (
     <div className="w-full max-w-5xl mx-auto px-4 sm:px-6 py-8">

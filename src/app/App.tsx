@@ -92,7 +92,7 @@ export const App: React.FC<AppProps> = ({ initialPath }) => {
     if (currentPath === '/terms/') {
       return <LegalPage type="terms" />;
     }
-    if (currentPath.startsWith('/typing-test/') || currentPath.includes('typing-speed-test')) {
+    if (currentPath.startsWith('/typing-test/')) {
       return <TimedTestPage route={currentRoute} onNavigate={handleNavigate} />;
     }
     if (currentPath === '/404/' || !ROUTES[currentPath]) {

@@ -191,7 +191,6 @@ export function generateStructuredData(route: RouteMeta | SeoRoute): string {
   // FAQ Schema on core home and speed test routes
   if (
     route.path === '/' ||
-    route.path === '/typing-speed-test/' ||
     route.path === '/typing-test/1-minute/' ||
     route.path === '/how-wpm-is-calculated/'
   ) {

@@ -11,7 +11,7 @@ export const Header: React.FC<HeaderProps> = ({ currentPath = '/', onNavigate })
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const navLinks = [
-    { label: 'Speed Test', path: '/typing-speed-test/' },
+    { label: 'Speed Test', path: '/' },
     { label: '1 Min', path: '/typing-test/1-minute/' },
     { label: '5 Min', path: '/typing-test/5-minute/' },
     { label: 'Practice', path: '/typing-practice/' },

@@ -195,9 +195,9 @@ Add to `package.json` scripts: `"seo:check": "node scripts/seo-check.mjs"`
 4. If any unique paragraph on that page is worth keeping, move it to the homepage. Do not copy text that already exists on the 1-minute page.
 
 ### ✅ Done when
-- [ ] `grep -r "typing-speed-test" src/` returns nothing
-- [ ] `dist/typing-speed-test/` does not exist after the build
-- [ ] `npm run seo:check` shows no duplicate-content error for that pair
+- [x] `grep -r "typing-speed-test" src/` returns nothing
+- [x] `dist/typing-speed-test/` does not exist after the build
+- [x] `npm run seo:check` shows no duplicate-content error for that pair
 - [ ] After deploy: `curl -sI https://checktypingspeeds.com/typing-speed-test/` shows `301` and `location: https://checktypingspeeds.com/`
 
 ---
@@ -826,7 +826,7 @@ Do these once Issues 1–6 are deployed:
 ## 📋 Progress tracker (agent: tick each box as you finish)
 
 - [x] Step 0 — Repo inspection, central SEO config, seo-check script
-- [ ] Issue 1 — Redirect duplicate `/typing-speed-test/`
+- [x] Issue 1 — Redirect duplicate `/typing-speed-test/`
 - [ ] Issue 2 — Rewrite titles, metas, H1s, remove jargon
 - [ ] Issue 3 — Add 3-minute + 30-second pages, de-duplicate duration pages
 - [ ] Issue 4 — Clean JSON-LD schema with @graph

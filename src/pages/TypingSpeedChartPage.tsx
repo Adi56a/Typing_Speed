@@ -185,7 +185,7 @@ export const TypingSpeedChartPage: React.FC<TypingSpeedChartPageProps> = ({ onNa
         <div className="flex items-center gap-3 w-full sm:w-auto">
           <Button
             variant="primary"
-            onClick={() => onNavigate && onNavigate('/typing-speed-test/')}
+            onClick={() => onNavigate && onNavigate('/')}
             className="w-full sm:w-auto gap-2"
           >
             <span>Test Your Speed Now</span>
