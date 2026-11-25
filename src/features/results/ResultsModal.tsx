@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { TypingMetrics } from '../../types';
 import { getSpeedRating } from '../typing-engine/scoring';
 import { saveResult, getPersonalBests } from './localHistory';
-import { RotateCcw, Share2, Check, Award, Target, Trophy, RefreshCw } from 'lucide-react';
+import { RotateCcw, Share2, Check, Award, Trophy, RefreshCw, Linkedin } from 'lucide-react';
 import { Button } from '../../components/ui/Button';
 
 export interface ResultsModalProps {
@@ -15,6 +15,7 @@ export const ResultsModal: React.FC<ResultsModalProps> = ({ metrics, onRestart, 
   const [copied, setCopied] = useState(false);
   const [isPersonalBest, setIsPersonalBest] = useState(false);
   const [previousBest, setPreviousBest] = useState<number>(0);
+  const [showShareOptions, setShowShareOptions] = useState(false);
   const rating = getSpeedRating(metrics.netWPM);
 
   useEffect(() => {
@@ -27,43 +28,44 @@ export const ResultsModal: React.FC<ResultsModalProps> = ({ metrics, onRestart, 
     saveResult(metrics, 'words');
   }, [metrics]);
 
-  const handleShare = async () => {
-    const summaryText = `🚀 CheckTypingSpeeds Results:
-• Speed: ${metrics.netWPM} Net WPM (Raw: ${metrics.grossWPM} WPM)
-• Accuracy: ${metrics.accuracy}%
-• Duration: ${metrics.durationSeconds}s
-• Consistency: ${metrics.cpm} CPM | ${metrics.incorrectChars} errors
-${isPersonalBest ? '🏆 New Personal Best!\n' : ''}Check your typing speed free at: https://checktypingspeeds.com`;
+  const durationMinutes = Math.round(metrics.durationSeconds / 60);
+  const durationText = durationMinutes >= 1 ? `${durationMinutes}-minute` : `${metrics.durationSeconds}-second`;
+  const shareText = `I typed ${metrics.netWPM} WPM with ${metrics.accuracy}% accuracy on a ${durationText} typing test. Can you beat me?`;
+  const shareUrl = `https://checktypingspeeds.com/r/?w=${metrics.netWPM}&a=${metrics.accuracy}&d=${metrics.durationSeconds}`;
 
+  const handleShare = async () => {
     // Native mobile share sheet (iOS Safari & Android Chrome)
-    if (navigator.share) {
+    if (typeof navigator !== 'undefined' && navigator.share) {
       try {
         await navigator.share({
           title: 'CheckTypingSpeeds - My Typing Speed Result',
-          text: summaryText,
-          url: 'https://checktypingspeeds.com',
+          text: shareText,
+          url: shareUrl,
         });
         return;
       } catch {
-        // User cancelled share or failed, proceed to clipboard copy
+        // User cancelled share or failed, proceed to desktop popover
       }
     }
+    setShowShareOptions((prev) => !prev);
+  };
 
-    if (navigator.clipboard) {
+  const handleCopyLink = async () => {
+    if (typeof navigator !== 'undefined' && navigator.clipboard) {
       try {
-        await navigator.clipboard.writeText(summaryText);
+        await navigator.clipboard.writeText(`${shareText} ${shareUrl}`);
         setCopied(true);
         setTimeout(() => setCopied(false), 2500);
-      } catch {
-        // Fallback
-      }
+      } catch {}
     }
   };
+
+  const isCertEligible = metrics.durationSeconds >= 180 && metrics.accuracy >= 90;
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-200">
       <div
-        className="w-full max-w-xl bg-white dark:bg-surface-dark-card border border-slate-200 dark:border-surface-dark-border rounded-2xl p-6 sm:p-8 shadow-2xl space-y-6"
+        className="w-full max-w-xl bg-white dark:bg-surface-dark-card border border-slate-200 dark:border-surface-dark-border rounded-2xl p-6 sm:p-8 shadow-2xl space-y-5"
         role="dialog"
         aria-modal="true"
         aria-labelledby="results-title"
@@ -154,18 +156,71 @@ ${isPersonalBest ? '🏆 New Personal Best!\n' : ''}Check your typing speed free
           </div>
         </div>
 
-        {/* Transparent Formula & Coaching Feedback */}
-        <div className="text-xs text-slate-600 dark:text-slate-400 space-y-1.5 p-3 rounded-xl border border-slate-100 dark:border-surface-dark-border bg-slate-50/50 dark:bg-surface-dark/50">
-          <div className="flex items-center gap-1.5 font-semibold text-slate-800 dark:text-slate-200">
-            <Target className="w-3.5 h-3.5 text-brand-500" />
-            <span>Scoring Breakdown:</span>
+        {/* Certificate CTA when duration >= 180s and accuracy >= 90% */}
+        {isCertEligible && (
+          <div className="p-3.5 rounded-xl bg-ochre-50/80 dark:bg-ochre-950/40 border border-ochre-300 dark:border-ochre-800 flex items-center justify-between gap-3 animate-in fade-in">
+            <div className="flex items-center gap-2.5">
+              <Award className="w-5 h-5 text-ochre-600 dark:text-ochre-400 flex-shrink-0" />
+              <div className="text-xs">
+                <span className="font-bold text-slate-900 dark:text-white">
+                  You qualified for an Official Certificate!
+                </span>{' '}
+                <span className="text-slate-500 dark:text-slate-400">
+                  ({metrics.netWPM} WPM · {metrics.accuracy}% Acc)
+                </span>
+              </div>
+            </div>
+            <a
+              href={`/certificate/?w=${metrics.netWPM}&a=${metrics.accuracy}&d=${metrics.durationSeconds}`}
+              className="px-3 py-1.5 rounded-lg bg-ochre-600 hover:bg-ochre-700 text-white font-bold text-xs shadow-xs transition-colors whitespace-nowrap"
+            >
+              Claim Certificate →
+            </a>
           </div>
-          <p className="leading-relaxed">
-            Net WPM = Gross WPM ({metrics.grossWPM}) - Error Penalty (
-            {Math.round((metrics.incorrectChars / 5 / (metrics.elapsedSeconds / 60)) * 10) / 10 || 0}) ={' '}
-            <strong className="text-brand-600 dark:text-brand-400">{metrics.netWPM} WPM</strong>. {rating.feedback}
-          </p>
-        </div>
+        )}
+
+        {/* Share Options Drawer */}
+        {showShareOptions && (
+          <div className="p-4 rounded-xl bg-slate-50 dark:bg-surface-dark-muted border border-slate-200 dark:border-surface-dark-border space-y-3 animate-in fade-in">
+            <div className="text-xs font-bold text-slate-700 dark:text-slate-300">
+              Share your score link:
+            </div>
+            <div className="flex flex-wrap items-center gap-2">
+              <button
+                onClick={handleCopyLink}
+                className="px-3 py-1.5 text-xs font-semibold rounded-lg bg-white dark:bg-surface-dark border border-slate-200 dark:border-surface-dark-border hover:border-brand-500 flex items-center gap-1.5 shadow-xs"
+              >
+                {copied ? <Check className="w-3.5 h-3.5 text-emerald-500" /> : <Share2 className="w-3.5 h-3.5" />}
+                <span>{copied ? 'Copied Link!' : 'Copy Link'}</span>
+              </button>
+              <a
+                href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(shareUrl)}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-3 py-1.5 text-xs font-semibold rounded-lg bg-black text-white hover:bg-slate-800 flex items-center gap-1.5 shadow-xs"
+              >
+                <span>X / Twitter</span>
+              </a>
+              <a
+                href={`https://api.whatsapp.com/send?text=${encodeURIComponent(shareText + ' ' + shareUrl)}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-3 py-1.5 text-xs font-semibold rounded-lg bg-[#25D366] text-white hover:bg-[#20ba59] flex items-center gap-1.5 shadow-xs"
+              >
+                <span>WhatsApp</span>
+              </a>
+              <a
+                href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(shareUrl)}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-3 py-1.5 text-xs font-semibold rounded-lg bg-[#0077b5] text-white hover:bg-[#006396] flex items-center gap-1.5 shadow-xs"
+              >
+                <Linkedin className="w-3.5 h-3.5" />
+                <span>LinkedIn</span>
+              </a>
+            </div>
+          </div>
+        )}
 
         {/* Action Buttons */}
         <div className="flex flex-col sm:flex-row items-center justify-between gap-3 pt-2">
@@ -191,17 +246,8 @@ ${isPersonalBest ? '🏆 New Personal Best!\n' : ''}Check your typing speed free
           </div>
 
           <Button onClick={handleShare} variant="outline" className="w-full sm:w-auto gap-1.5">
-            {copied ? (
-              <>
-                <Check className="w-4 h-4 text-brand-500" />
-                <span>Copied to Clipboard!</span>
-              </>
-            ) : (
-              <>
-                <Share2 className="w-4 h-4" />
-                <span>Share Result</span>
-              </>
-            )}
+            <Share2 className="w-4 h-4" />
+            <span>Share My Score</span>
           </Button>
         </div>
       </div>

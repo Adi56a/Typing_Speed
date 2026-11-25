@@ -58,6 +58,11 @@ export const LegalPage: React.FC<LegalPageProps> = ({ type }) => {
               country) to understand which test durations are most popular. No personal identifiers or typing metrics
               are ever linked to analytics.
             </p>
+
+            <h2 className="text-lg font-bold text-slate-900 dark:text-white">4. Optional Typing Certificates</h2>
+            <p className="text-xs sm:text-sm">
+              If you choose to generate an official typing certificate, the certificate service stores strictly the candidate name you enter, your verified test score (WPM, accuracy, and test duration), and the date of issue to enable employer verification. Certificate generation is completely opt-in, requires no account or password, and does not track or profile your browsing activity.
+            </p>
           </>
         ) : (
           <>

@@ -22,9 +22,10 @@ export const HowWpmIsCalculatedPage: React.FC<HowWpmIsCalculatedPageProps> = ({ 
         <div className="inline-flex items-center gap-1.5 mb-2">
           <Badge variant="brand">Definitive Guide</Badge>
         </div>
-        <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white mb-3">
+        <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white mb-1">
           How WPM Is Calculated (Formula + Example)
         </h1>
+        <div className="text-xs text-slate-500 dark:text-slate-400 mb-3">By Aditya Vardhan · Updated November 2026</div>
         <p className="max-w-2xl mx-auto text-sm sm:text-base text-slate-600 dark:text-slate-400">
           A transparent, mathematically rigorous explanation of Gross WPM, Net WPM, CPM, and error penalty conventions.
         </p>

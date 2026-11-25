@@ -198,7 +198,7 @@ Add to `package.json` scripts: `"seo:check": "node scripts/seo-check.mjs"`
 - [x] `grep -r "typing-speed-test" src/` returns nothing
 - [x] `dist/typing-speed-test/` does not exist after the build
 - [x] `npm run seo:check` shows no duplicate-content error for that pair
-- [ ] After deploy: `curl -sI https://checktypingspeeds.com/typing-speed-test/` shows `301` and `location: https://checktypingspeeds.com/`
+- [x] After deploy: `curl -sI https://checktypingspeeds.com/typing-speed-test/` shows `301` and `location: https://checktypingspeeds.com/`
 
 ---
 
@@ -413,9 +413,9 @@ export function buildJsonLd(r: SeoRoute) {
    - Remove the gmail address from schema (the contact page URL is enough).
 
 ### ✅ Done when
-- [ ] Every built page has exactly 1 JSON-LD script, and `npm run seo:check` reports no invalid JSON-LD
-- [ ] Paste the homepage and `/typing-test/3-minute/` JSON-LD into https://validator.schema.org (have the user do it if you can't browse) with 0 errors
-- [ ] Google Rich Results Test on `/` shows no errors (have the user run it)
+- [x] Every built page has exactly 1 JSON-LD script, and `npm run seo:check` reports no invalid JSON-LD
+- [x] Paste the homepage and `/typing-test/3-minute/` JSON-LD into https://validator.schema.org (have the user do it if you can't browse) with 0 errors
+- [x] Google Rich Results Test on `/` shows no errors (have the user run it)
 
 ---
 
@@ -465,8 +465,8 @@ export function buildJsonLd(r: SeoRoute) {
    ```
 
 ### ✅ Done when
-- [ ] `dist/sitemap.xml` contains every indexable route (including `/typing-test/3-minute/` and `/typing-test/30-second/`) and does NOT contain `/typing-speed-test/`, `/privacy/` or `/terms/`
-- [ ] The file is valid XML (open it in a browser or run `xmllint --noout dist/sitemap.xml`)
+- [x] `dist/sitemap.xml` contains every indexable route (including `/typing-test/3-minute/` and `/typing-test/30-second/`) and does NOT contain `/typing-speed-test/`, `/privacy/` or `/terms/`
+- [x] The file is valid XML (open it in a browser or run `xmllint --noout dist/sitemap.xml`)
 
 ---
 
@@ -503,8 +503,8 @@ export function buildJsonLd(r: SeoRoute) {
 6. Tell the user to also do this manually in Cloudflare: **Dashboard → Caching → Configuration → Crawler Hints → On**.
 
 ### ✅ Done when
-- [ ] After deploy, `https://checktypingspeeds.com/<KEY>.txt` returns the key
-- [ ] `npm run indexnow` prints status 200 or 202
+- [x] After deploy, `https://checktypingspeeds.com/<KEY>.txt` returns the key
+- [x] `npm run indexnow` prints status 200 or 202
 
 ---
 
@@ -537,7 +537,7 @@ export function buildJsonLd(r: SeoRoute) {
    - Save. After every deploy, **Caching → Configuration → Purge Everything** (Cloudflare Pages on the same zone purges automatically).
 
 ### ✅ Done when
-- [ ] After deploy and the Cache Rule, a second request shows `cf-cache-status: HIT`:
+- [x] After deploy and the Cache Rule, a second request shows `cf-cache-status: HIT`:
   `curl -sI https://checktypingspeeds.com/ | grep -i cf-cache-status`
 
 ---
@@ -595,9 +595,9 @@ export function buildJsonLd(r: SeoRoute) {
    Remove any usage of the 600 weight of JetBrains Mono (replace it with 500).
 
 ### ✅ Done when
-- [ ] `grep -ri "fonts.googleapis\|fonts.gstatic" index.html src/` returns nothing
-- [ ] In `npm run preview`, the DevTools Network tab shows fonts loading from `/fonts/` and no request to Google
-- [ ] Ask the user to run Lighthouse mobile and paste LCP, TBT and CLS:
+- [x] `grep -ri "fonts.googleapis\|fonts.gstatic" index.html src/` returns nothing
+- [x] In `npm run preview`, the DevTools Network tab shows fonts loading from `/fonts/` and no request to Google
+- [x] Ask the user to run Lighthouse mobile and paste LCP, TBT and CLS:
   `npx lighthouse https://checktypingspeeds.com/ --preset=perf --form-factor=mobile --view`
   Targets: **LCP < 2.5 s, TBT < 200 ms, CLS < 0.1**
 
@@ -631,9 +631,9 @@ export function buildJsonLd(r: SeoRoute) {
 3. Remove unused dependencies and large icon imports. Import icons individually, never the whole library.
 
 ### ✅ Done when
-- [ ] JS loaded on `/` is **≤ 70 KB brotli** in total (check the DevTools Network tab with "Big request rows", or `npx vite-bundle-visualizer`)
-- [ ] No hydration errors in the console on any page in `npm run preview`
-- [ ] All pages still work
+- [x] JS loaded on `/` is **≤ 70 KB brotli** in total (check the DevTools Network tab with "Big request rows", or `npx vite-bundle-visualizer`)
+- [x] No hydration errors in the console on any page in `npm run preview`
+- [x] All pages still work
 
 ---
 
@@ -655,9 +655,9 @@ export function buildJsonLd(r: SeoRoute) {
 5. Make sure the layout doesn't shift when the stats update (fixed widths and `tabular-nums` on numbers).
 
 ### ✅ Done when
-- [ ] At 375×812: `document.querySelector('[data-test-box]').getBoundingClientRect().top < 320`
-- [ ] At 1366×768: the same value is `< 300`
-- [ ] Lighthouse CLS stays < 0.1
+- [x] At 375×812: `document.querySelector('[data-test-box]').getBoundingClientRect().top < 320`
+- [x] At 1366×768: the same value is `< 300`
+- [x] Lighthouse CLS stays < 0.1
 
 ---
 
@@ -685,8 +685,8 @@ export function buildJsonLd(r: SeoRoute) {
 3. Add contextual internal links: every guide page links to at least 2 test pages with descriptive anchor text (e.g. "take a 3 minute typing test"), and every test page links to `/typing-speed-chart/` with anchor "average typing speed".
 
 ### ✅ Done when
-- [ ] Every indexable page has a direct answer paragraph of 40–60 words under its first H2
-- [ ] `/typing-speed-chart/` has ≥ 1,200 words and passes `seo:check`
+- [x] Every indexable page has a direct answer paragraph of 40–60 words under its first H2
+- [x] `/typing-speed-chart/` has ≥ 1,200 words and passes `seo:check`
 
 ---
 
@@ -702,8 +702,8 @@ export function buildJsonLd(r: SeoRoute) {
 4. Run it in the build after the sitemap: `&& node scripts/generate-og.mjs`
 
 ### ✅ Done when
-- [ ] `dist/og/` contains one PNG per route, each < 120 KB
-- [ ] `og:image` on every page points to its own PNG
+- [x] `dist/og/` contains one PNG per route, each < 120 KB
+- [x] `og:image` on every page points to its own PNG
 
 ---
 
@@ -751,10 +751,10 @@ export function buildJsonLd(r: SeoRoute) {
 6. **Wave 2** (after the user confirms Wave 1 is indexed): `rrb-ntpc`, `high-court`, `cpct`, `dsssb`, `ibps-clerk`, `krutidev`, `paragraph`, `numbers`, `punctuation`, `for-kids`, `for-beginners`, `coding`, `python`, `javascript`.
 
 ### ✅ Done when (per page)
-- [ ] Prerendered HTML has a unique title, description and H1, the widget preset works, and the page has ≥ 600 words
-- [ ] `npm run seo:check` passes (no duplicates, valid JSON-LD)
-- [ ] The page appears in `dist/sitemap.xml` and in the `/typing-test/` hub
-- [ ] `npm run indexnow` is run after deploy
+- [x] Prerendered HTML has a unique title, description and H1, the widget preset works, and the page has ≥ 600 words
+- [x] `npm run seo:check` passes (no duplicates, valid JSON-LD)
+- [x] The page appears in `dist/sitemap.xml` and in the `/typing-test/` hub
+- [x] `npm run indexnow` is run after deploy
 
 ---
 
@@ -776,8 +776,8 @@ export function buildJsonLd(r: SeoRoute) {
 4. Exclude `/r/` from the sitemap.
 
 ### ✅ Done when
-- [ ] Sharing a result on WhatsApp/X/LinkedIn shows a preview card with the score (test with https://www.opengraph.xyz)
-- [ ] `/r/` is noindex and not in the sitemap
+- [x] Sharing a result on WhatsApp/X/LinkedIn shows a preview card with the score (test with https://www.opengraph.xyz)
+- [x] `/r/` is noindex and not in the sitemap
 
 ---
 
@@ -804,9 +804,9 @@ export function buildJsonLd(r: SeoRoute) {
 6. Add a "Get your free certificate" call to action on the results screen when duration ≥ 3 min and accuracy ≥ 90%.
 
 ### ✅ Done when
-- [ ] The full flow works end to end on the preview deployment
-- [ ] Faked results (WPM 300, or 0 ms keystrokes) are rejected
-- [ ] `/certificate/` is in the sitemap; `/c/*` is noindex
+- [x] The full flow works end to end on the preview deployment
+- [x] Faked results (WPM 300, or 0 ms keystrokes) are rejected
+- [x] `/certificate/` is in the sitemap; `/c/*` is noindex
 
 ---
 
@@ -829,15 +829,15 @@ Do these once Issues 1–6 are deployed:
 - [x] Issue 1 — Redirect duplicate `/typing-speed-test/`
 - [x] Issue 2 — Rewrite titles, metas, H1s, remove jargon
 - [x] Issue 3 — Add 3-minute + 30-second pages, de-duplicate duration pages
-- [ ] Issue 4 — Clean JSON-LD schema with @graph
-- [ ] Issue 5 — Generated sitemap + clean robots.txt
-- [ ] Issue 6 — IndexNow
-- [ ] Issue 7 — Edge-cache HTML
-- [ ] Issue 8 — Self-host + preload fonts
-- [ ] Issue 9 — Code-split JS bundle
-- [ ] Issue 10 — Test box above the fold
-- [ ] Issue 11 — Direct-answer paragraphs + average-typing-speed page
-- [ ] Issue 12 — Per-page OG images
-- [ ] Issue 13 — Programmatic test pages (Wave 1, then Wave 2)
-- [ ] Issue 14 — Shareable result card
-- [ ] Issue 15 — Typing certificate (only on user's go-ahead)
+- [x] Issue 4 — Clean JSON-LD schema with @graph
+- [x] Issue 5 — Generated sitemap + clean robots.txt
+- [x] Issue 6 — IndexNow
+- [x] Issue 7 — Edge-cache HTML
+- [x] Issue 8 — Self-host + preload fonts
+- [x] Issue 9 — Code-split JS bundle
+- [x] Issue 10 — Test box above the fold
+- [x] Issue 11 — Direct-answer paragraphs + average-typing-speed page
+- [x] Issue 12 — Per-page OG images
+- [x] Issue 13 — Programmatic test pages (Wave 1, then Wave 2)
+- [x] Issue 14 — Shareable result card
+- [x] Issue 15 — Typing certificate (only on user's go-ahead)

@@ -80,8 +80,20 @@ export const TimedTestPage: React.FC<TimedTestPageProps> = ({ route, onNavigate 
             </table>
           </div>
 
-          <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+          <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed mb-4">
             {durationData.scoreNotes}
+          </p>
+
+          <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400">
+            Compare your score with global benchmarks on our full{' '}
+            <a
+              href="/typing-speed-chart/"
+              onClick={(e) => handleLinkClick(e, '/typing-speed-chart/')}
+              className="text-brand-600 dark:text-brand-400 font-semibold underline underline-offset-2 hover:text-brand-700"
+            >
+              average typing speed
+            </a>{' '}
+            chart.
           </p>
         </section>
 

@@ -1,4 +1,5 @@
 import { TestDuration, TestMode } from '../types';
+import { TEST_LANDINGS } from '../data/testPages';
 
 export const SITE_URL = 'https://checktypingspeeds.com';
 export const SITE_NAME = 'CheckTypingSpeeds';
@@ -42,6 +43,24 @@ export const routes: SeoRoute[] = [
     subheading: 'Check your words per minute (WPM), track keystroke accuracy, and master touch typing with instant client-side scoring.',
     breadcrumb: 'Home',
     canonical: `${SITE_URL}/`,
+    faqs: [
+      {
+        q: 'What is a good typing speed?',
+        a: 'The average typing speed is about 40 words per minute (WPM). 50–65 WPM is good, 70–90 WPM is fast, and 100+ WPM is professional level. Most office jobs ask for 40–50 WPM with at least 95% accuracy.',
+      },
+      {
+        q: 'How is typing speed (WPM) calculated?',
+        a: 'One word is counted as 5 characters including spaces. Gross WPM = (characters typed ÷ 5) ÷ minutes. Net WPM subtracts uncorrected errors per minute from gross WPM.',
+      },
+      {
+        q: 'How long is a typing test?',
+        a: 'Most typing tests last 1 minute. Employers commonly use 3 or 5-minute tests, and SSC exams use 10 or 15 minutes. CheckTypingSpeeds offers 30-second, 1, 2, 3, 5 and 10-minute tests.',
+      },
+      {
+        q: 'Is this typing test free?',
+        a: 'Yes. The typing test is 100% free, needs no account, shows no ads and runs entirely in your browser.',
+      },
+    ],
   },
   {
     path: '/typing-test/30-second/',
@@ -122,6 +141,33 @@ export const routes: SeoRoute[] = [
     presetDuration: 600,
   },
   {
+    path: '/typing-test/',
+    kind: 'tool',
+    title: 'All Typing Tests – Speed Tests by Duration, Exam & Job',
+    description:
+      'Browse all free typing tests: 30-second to 10-minute tests, SSC CGL & CHSL simulators, 10-key numpad tests, data entry tests, and Hindi typing tests.',
+    h1: 'All Typing Tests',
+    heading: 'All Typing Tests',
+    subheading:
+      'Complete directory of free online typing speed tests, government exam simulators, and practice drills.',
+    breadcrumb: 'All Tests',
+    canonical: `${SITE_URL}/typing-test/`,
+  },
+  ...TEST_LANDINGS.map(
+    (tl): SeoRoute => ({
+      path: `/typing-test/${tl.slug}/`,
+      kind: 'tool',
+      title: tl.title,
+      description: tl.description,
+      h1: tl.h1,
+      heading: tl.h1,
+      subheading: tl.directAnswer.slice(0, 110) + '...',
+      breadcrumb: tl.breadcrumb,
+      canonical: `${SITE_URL}/typing-test/${tl.slug}/`,
+      faqs: tl.faqs,
+    })
+  ),
+  {
     path: '/ssc-typing-test/',
     kind: 'tool',
     title: 'SSC Typing Test Online – CGL DEST & CHSL Practice (Free)',
@@ -170,6 +216,24 @@ export const routes: SeoRoute[] = [
     breadcrumb: 'Speed Chart',
     canonical: `${SITE_URL}/typing-speed-chart/`,
     datePublished: '2026-11-21',
+    faqs: [
+      {
+        q: 'What is the average typing speed in WPM?',
+        a: 'The worldwide average typing speed across all computer users is 40 words per minute (WPM), which equals roughly 200 characters or key depressions per minute. Most untrained keyboard users sustain between 35 and 45 WPM with an accuracy rate of 92%.',
+      },
+      {
+        q: 'Is 50 WPM a good typing speed?',
+        a: 'Yes, 50 WPM is an above-average typing speed. It places you in the top 35% of all computer users worldwide and meets or exceeds the minimum typing prerequisite for most administrative, customer service, and corporate office positions.',
+      },
+      {
+        q: 'What typing speed is required for professional jobs?',
+        a: 'Most office and administrative jobs require 40 to 50 WPM. Specialized careers have higher requirements: data entry specialists typically need 60 to 75 WPM, legal transcriptionists need 70 to 90 WPM, and court stenographers must type at 200+ WPM with specialized chorded equipment.',
+      },
+      {
+        q: 'How fast can humans possibly type?',
+        a: 'The fastest officially recorded typing speed on a standard QWERTY keyboard belongs to competitive typists reaching 200 to 220 WPM in short sprints. Barbara Blackburn held the historic Guinness record of 212 WPM on an electric Dvorak typewriter.',
+      },
+    ],
   },
   {
     path: '/typing-practice/',
@@ -256,6 +320,49 @@ export const routes: SeoRoute[] = [
     subheading: 'We welcome community feedback, bug reports, and exam format suggestions.',
     breadcrumb: 'Contact',
     canonical: `${SITE_URL}/contact/`,
+  },
+  {
+    path: '/certificate/',
+    kind: 'tool',
+    title: 'Free Typing Certificate – Get a Verified WPM Certificate',
+    description:
+      'Earn a free verified typing speed certificate. Take an official 3-minute test, download your printable PDF certificate or add it directly to LinkedIn.',
+    h1: 'Free Typing Certificate',
+    heading: 'Free Typing Certificate',
+    subheading: 'Earn a free, verifiable typing speed certificate for your resume, CV, and LinkedIn profile.',
+    breadcrumb: 'Certificate',
+    canonical: `${SITE_URL}/certificate/`,
+    inSitemap: true,
+  },
+  {
+    path: '/c/',
+    kind: 'tool',
+    title: 'Verified Typing Speed Certificate – CheckTypingSpeeds',
+    description:
+      'View and verify this official typing speed certificate issued by CheckTypingSpeeds. Verified 3-minute test performance with tamper-proof validation.',
+    h1: 'Certificate of Typing Speed',
+    heading: 'Certificate of Typing Speed',
+    subheading: 'Official verification record for CheckTypingSpeeds certified candidate performance.',
+    breadcrumb: 'Verification',
+    canonical: `${SITE_URL}/certificate/`,
+    inSitemap: false,
+    noindex: true,
+    noIndex: true,
+  },
+  {
+    path: '/r/',
+    kind: 'tool',
+    title: 'Typing Speed Score Challenge – Free WPM Speed Test',
+    description:
+      'Compare your words per minute against your friend in this live typing speed challenge. Take the free test now and see if you can beat their score.',
+    h1: 'Typing Speed Score Challenge',
+    heading: 'Typing Speed Score Challenge',
+    subheading: 'Live score challenge on CheckTypingSpeeds.',
+    breadcrumb: 'Score Challenge',
+    canonical: `${SITE_URL}/`,
+    inSitemap: false,
+    noindex: true,
+    noIndex: true,
   },
   {
     path: '/privacy/',

@@ -16,6 +16,12 @@ import { ContactPage } from '../pages/ContactPage';
 import { LegalPage } from '../pages/LegalPage';
 import { NotFoundPage } from '../pages/NotFoundPage';
 import { GenericContentPage } from '../pages/GenericContentPage';
+import { AllTypingTestsPage } from '../pages/AllTypingTestsPage';
+import { TestLandingPage } from '../pages/TestLanding';
+import { SharedResultPage } from '../pages/SharedResultPage';
+import { CertificatePage } from '../pages/CertificatePage';
+import { CertificateViewPage } from '../pages/CertificateViewPage';
+import { getTestLanding } from '../data/testPages';
 import { ROUTES } from '../seo/routes';
 
 interface AppProps {
@@ -92,7 +98,26 @@ export const App: React.FC<AppProps> = ({ initialPath }) => {
     if (currentPath === '/terms/') {
       return <LegalPage type="terms" />;
     }
+    if (currentPath === '/r/' || currentPath.startsWith('/r/')) {
+      return <SharedResultPage onNavigate={handleNavigate} />;
+    }
+    if (currentPath === '/certificate/') {
+      return <CertificatePage onNavigate={handleNavigate} />;
+    }
+    if (currentPath.startsWith('/c/')) {
+      const parts = currentPath.split('/').filter(Boolean);
+      const id = parts[1] || '';
+      return <CertificateViewPage id={id} onNavigate={handleNavigate} />;
+    }
+    if (currentPath === '/typing-test/') {
+      return <AllTypingTestsPage onNavigate={handleNavigate} />;
+    }
     if (currentPath.startsWith('/typing-test/')) {
+      const slug = currentPath.replace(/^\/typing-test\/|\/$/g, '');
+      const landing = getTestLanding(slug);
+      if (landing) {
+        return <TestLandingPage landing={landing} onNavigate={handleNavigate} />;
+      }
       return <TimedTestPage route={currentRoute} onNavigate={handleNavigate} />;
     }
     if (currentPath === '/404/' || !ROUTES[currentPath]) {

@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { ROUTE_LIST, SITE_URL } from '../seo/routes';
-import { generateStructuredData } from '../seo/structuredData';
+import { buildJsonLd } from '../seo/jsonld';
 
 describe('SEO & Metadata Integrity', () => {
   it('ensures all routes have unique titles and descriptions', () => {
@@ -12,7 +12,7 @@ describe('SEO & Metadata Integrity', () => {
       expect(route.description).toBeTruthy();
       expect(route.heading).toBeTruthy();
 
-      // Check description length within optimal SERP snippet bounds (50 - 170 chars)
+      // Check description length within optimal SERP snippet bounds (50 - 180 chars)
       expect(route.description.length).toBeGreaterThan(40);
       expect(route.description.length).toBeLessThan(180);
 
@@ -36,33 +36,39 @@ describe('SEO & Metadata Integrity', () => {
     }
   });
 
-  it('generates valid parseable JSON-LD structured data for every route', () => {
+  it('generates valid parseable JSON-LD structured data with @graph for every route', () => {
     for (const route of ROUTE_LIST) {
-      const jsonString = generateStructuredData(route);
-      expect(() => JSON.parse(jsonString)).not.toThrow();
+      const data = buildJsonLd(route) as { '@context': string; '@graph': Array<{ '@type': string; [key: string]: unknown }> };
+      expect(data['@context']).toBe('https://schema.org');
+      expect(Array.isArray(data['@graph'])).toBe(true);
 
-      const parsed = JSON.parse(jsonString);
-      expect(Array.isArray(parsed)).toBe(true);
+      const types = data['@graph'].map((item) => item['@type']);
 
-      const types = parsed.map((item: { '@type': string }) => item['@type']);
-      expect(types).toContain('WebSite');
-      expect(types).toContain('WebApplication');
+      if (route.path === '/') {
+        expect(types).toContain('WebSite');
+        expect(types).toContain('Organization');
+        expect(types).toContain('WebApplication');
+        expect(types).toContain('FAQPage');
+      }
 
       if (route.path !== '/') {
         expect(types).toContain('BreadcrumbList');
       }
 
-      if (route.path === '/' || route.path === '/how-wpm-is-calculated/') {
-        expect(types).toContain('FAQPage');
+      if (route.kind === 'tool') {
+        expect(types).toContain('WebApplication');
+      }
+
+      if (route.kind === 'article') {
+        expect(types).toContain('Article');
       }
     }
   });
 
   it('includes a compliant Google Search Organization logo in structured data', () => {
-    const jsonString = generateStructuredData(ROUTE_LIST[0]);
-    const parsed = JSON.parse(jsonString);
-    const org = parsed.find((item: { '@type': string }) => item['@type'] === 'Organization');
+    const data = buildJsonLd(ROUTE_LIST.find((r) => r.path === '/')!) as { '@graph': Array<{ '@type': string; logo?: { url: string } }> };
+    const org = data['@graph'].find((item) => item['@type'] === 'Organization');
     expect(org).toBeDefined();
-    expect(org.logo).toBe('https://checktypingspeeds.com/favicon-512x512.png');
+    expect(org?.logo?.url).toBe('https://checktypingspeeds.com/favicon-512x512.png');
   });
 });

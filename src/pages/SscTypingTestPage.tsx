@@ -13,7 +13,14 @@ const SSC_PASSAGES = {
   court: `The judicial system functions on the immutable principle that justice must not only be done, but must manifestly and undoubtedly be seen to be done. Court stenographers and bench typists occupy positions of extraordinary trust, transcribing verbatim testimony, witness affidavits, and judicial decrees in real-time courtroom proceedings. Any deviation between the spoken deposition and the transcribed court record can result in severe miscarriages of justice, prolonged appellate litigation, and irreversible prejudice to litigants. Candidates aspiring to judicial clerical services must demonstrate flawless accuracy, impeccable punctuation discipline, and the psychological composure required to type continuously under high-pressure hearing conditions. Regular training with formal legal vocabulary and multi-sentence syntax is indispensable for success.`,
 };
 
-export const SscTypingTestPage: React.FC<SscTypingTestPageProps> = ({ onNavigate: _onNavigate }) => {
+export const SscTypingTestPage: React.FC<SscTypingTestPageProps> = ({ onNavigate }) => {
+  const navigate = (path: string) => {
+    if (onNavigate) {
+      onNavigate(path);
+    } else {
+      window.location.href = path;
+    }
+  };
   const [examType, setExamType] = useState<'cgl' | 'chsl' | 'court'>('cgl');
   const [category, setCategory] = useState<'UR' | 'RESERVED'>('UR');
   const [testDurationMinutes, setTestDurationMinutes] = useState<number>(15);
@@ -362,8 +369,13 @@ export const SscTypingTestPage: React.FC<SscTypingTestPageProps> = ({ onNavigate
       <div className="p-6 rounded-2xl bg-white dark:bg-surface-dark-card border border-surface-light-border dark:border-surface-dark-border space-y-4 shadow-sm">
         <h2 className="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
           <FileText className="w-5 h-5 text-brand-500" />
-          <span>Official SSC Typing Test Guidelines & Evaluation Scheme</span>
+          <span>What Is the SSC Typing Test Speed Requirement?</span>
         </h2>
+        <div className="p-5 rounded-2xl bg-brand-50/60 dark:bg-brand-950/20 border border-brand-200 dark:border-brand-800">
+          <p className="text-sm sm:text-base text-slate-800 dark:text-slate-200 font-medium leading-relaxed">
+            The official Staff Selection Commission (SSC) typing requirement is 35 words per minute (WPM) in English (10,500 KDPH) or 30 WPM in Hindi (9,000 KDPH) over 10 minutes for CHSL LDC posts. For SSC CGL Tier-2 DEST, candidates must complete 2,000 key depressions in 15 minutes (approximately 27 WPM) with maximum 7% error for unreserved categories.
+          </p>
+        </div>
         <div className="overflow-x-auto">
           <table className="w-full text-left text-xs sm:text-sm border-collapse">
             <thead>
@@ -406,6 +418,79 @@ export const SscTypingTestPage: React.FC<SscTypingTestPageProps> = ({ onNavigate
               </tr>
             </tbody>
           </table>
+        </div>
+      </div>
+
+      {/* Dedicated Government Exam Simulators */}
+      <div className="p-6 rounded-2xl bg-slate-100 dark:bg-surface-dark-card border border-slate-200 dark:border-surface-dark-border space-y-4">
+        <h2 className="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
+          <FileText className="w-5 h-5 text-brand-500" />
+          <span>Explore Dedicated Exam Practice Tests</span>
+        </h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3">
+          <a
+            href="/typing-test/ssc-cgl/"
+            onClick={(e) => {
+              e.preventDefault();
+              navigate('/typing-test/ssc-cgl/');
+            }}
+            className="p-4 rounded-xl bg-white dark:bg-surface-dark border border-slate-200 dark:border-surface-dark-border hover:border-brand-500 hover:shadow-sm transition-all group"
+          >
+            <div className="font-bold text-sm text-slate-900 dark:text-white group-hover:text-brand-600 dark:group-hover:text-brand-400">
+              SSC CGL DEST Mock
+            </div>
+            <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
+              15 Minutes · 2,000 Keystrokes · 7% Error Limit
+            </p>
+          </a>
+
+          <a
+            href="/typing-test/ssc-chsl/"
+            onClick={(e) => {
+              e.preventDefault();
+              navigate('/typing-test/ssc-chsl/');
+            }}
+            className="p-4 rounded-xl bg-white dark:bg-surface-dark border border-slate-200 dark:border-surface-dark-border hover:border-brand-500 hover:shadow-sm transition-all group"
+          >
+            <div className="font-bold text-sm text-slate-900 dark:text-white group-hover:text-brand-600 dark:group-hover:text-brand-400">
+              SSC CHSL Skill Test
+            </div>
+            <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
+              10 Minutes · 35 WPM / 10,500 KDPH for LDC
+            </p>
+          </a>
+
+          <a
+            href="/typing-test/hindi/"
+            onClick={(e) => {
+              e.preventDefault();
+              navigate('/typing-test/hindi/');
+            }}
+            className="p-4 rounded-xl bg-white dark:bg-surface-dark border border-slate-200 dark:border-surface-dark-border hover:border-brand-500 hover:shadow-sm transition-all group"
+          >
+            <div className="font-bold text-sm text-slate-900 dark:text-white group-hover:text-brand-600 dark:group-hover:text-brand-400">
+              Hindi Typing Test
+            </div>
+            <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
+              Mangal Font · InScript &amp; Remington Gail
+            </p>
+          </a>
+
+          <a
+            href="/typing-test/data-entry/"
+            onClick={(e) => {
+              e.preventDefault();
+              navigate('/typing-test/data-entry/');
+            }}
+            className="p-4 rounded-xl bg-white dark:bg-surface-dark border border-slate-200 dark:border-surface-dark-border hover:border-brand-500 hover:shadow-sm transition-all group"
+          >
+            <div className="font-bold text-sm text-slate-900 dark:text-white group-hover:text-brand-600 dark:group-hover:text-brand-400">
+              Data Entry Test
+            </div>
+            <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
+              Mixed alphanumeric &amp; financial transcribing
+            </p>
+          </a>
         </div>
       </div>
 

@@ -103,6 +103,24 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
                   10 Minute Typing Test
                 </a>
               </li>
+              <li>
+                <a
+                  href="/certificate/"
+                  onClick={(e) => handleLinkClick(e, '/certificate/')}
+                  className="text-brand-600 dark:text-brand-400 font-semibold hover:underline transition-colors"
+                >
+                  Free Typing Certificate
+                </a>
+              </li>
+              <li>
+                <a
+                  href="/typing-test/"
+                  onClick={(e) => handleLinkClick(e, '/typing-test/')}
+                  className="text-brand-600 dark:text-brand-400 font-bold hover:underline transition-colors"
+                >
+                  All Typing Tests →
+                </a>
+              </li>
             </ul>
           </div>
 

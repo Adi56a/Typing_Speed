@@ -137,9 +137,9 @@ export const TypingLessonsPage: React.FC<TypingLessonsPageProps> = ({ onNavigate
             <div className="text-xs font-bold uppercase tracking-wider text-brand-600 dark:text-brand-400">
               {activeLesson.category}
             </div>
-            <h2 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white">
+            <h3 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white">
               {activeLesson.title}
-            </h2>
+            </h3>
             <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400">
               {activeLesson.description}
             </p>
@@ -231,8 +231,17 @@ export const TypingLessonsPage: React.FC<TypingLessonsPageProps> = ({ onNavigate
       <div className="max-w-4xl mx-auto px-4 space-y-8 pt-6 border-t border-slate-200 dark:border-surface-dark-border">
         <article className="prose dark:prose-invert max-w-none space-y-6 text-slate-700 dark:text-slate-300 text-sm sm:text-base leading-relaxed">
           <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white">
-            The Fundamental Principles of Touch Typing
+            How Long Does It Take to Learn Touch Typing?
           </h2>
+          <div className="p-5 rounded-2xl bg-brand-50/60 dark:bg-brand-950/20 border border-brand-200 dark:border-brand-800 not-prose my-4">
+            <p className="text-sm sm:text-base text-slate-800 dark:text-slate-200 font-medium leading-relaxed">
+              Learning touch typing typically takes two to three weeks of consistent 15-minute daily practice. Most dedicated beginners progress from hunt-and-peck typing to 30–40 WPM without looking at the keyboard within 20 days. Reaching 50 to 65 WPM with 95% accuracy usually requires two months of steady muscle memory training.
+            </p>
+          </div>
+
+          <h3 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white">
+            The Fundamental Principles of Touch Typing
+          </h3>
           <p>
             Touch typing is the discipline of typing without visually consulting your keyboard. Instead of "hunting and pecking" with two fingers, touch typists rely entirely on neuromuscular muscle memory, positioning all ten fingers over dedicated keyboard sectors.
           </p>

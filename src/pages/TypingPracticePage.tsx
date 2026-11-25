@@ -90,9 +90,9 @@ export const TypingPracticePage: React.FC<TypingPracticePageProps> = () => {
                 <span className="text-[10px] uppercase font-bold tracking-wider text-slate-400">
                   {drill.category}
                 </span>
-                <h2 className="text-xs font-bold text-slate-900 dark:text-white mt-1">
+                <div className="text-xs font-bold text-slate-900 dark:text-white mt-1">
                   {drill.title}
-                </h2>
+                </div>
               </div>
               <div className="mt-3 pt-2 border-t border-slate-100 dark:border-surface-dark-border text-[11px] font-mono text-brand-600 dark:text-brand-400">
                 {drill.targetKeys}
@@ -102,13 +102,23 @@ export const TypingPracticePage: React.FC<TypingPracticePageProps> = () => {
         })}
       </div>
 
+      {/* Direct Answer & Methodology */}
+      <div className="mb-8 p-5 rounded-2xl bg-brand-50/60 dark:bg-brand-950/20 border border-brand-200 dark:border-brand-800">
+        <h2 className="text-xl font-bold text-slate-900 dark:text-white mb-2">
+          How Do Typing Practice Drills Increase Speed?
+        </h2>
+        <p className="text-sm text-slate-800 dark:text-slate-200 font-medium leading-relaxed">
+          Typing practice drills increase typing speed by converting conscious finger movement into subconscious neuromuscular reflexes. By isolating high-frequency key combinations like home-row reaches and common letter pairs, targeted drills eliminate hesitation pauses between keystrokes. Practicing 15 minutes daily typically boosts typing speed by 10 to 15 WPM within one month.
+        </p>
+      </div>
+
       {/* Active Drill Overview */}
       <div className="mb-6 p-4 rounded-xl bg-slate-100 dark:bg-surface-dark-card border border-slate-200 dark:border-surface-dark-border flex flex-col sm:flex-row sm:items-center justify-between gap-3">
         <div>
-          <h2 className="text-sm font-bold text-slate-900 dark:text-white flex items-center gap-2">
+          <h3 className="text-sm font-bold text-slate-900 dark:text-white flex items-center gap-2">
             <BookOpen className="w-4 h-4 text-brand-500" />
             <span>Active Drill: {selectedDrill.title}</span>
-          </h2>
+          </h3>
           <p className="text-xs text-slate-600 dark:text-slate-400 mt-0.5">
             {selectedDrill.description}
           </p>

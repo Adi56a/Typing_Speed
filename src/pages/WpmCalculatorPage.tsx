@@ -175,14 +175,73 @@ export const WpmCalculatorPage: React.FC<WpmCalculatorPageProps> = ({ onNavigate
         </Card>
       </div>
 
+      {/* Educational Guide & Exam Benchmarks */}
+      <div className="space-y-6 mb-12">
+        <Card className="p-6 text-sm text-slate-700 dark:text-slate-300 space-y-4">
+          <h2 className="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
+            <HelpCircle className="w-5 h-5 text-brand-500" />
+            <span>How Do You Calculate WPM?</span>
+          </h2>
+          <div className="p-4 rounded-xl bg-brand-50/60 dark:bg-brand-950/20 border border-brand-200 dark:border-brand-800">
+            <p className="text-sm text-slate-800 dark:text-slate-200 font-medium leading-relaxed">
+              To calculate typing speed, divide the total number of characters typed by 5 to determine words, then divide by elapsed minutes. Gross WPM equals (Characters ÷ 5) ÷ Minutes. Net WPM subtracts uncorrected errors per minute from Gross WPM. For example, typing 300 characters in 1 minute with 2 errors yields 60 Gross WPM and 58 Net WPM.
+            </p>
+          </div>
+          <p className="leading-relaxed">
+            In touch-typing measurement, speed is standardized across different passage complexities by defining{' '}
+            <strong>1 word = 5 characters</strong> (including spaces). This ensures tests with longer vocabulary
+            do not artificially lower your measured speed compared to tests with shorter words.
+          </p>
+
+          <div className="p-4 rounded-xl bg-slate-50 dark:bg-surface-dark font-mono text-xs space-y-2 border border-slate-200 dark:border-surface-dark-border">
+            <div>
+              <strong>Gross WPM:</strong> (Total Characters Typed / 5) / Elapsed Minutes
+            </div>
+            <div>
+              <strong>Error Penalty:</strong> (Uncorrected Errors / 5) / Elapsed Minutes
+            </div>
+            <div>
+              <strong>Net WPM:</strong> Gross WPM - Error Penalty
+            </div>
+            <div>
+              <strong>Accuracy %:</strong> (Correct Characters / Total Characters) * 100
+            </div>
+          </div>
+
+          <h3 className="text-base font-bold text-slate-900 dark:text-white pt-2">
+            Common Government & Corporate Speed Benchmarks
+          </h3>
+          <ul className="space-y-2">
+            <li className="flex items-start gap-2">
+              <CheckCircle2 className="w-4 h-4 text-brand-500 flex-shrink-0 mt-0.5" />
+              <span>
+                <strong>SSC CGL / CHSL (India):</strong> 35 WPM in English (approx. 10,500 KDPH key depressions per hour) or 30 WPM in Hindi, with &le; 5% error margin.
+              </span>
+            </li>
+            <li className="flex items-start gap-2">
+              <CheckCircle2 className="w-4 h-4 text-brand-500 flex-shrink-0 mt-0.5" />
+              <span>
+                <strong>Court & Legal Transcription:</strong> 60 to 80+ Net WPM with 98% accuracy.
+              </span>
+            </li>
+            <li className="flex items-start gap-2">
+              <CheckCircle2 className="w-4 h-4 text-brand-500 flex-shrink-0 mt-0.5" />
+              <span>
+                <strong>General Office & Administrative:</strong> 40 to 50 Net WPM.
+              </span>
+            </li>
+          </ul>
+        </Card>
+      </div>
+
       {/* KDPH to WPM Exam Converter Card */}
       <Card className="p-6 mb-12 bg-white dark:bg-surface-dark-card border border-surface-light-border dark:border-surface-dark-border shadow-sm space-y-5">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-100 dark:border-surface-dark-border pb-3">
           <div>
-            <h2 className="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2">
+            <h3 className="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2">
               <Calculator className="w-5 h-5 text-ochre-500" />
               <span>KDPH to WPM Converter (Indian Government Exams)</span>
-            </h2>
+            </h3>
             <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
               Instant conversion between Key Depressions Per Hour (KDPH) and Words Per Minute (WPM) for SSC CGL, CHSL, and High Court exams.
             </p>
@@ -242,60 +301,6 @@ export const WpmCalculatorPage: React.FC<WpmCalculatorPageProps> = ({ onNavigate
           </div>
         </div>
       </Card>
-
-      {/* Educational Guide & Exam Benchmarks */}
-      <div className="space-y-6">
-        <Card className="p-6 text-sm text-slate-700 dark:text-slate-300 space-y-4">
-          <h2 className="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2">
-            <HelpCircle className="w-5 h-5 text-brand-500" />
-            <span>How the WPM Formula Works</span>
-          </h2>
-          <p className="leading-relaxed">
-            In touch-typing measurement, speed is standardized across different passage complexities by defining{' '}
-            <strong>1 word = 5 characters</strong> (including spaces). This ensures tests with longer vocabulary
-            do not artificially lower your measured speed compared to tests with shorter words.
-          </p>
-
-          <div className="p-4 rounded-xl bg-slate-50 dark:bg-surface-dark font-mono text-xs space-y-2 border border-slate-200 dark:border-surface-dark-border">
-            <div>
-              <strong>Gross WPM:</strong> (Total Characters Typed / 5) / Elapsed Minutes
-            </div>
-            <div>
-              <strong>Error Penalty:</strong> (Uncorrected Errors / 5) / Elapsed Minutes
-            </div>
-            <div>
-              <strong>Net WPM:</strong> Gross WPM - Error Penalty
-            </div>
-            <div>
-              <strong>Accuracy %:</strong> (Correct Characters / Total Characters) * 100
-            </div>
-          </div>
-
-          <h3 className="text-base font-bold text-slate-900 dark:text-white pt-2">
-            Common Government & Corporate Speed Benchmarks
-          </h3>
-          <ul className="space-y-2">
-            <li className="flex items-start gap-2">
-              <CheckCircle2 className="w-4 h-4 text-brand-500 flex-shrink-0 mt-0.5" />
-              <span>
-                <strong>SSC CGL / CHSL (India):</strong> 35 WPM in English (approx. 10,500 KDPH key depressions per hour) or 30 WPM in Hindi, with $\le 5\%$ error margin.
-              </span>
-            </li>
-            <li className="flex items-start gap-2">
-              <CheckCircle2 className="w-4 h-4 text-brand-500 flex-shrink-0 mt-0.5" />
-              <span>
-                <strong>Court & Legal Transcription:</strong> 60 to 80+ Net WPM with 98% accuracy.
-              </span>
-            </li>
-            <li className="flex items-start gap-2">
-              <CheckCircle2 className="w-4 h-4 text-brand-500 flex-shrink-0 mt-0.5" />
-              <span>
-                <strong>General Office & Administrative:</strong> 40 to 50 Net WPM.
-              </span>
-            </li>
-          </ul>
-        </Card>
-      </div>
     </div>
   );
 };

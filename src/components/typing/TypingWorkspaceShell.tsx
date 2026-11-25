@@ -20,18 +20,26 @@ interface TypingWorkspaceShellProps {
   initialDuration?: TestDuration;
   initialMode?: TestMode;
   initialDifficulty?: TestDifficulty;
+  initialWithPunctuation?: boolean;
+  initialWithNumbers?: boolean;
+  initialCustomText?: string;
+  scoringLabel?: 'wpm' | 'kdph' | 'kph';
 }
 
 export const TypingWorkspaceShell: React.FC<TypingWorkspaceShellProps> = ({
   initialDuration = 60,
   initialMode = 'words',
   initialDifficulty = 'medium',
+  initialWithPunctuation = false,
+  initialWithNumbers = false,
+  initialCustomText,
+  scoringLabel = 'wpm',
 }) => {
   const [duration, setDuration] = useState<TestDuration>(initialDuration);
   const [mode, setMode] = useState<TestMode>(initialMode);
   const [difficulty, setDifficulty] = useState<TestDifficulty>(initialDifficulty);
-  const [withPunctuation, setWithPunctuation] = useState(false);
-  const [withNumbers, setWithNumbers] = useState(false);
+  const [withPunctuation, setWithPunctuation] = useState(initialWithPunctuation);
+  const [withNumbers, setWithNumbers] = useState(initialWithNumbers);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [isInputFocused, setIsInputFocused] = useState<boolean>(false);
   const [showKeyboard, setShowKeyboard] = useState<boolean>(() => {
@@ -67,6 +75,7 @@ export const TypingWorkspaceShell: React.FC<TypingWorkspaceShellProps> = ({
     difficulty,
     punctuation: withPunctuation,
     numbers: withNumbers,
+    customText: initialCustomText,
   });
 
   const focusInput = useCallback(() => {
@@ -180,9 +189,9 @@ export const TypingWorkspaceShell: React.FC<TypingWorkspaceShellProps> = ({
     };
   }, [isFullscreen]);
 
-  // Keep focus on hidden input automatically without triggering forced layout reflow
+  // Keep focus on hidden input on desktop pointer:fine devices without triggering mobile keyboard popups or forced layout reflow
   useEffect(() => {
-    if (inputRef.current) {
+    if (inputRef.current && typeof window !== 'undefined' && window.matchMedia && window.matchMedia('(pointer:fine)').matches) {
       inputRef.current.focus({ preventScroll: true });
     }
   }, [inputRef, status, isFullscreen]);
@@ -342,7 +351,7 @@ export const TypingWorkspaceShell: React.FC<TypingWorkspaceShellProps> = ({
               <div className="text-[9px] sm:text-[11px] font-medium uppercase text-slate-500 dark:text-slate-400 tracking-wider truncate">
                 Time
               </div>
-              <div className="text-base sm:text-2xl font-bold font-mono text-slate-900 dark:text-white leading-tight">
+              <div className="text-base sm:text-2xl font-bold font-mono tabular-nums text-slate-900 dark:text-white leading-tight">
                 {remainingSeconds}s
               </div>
             </div>
@@ -357,8 +366,13 @@ export const TypingWorkspaceShell: React.FC<TypingWorkspaceShellProps> = ({
               <div className="text-[9px] sm:text-[11px] font-medium uppercase text-slate-500 dark:text-slate-400 tracking-wider truncate">
                 Speed
               </div>
-              <div className="text-base sm:text-2xl font-bold font-mono text-slate-900 dark:text-white leading-tight">
-                {metrics.netWPM} <span className="text-[9px] sm:text-xs font-normal text-slate-400">WPM</span>
+              <div className="text-base sm:text-2xl font-bold font-mono tabular-nums text-slate-900 dark:text-white leading-tight">
+                {scoringLabel === 'kph' || scoringLabel === 'kdph'
+                  ? Math.round(metrics.netWPM * 300)
+                  : metrics.netWPM}{' '}
+                <span className="text-[9px] sm:text-xs font-normal text-slate-400">
+                  {scoringLabel.toUpperCase()}
+                </span>
               </div>
             </div>
           </div>
@@ -372,7 +386,7 @@ export const TypingWorkspaceShell: React.FC<TypingWorkspaceShellProps> = ({
               <div className="text-[9px] sm:text-[11px] font-medium uppercase text-slate-500 dark:text-slate-400 tracking-wider truncate">
                 Accuracy
               </div>
-              <div className="text-base sm:text-2xl font-bold font-mono text-slate-900 dark:text-white leading-tight">
+              <div className="text-base sm:text-2xl font-bold font-mono tabular-nums text-slate-900 dark:text-white leading-tight">
                 {metrics.accuracy}%
               </div>
             </div>
@@ -387,7 +401,7 @@ export const TypingWorkspaceShell: React.FC<TypingWorkspaceShellProps> = ({
               <div className="text-[9px] sm:text-[11px] font-medium uppercase text-slate-500 dark:text-slate-400 tracking-wider truncate">
                 Errors
               </div>
-              <div className="text-base sm:text-2xl font-bold font-mono text-slate-900 dark:text-white leading-tight">
+              <div className="text-base sm:text-2xl font-bold font-mono tabular-nums text-slate-900 dark:text-white leading-tight">
                 {metrics.incorrectChars}
               </div>
             </div>
@@ -411,6 +425,7 @@ export const TypingWorkspaceShell: React.FC<TypingWorkspaceShellProps> = ({
 
         {/* Typing Surface: Distraction-free with Scoped Touch Input */}
         <div
+          data-test-box
           className={`rounded-2xl bg-white dark:bg-surface-dark-card border-2 p-4 sm:p-8 shadow-sm transition-all ${
             isInputFocused
               ? 'border-brand-500 ring-2 ring-brand-500/20 dark:border-brand-500'

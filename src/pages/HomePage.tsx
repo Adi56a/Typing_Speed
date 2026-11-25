@@ -307,27 +307,37 @@ export const HomePage: React.FC<HomePageProps> = ({ initialDuration = 60, onNavi
           <div className="space-y-6">
             <div className="p-5 rounded-xl bg-white dark:bg-surface-dark-card border border-surface-light-border dark:border-surface-dark-border">
               <h3 className="text-sm font-bold text-slate-900 dark:text-white mb-2">
-                How do I check my typing speed on CheckTypingSpeeds?
+                What is a good typing speed?
               </h3>
               <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
-                To check your typing speed, simply start typing the words displayed on screen above. The accurate timer starts
-                automatically with your first keystroke. No login, account creation, or software installation is required. When
-                the timer expires, you instantly get your Net WPM, Gross WPM, accuracy %, and error analysis.
+                The average typing speed is about 40 words per minute (WPM). 50–65 WPM is good, 70–90 WPM is fast, and 100+ WPM is professional level. Most office jobs ask for 40–50 WPM with at least 95% accuracy.
               </p>
             </div>
 
             <div className="p-5 rounded-xl bg-white dark:bg-surface-dark-card border border-surface-light-border dark:border-surface-dark-border">
               <h3 className="text-sm font-bold text-slate-900 dark:text-white mb-2">
-                What is WPM and how is it calculated?
+                How is typing speed (WPM) calculated?
               </h3>
               <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
-                <strong>WPM stands for Words Per Minute</strong>. Under standard international typing conventions,
-                one standardized &quot;word&quot; is equal to <strong>5 characters</strong> (including letters, spaces,
-                and punctuation). Gross WPM is calculated as{' '}
-                <code className="px-1.5 py-0.5 rounded bg-surface-light-muted dark:bg-surface-dark-muted font-mono text-xs">
-                  (Total Characters / 5) / Elapsed Minutes
-                </code>
-                . Net WPM subtracts uncorrected errors to measure true usable speed.
+                One word is counted as 5 characters including spaces. Gross WPM = (characters typed ÷ 5) ÷ minutes. Net WPM subtracts uncorrected errors per minute from gross WPM.
+              </p>
+            </div>
+
+            <div className="p-5 rounded-xl bg-white dark:bg-surface-dark-card border border-surface-light-border dark:border-surface-dark-border">
+              <h3 className="text-sm font-bold text-slate-900 dark:text-white mb-2">
+                How long is a typing test?
+              </h3>
+              <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+                Most typing tests last 1 minute. Employers commonly use 3 or 5-minute tests, and SSC exams use 10 or 15 minutes. CheckTypingSpeeds offers 30-second, 1, 2, 3, 5 and 10-minute tests.
+              </p>
+            </div>
+
+            <div className="p-5 rounded-xl bg-white dark:bg-surface-dark-card border border-surface-light-border dark:border-surface-dark-border">
+              <h3 className="text-sm font-bold text-slate-900 dark:text-white mb-2">
+                Is this typing test free?
+              </h3>
+              <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+                Yes. The typing test is 100% free, needs no account, shows no ads and runs entirely in your browser.
               </p>
             </div>
 

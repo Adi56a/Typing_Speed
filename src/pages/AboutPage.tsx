@@ -83,6 +83,25 @@ export const AboutPage: React.FC = () => {
           </Card>
         </div>
 
+        {/* Author & Editorial Team */}
+        <Card className="p-6 sm:p-8 space-y-4">
+          <h2 className="text-xl font-bold text-slate-900 dark:text-white">
+            Editorial Team &amp; Author
+          </h2>
+          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
+            <div className="w-14 h-14 rounded-full bg-brand-100 dark:bg-brand-950 flex items-center justify-center font-bold text-brand-600 dark:text-brand-400 text-lg flex-shrink-0">
+              AV
+            </div>
+            <div>
+              <div className="font-bold text-base text-slate-900 dark:text-white">Aditya Vardhan</div>
+              <div className="text-xs text-brand-600 dark:text-brand-400 font-medium">Founder &amp; Lead Engineer</div>
+              <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 mt-1 leading-relaxed">
+                Software architect and typing speed researcher focused on client-side web performance, touch-typing motor learning, and examination standards for civil service candidates.
+              </p>
+            </div>
+          </div>
+        </Card>
+
         {/* Global + India Dedication */}
         <Card className="p-6 sm:p-8 space-y-4">
           <h2 className="text-xl font-bold text-slate-900 dark:text-white">

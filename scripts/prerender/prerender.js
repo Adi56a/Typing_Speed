@@ -59,42 +59,7 @@ async function prerender() {
     console.log(`  ✓ ${route.path.padEnd(32)} -> ${relativePath} (${(stats.size / 1024).toFixed(2)} KB)`);
   }
 
-  // Generate sitemap.xml
-  generateSitemap(routes);
-
   console.log('\n✨ Static prerendering completed successfully!');
-}
-
-function generateSitemap(routes) {
-  const siteUrl = 'https://checktypingspeeds.com';
-  const today = new Date().toISOString().split('T')[0];
-
-  // Exclude error/utility routes from sitemap
-  const indexableRoutes = routes.filter((r) => r.path !== '/404/');
-
-  const urlsXml = indexableRoutes
-    .map(
-      (r) => `  <url>
-    <loc>${siteUrl}${r.path}</loc>
-    <lastmod>${today}</lastmod>
-    <changefreq>${r.path === '/' ? 'daily' : 'weekly'}</changefreq>
-    <priority>${r.path === '/' ? '1.0' : '0.8'}</priority>
-  </url>`
-    )
-    .join('\n');
-
-  const sitemapXml = `<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-${urlsXml}
-</urlset>`;
-
-  const sitemapPath = path.resolve(distDir, 'sitemap.xml');
-  fs.writeFileSync(sitemapPath, sitemapXml, 'utf-8');
-
-  // Also sync to public/ so it is always present in version control and dev server
-  const publicSitemapPath = path.resolve(distDir, '..', 'public', 'sitemap.xml');
-  fs.writeFileSync(publicSitemapPath, sitemapXml, 'utf-8');
-  console.log(`\n🗺️  Generated sitemap.xml with ${indexableRoutes.length} canonical URLs.`);
 }
 
 prerender().catch((err) => {

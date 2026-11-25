@@ -5,11 +5,11 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build && npm run prerender",
+    "build": "tsc -b && vite build && npm run prerender && npx tsx scripts/generate-sitemap.mjs && npx tsx scripts/generate-og.mjs",
     "build:client": "tsc -b && vite build",
     "build:ssr": "vite build --ssr src/entry-server.tsx --outDir dist/server",
     "prerender": "npm run build:ssr && node scripts/prerender/prerender.js",
-    "indexnow": "node scripts/seo/notifyIndexNow.js",
+    "indexnow": "node scripts/indexnow.mjs",
     "lint": "eslint . --max-warnings 0",
     "format": "prettier --write \"src/**/*.{ts,tsx,css,json}\"",
     "format:check": "prettier --check \"src/**/*.{ts,tsx,css,json}\"",
@@ -26,6 +26,10 @@
     "tailwind-merge": "^2.5.4"
   },
   "devDependencies": {
+    "@fontsource-variable/inter": "^5.3.0",
+    "@fontsource/inter": "^5.3.0",
+    "@fontsource/jetbrains-mono": "^5.3.0",
+    "@resvg/resvg-js": "^2.6.2",
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.0.1",
     "@types/node": "^22.9.0",
@@ -42,7 +46,9 @@
     "node-html-parser": "^9.0.7",
     "postcss": "^8.4.49",
     "prettier": "^3.3.3",
+    "satori": "^0.63.2",
     "tailwindcss": "^3.4.15",
+    "tsx": "^4.23.15",
     "typescript": "^5.6.3",
     "vite": "^5.4.11",
     "vitest": "^2.1.5"

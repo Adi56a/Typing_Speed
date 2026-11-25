@@ -11,13 +11,14 @@ export const Header: React.FC<HeaderProps> = ({ currentPath = '/', onNavigate })
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const navLinks = [
+    { label: 'All Tests', path: '/typing-test/' },
     { label: 'Speed Test', path: '/' },
-    { label: '1 Min', path: '/typing-test/1-minute/' },
-    { label: '5 Min', path: '/typing-test/5-minute/' },
+    { label: 'SSC Exam', path: '/ssc-typing-test/' },
+    { label: 'Lessons', path: '/typing-lessons/' },
     { label: 'Practice', path: '/typing-practice/' },
+    { label: 'Speed Chart', path: '/typing-speed-chart/' },
     { label: 'Games', path: '/typing-games/' },
     { label: 'WPM Calc', path: '/wpm-calculator/' },
-    { label: 'About', path: '/about/' },
   ];
 
   const handleLinkClick = (e: React.MouseEvent<HTMLAnchorElement>, path: string) => {
