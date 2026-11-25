@@ -1,16 +1,15 @@
 import React from 'react';
 import { renderToString } from 'react-dom/server';
 import { App } from './app/App';
-import { ROUTES, ROUTE_LIST, SITE_URL } from './seo/routes';
+import { getRoute, routes, SITE_URL, SeoRoute } from './seo/routes';
 import { generateStructuredData } from './seo/structuredData';
-import { RouteMeta } from './types';
 
-export function getRoutes(): RouteMeta[] {
-  return ROUTE_LIST;
+export function getRoutes(): SeoRoute[] {
+  return routes;
 }
 
 export function render(url: string) {
-  const route = ROUTES[url] || ROUTES['/'];
+  const route = getRoute(url) || getRoute('/')!;
 
   const html = renderToString(
     <React.StrictMode>

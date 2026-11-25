@@ -1,7 +1,7 @@
 import { RouteMeta } from '../types';
-import { SITE_NAME, SITE_URL } from './routes';
+import { SITE_NAME, SITE_URL, SeoRoute } from './routes';
 
-export function generateStructuredData(route: RouteMeta): string {
+export function generateStructuredData(route: RouteMeta | SeoRoute): string {
   const canonicalUrl = route.canonical || `${SITE_URL}${route.path}`;
 
   const jsonLdObjects: Record<string, unknown>[] = [
